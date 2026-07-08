@@ -427,3 +427,25 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Custom
+.vs/
+x64/
+x86/
+Debug/
+Release/
+
+*.obj
+*.pdb
+*.ilk
+*.exe
+*.dll
+
+*.user
+*.suo
+
+ipch/
+
+*.opensdf
+*.VC.db
+
