@@ -30,9 +30,11 @@ public:
 private:
     vector<D3DXVECTOR3> m_vLocalPointVec;
     vector<D3DXVECTOR3> m_vWorldPointVec;
+
     bool m_bDamaged;
     float m_fInvincibleTimer;
     float m_fInvincibleTime;
+    
     BREAKABLE_ID m_eType;
 };
 

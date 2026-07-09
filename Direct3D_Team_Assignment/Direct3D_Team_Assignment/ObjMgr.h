@@ -2,10 +2,12 @@
 #include "CObj.h"
 
 enum OBJID {
-	OBJ_EXP,
+	OBJ_OBSTACLE,
+
 	OBJ_BREAKABLE,
 
-	OBJ_ENEMY_BULLET,
+	OBJ_BULLET,
+
 	OBJ_ENEMY,
 
 	OBJ_PLAYER,

@@ -47,3 +47,8 @@ static D3DXVECTOR3 GetMouse()
 
 	return D3DXVECTOR3((float)pt.x, (float)pt.y, 0.f);
 }
+
+template<typename T>
+inline T clampT(T value, T min, T max) {
+	return min(max(value, min), max);
+}

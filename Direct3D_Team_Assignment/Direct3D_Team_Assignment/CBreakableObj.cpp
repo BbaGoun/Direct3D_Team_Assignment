@@ -50,7 +50,7 @@ void CBreakableObj::Initialize()
 		m_eType = BREAKABLE_HEXAGON;
 	}
 
-	m_fRadian = dis(gen) * 3.6;
+	m_fRadian = dis(gen) * 3.6f;
 	m_vWorldPointVec.resize(m_vLocalPointVec.size());
 }
 

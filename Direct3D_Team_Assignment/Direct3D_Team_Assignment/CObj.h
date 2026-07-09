@@ -24,6 +24,7 @@ public:
 	const int& GetHP() { return m_iHP; }
 	const int& GetMaxHP() { return m_iMaxHP; }
 	const int& GetDamage() { return m_iDamage; }
+	const vector<D3DXVECTOR3>& GetWorldVertex() { return m_vWorldVec; }
 
 	void SetPos(D3DXVECTOR3 _vPos) { m_tINFO.vPos = _vPos; }
 	void SetDir(D3DXVECTOR3 _vDir) { m_tINFO.vDir = _vDir; }
@@ -34,7 +35,6 @@ public:
 	void SetHP(int _iHP) { m_iHP = _iHP; }
 	void SetMaxHP(int _iMaxHP) { m_iMaxHP = _iMaxHP; }
 	void SetDamage(int _iDamage) { m_iDamage = _iDamage; }
-	
 
 protected:
 
@@ -47,5 +47,8 @@ protected:
 	int m_iMaxHP;
 
 	int m_iDamage;
+
+	vector<D3DXVECTOR3> m_vLocalVec;
+	vector<D3DXVECTOR3> m_vWorldVec;
 };
 

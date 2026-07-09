@@ -115,6 +115,12 @@
     <Filter Include="헤더 파일\00. Obj\BreakableObj">
       <UniqueIdentifier>{32caa196-fb5e-4c1f-bd37-8ba605ea36b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\02. Utility\CollisionProcess">
+      <UniqueIdentifier>{14b9e2a9-d36b-48c0-bd0e-6cbbcf46a1d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. Utility\CollisionProcess">
+      <UniqueIdentifier>{7a50266d-247f-4cc2-9bfb-5e2242cfef3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -182,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="CBreakableObj.h">
       <Filter>헤더 파일\00. Obj\BreakableObj</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionProcess.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +260,9 @@
     </ClCompile>
     <ClCompile Include="CBreakableObj.cpp">
       <Filter>소스 파일\00. Obj\BreakableObj</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionProcess.cpp">
+      <Filter>소스 파일\02. Utility\CollisionProcess</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

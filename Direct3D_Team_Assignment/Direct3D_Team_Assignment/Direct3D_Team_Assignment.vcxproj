@@ -140,6 +140,7 @@
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMenu.h" />
     <ClInclude Include="CObj.h" />
+    <ClInclude Include="CollisionProcess.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CStage.h" />
     <ClInclude Include="CTank.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMenu.cpp" />
     <ClCompile Include="CObj.cpp" />
+    <ClCompile Include="CollisionProcess.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CStage.cpp" />
