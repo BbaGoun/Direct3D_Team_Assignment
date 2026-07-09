@@ -3,6 +3,7 @@
 
 CEnemy::CEnemy()
 {
+	//모든 각주는 작업자 본인이 코드의 구조를 까먹지 않을수 있도록 돕는 용도로 작성됨
 }
 
 CEnemy::~CEnemy()
@@ -11,7 +12,11 @@ CEnemy::~CEnemy()
 
 void CEnemy::Initialize()
 {
-	//모든 각주는 작업자 본인이 코드의 구조를 까먹지 않을수 있도록 돕는 용도로 작성됨
+	m_eTankID = TANK_NOMAL;
+
+	m_iEXP = 0;
+	m_iMaxEXP = 0;
+	m_iLevel = 1;
 
 	//오브젝트의 월드 스폰 지점을 초기화 (vPos)
 	m_tINFO.vPos = { WINCX * 0.5f, WINCY * 0.5f, 0 };
@@ -61,6 +66,7 @@ void CEnemy::Update()
 	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
 
 	//행렬 적용 파트를 함수로 따로 분리하는것을 고려해보는중. LateUpdate에서 호출해도 문제 없나? 잘 모르겠다.
+
 }
 
 void CEnemy::LateUpdate()
@@ -103,6 +109,7 @@ void CEnemy::Render(HDC _hDC)
 
 void CEnemy::Release()
 {
+	Safe_Delete(m_pTankStat);
 }
 
 void CEnemy::KeyInput()
@@ -131,11 +138,11 @@ void CEnemy::KeyInput()
 
 		m_tINFO.vPos -= m_tINFO.vDir * m_fSpeed;
 	}
-
-	//총알 발사키
-	//if (GetAsyncKeyState('/')) {
-	//	m_fRadian += D3DXToRadian(3);
-	//}
-
-	//동시 입력시 선입력 처리 할 예외처리 추가 예정
 }
+
+void CEnemy::SwabTank()
+{
+	
+}
+
+
