@@ -111,6 +111,8 @@
     </Filter>
     <Filter Include="헤더 파일\00. Obj\03. BreakableObj">
       <UniqueIdentifier>{440a8e3c-5410-4991-82d3-2bb0dce56853}</UniqueIdentifier>
+    <Filter Include="소스 파일\00. Obj\03.Bullet2">
+      <UniqueIdentifier>{37697e54-99a4-447d-9f65-08de96d99f0b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +172,8 @@
     </ClInclude>
     <ClInclude Include="BreakableObj.h">
       <Filter>헤더 파일\00. Obj\03. BreakableObj</Filter>
+    <ClInclude Include="CBullet2.h">
+      <Filter>소스 파일\00. Obj\03.Bullet2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -230,6 +234,8 @@
     </ClCompile>
     <ClCompile Include="Define.cpp">
       <Filter>소스 파일</Filter>
+    <ClCompile Include="CBullet2.cpp">
+      <Filter>소스 파일\00. Obj\03.Bullet2</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

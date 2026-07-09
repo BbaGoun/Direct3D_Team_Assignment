@@ -134,12 +134,15 @@
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="BreakableObj.h" />
     <ClInclude Include="CameraMgr.h" />
+    <ClInclude Include="CBullet2.h" />
+    <ClInclude Include="CBullet1.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMenu.h" />
     <ClInclude Include="CObj.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CStage.h" />
+    <ClInclude Include="CTank.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Direct3D_Team_Assignment.h" />
     <ClInclude Include="framework.h" />
@@ -154,6 +157,8 @@
   <ItemGroup>
     <ClCompile Include="BreakableObj.cpp" />
     <ClCompile Include="CameraMgr.cpp" />
+    <ClCompile Include="CBullet2.cpp" />
+    <ClCompile Include="CBullet1.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMenu.cpp" />
@@ -162,6 +167,7 @@
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CStage.cpp" />
     <ClCompile Include="Define.cpp" />
+    <ClCompile Include="CTank.cpp" />
     <ClCompile Include="Direct3D_Team_Assignment.cpp" />
     <ClCompile Include="ObjMgr.cpp" />
     <ClCompile Include="pch.cpp" />

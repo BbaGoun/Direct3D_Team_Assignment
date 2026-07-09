@@ -1,22 +1,20 @@
 #pragma once
-#include "CScene.h"
 #include "CObj.h"
-
-class CStage :
-    public CScene 
+class CBullet2 :
+    public CObj
 {
 public:
-    CStage();
-    ~CStage() override;
+    CBullet2();
+    ~CBullet2();
 
 public:
-    // CScene을(를) 통해 상속됨
     void Initialize() override;
     void Update() override;
     void LateUpdate() override;
-    void Render(HDC _HDC) override;
+    void Render(HDC hDC) override;
     void Release() override;
 
 private:
-
+    D3DXVECTOR3 m_vLocalBodyPoint[4];
+    D3DXVECTOR3 m_vWorldBodyPoint[4];
 };
