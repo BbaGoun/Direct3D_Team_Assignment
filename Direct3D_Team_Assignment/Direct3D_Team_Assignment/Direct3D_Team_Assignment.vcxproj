@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="CameraMgr.h" />
+    <ClInclude Include="CBullet2.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMenu.h" />
@@ -152,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CameraMgr.cpp" />
+    <ClCompile Include="CBullet2.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMenu.cpp" />

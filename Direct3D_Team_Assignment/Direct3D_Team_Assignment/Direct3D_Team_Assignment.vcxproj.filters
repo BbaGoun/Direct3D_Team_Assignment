@@ -106,6 +106,9 @@
     <Filter Include="소스 파일\03. Scene\Stage">
       <UniqueIdentifier>{e0b55b12-acbf-409c-8f60-86f8a148ad98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\00. Obj\03.Bullet2">
+      <UniqueIdentifier>{37697e54-99a4-447d-9f65-08de96d99f0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -162,6 +165,9 @@
     <ClInclude Include="CMenu.h">
       <Filter>헤더 파일\03. Scene\Menu</Filter>
     </ClInclude>
+    <ClInclude Include="CBullet2.h">
+      <Filter>소스 파일\00. Obj\03.Bullet2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Direct3D_Team_Assignment.rc">
@@ -215,6 +221,9 @@
     </ClCompile>
     <ClCompile Include="CMenu.cpp">
       <Filter>소스 파일\03. Scene\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet2.cpp">
+      <Filter>소스 파일\00. Obj\03.Bullet2</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
