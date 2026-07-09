@@ -10,5 +10,14 @@ public:
 		pObj->Initialize();
 		return pObj;
 	}
-};
 
+	static CObj* Create(D3DXVECTOR3 _vDir, D3DXVECTOR3 _vPos, float _fSpeed) {
+		CObj* pObj = new T;
+		pObj->Initialize();
+
+		pObj->SetDir(_vDir);
+		pObj->SetPos(_vPos);
+		//pObj->
+		return pObj;
+	}
+};

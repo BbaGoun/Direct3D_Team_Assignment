@@ -1,25 +1,16 @@
 #pragma once
-#include "CObj.h"
 #include "Define.h"
-class CTank :
-    public CObj
+#include "CObj.h"
+
+class CTank
 {
 public:
     CTank();
-    virtual ~CTank();
-
-    // CObj을(를) 통해 상속됨
-    void Initialize() override;
-    void Update() override;
-    void LateUpdate() override;
-    void Render(HDC _hDC) override;
-    void Release() override;
+    ~CTank();
 
 public:
-    void KeyInput();//공격키
-    void MakeBullet();
-
-private:
-    list<CObj*> m_pList;
+    //virtual void Rebound() PURE;
+    virtual void Fire(D3DXVECTOR3 _vDir, D3DXVECTOR3 _vPos, float _fSpeed) PURE;
 };
 
+//할일: 반동 구현 완성. 가속도 넣을지 고민...우선순위에서는 밀림
