@@ -109,6 +109,12 @@
     <Filter Include="소스 파일\00. Obj\03.Bullet2">
       <UniqueIdentifier>{37697e54-99a4-447d-9f65-08de96d99f0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\00. Obj\02. Enemy\Tank">
+      <UniqueIdentifier>{052cae86-eb6f-4ff6-b93a-f79201ab13c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Obj\02. Enemy\CBullet1">
+      <UniqueIdentifier>{27250e12-1227-4ab7-a8e9-25cb21ff9140}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -168,6 +174,15 @@
     <ClInclude Include="CBullet2.h">
       <Filter>소스 파일\00. Obj\03.Bullet2</Filter>
     </ClInclude>
+    <ClInclude Include="CTank.h">
+      <Filter>소스 파일\00. Obj\02. Enemy\Tank</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet1.h">
+      <Filter>소스 파일\00. Obj\02. Enemy\CBullet1</Filter>
+    </ClInclude>
+    <ClInclude Include="CTankType.h">
+      <Filter>소스 파일\00. Obj\02. Enemy\Tank</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Direct3D_Team_Assignment.rc">
@@ -224,6 +239,15 @@
     </ClCompile>
     <ClCompile Include="CBullet2.cpp">
       <Filter>소스 파일\00. Obj\03.Bullet2</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet1.cpp">
+      <Filter>소스 파일\00. Obj\02. Enemy\CBullet1</Filter>
+    </ClCompile>
+    <ClCompile Include="CTank.cpp">
+      <Filter>소스 파일\00. Obj\02. Enemy\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="CTankType.cpp">
+      <Filter>소스 파일\00. Obj\02. Enemy\Tank</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
