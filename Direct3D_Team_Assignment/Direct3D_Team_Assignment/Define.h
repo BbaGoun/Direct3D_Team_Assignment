@@ -22,6 +22,19 @@ typedef struct tagInfo
 	bool			bChanged;	// 월드 변환 벡터가 수정되었는지
 }INFO;
 
+typedef struct tagStat
+ {
+     int iHP;
+     int iMaxHP;
+
+     int iLevel;
+     int iMaxLevel;
+
+     int iEXP;
+     int iMaxEXP;
+
+ }PLAYERSTAT;
+
 template<typename T>
 void Safe_Delete(T*& p)
 {
