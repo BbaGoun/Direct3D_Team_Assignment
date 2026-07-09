@@ -1,11 +1,11 @@
 #pragma once
 #include "CObj.h"
-class CBullet :
+class CBullet2 :
     public CObj
 {
 public:
-    CBullet();
-    ~CBullet();
+    CBullet2();
+    ~CBullet2();
 
 public:
     void Initialize() override;

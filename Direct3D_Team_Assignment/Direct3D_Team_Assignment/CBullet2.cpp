@@ -1,17 +1,17 @@
 #include "pch.h"
 #include "CBullet2.h"
 
-CBullet::CBullet()
+CBullet2::CBullet2()
 {
 
 }
 
-CBullet::~CBullet()
+CBullet2::~CBullet2()
 {
 	Release();
 }
 
-void CBullet::Initialize()
+void CBullet2::Initialize()
 {
 	m_tINFO.vPos = { 0, 0, 0 };
 	m_tINFO.vLook = { 0, -1, 0 };
@@ -23,22 +23,22 @@ void CBullet::Initialize()
 	m_vLocalBodyPoint[3] = { -5.f, 5.f, 0.f };
 }
 
-void CBullet::Update()
+void CBullet2::Update()
 {
 
 }
 
-void CBullet::LateUpdate()
+void CBullet2::LateUpdate()
 {
 
 }
 
-void CBullet::Render(HDC hDC)
+void CBullet2::Render(HDC hDC)
 {
 
 }
 
-void CBullet::Release()
+void CBullet2::Release()
 {
 
 }
