@@ -14,6 +14,10 @@ public:
     void Render(HDC hDC) override;
     void Release() override;
 
+public:
+    int GetRadiance() { return (m_vWorldBodyPoint[0].x - m_vWorldBodyPoint[1].x) * 0.5f; }
+    void SetSpeed(float speed) { m_fSpeed = speed; }
+
 private:
     D3DXVECTOR3 m_vLocalBodyPoint[4];
     D3DXVECTOR3 m_vWorldBodyPoint[4];

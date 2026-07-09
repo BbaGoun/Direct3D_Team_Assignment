@@ -1,8 +1,12 @@
 #include "pch.h"
 #include "CPlayer.h"
+#include "AbstractFactory.h"
+#include "ObjMgr.h"
+#include "CBullet2.h"
 
 CPlayer::CPlayer()
 {
+	m_bIsShootGun = true;
 }
 
 CPlayer::~CPlayer()
@@ -105,5 +109,81 @@ void CPlayer::KeyInput()
 		D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
 
 		m_tINFO.vPos -= m_tINFO.vDir * m_fSpeed;
+	}
+
+	if (GetAsyncKeyState(VK_LSHIFT))
+	{
+		if (m_bIsShootGun)
+		{
+			D3DXMATRIX matRotZ, matRot;
+			D3DXMatrixRotationZ(&matRotZ, m_fRadian);
+			D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
+			D3DXMatrixRotationZ(&matRot, m_fRadian);
+			D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRot);
+
+			int tempAng = 0;
+			//tempAng = dis(gen) % 41 - 20;
+			int tempAng2 = 0;
+			//tempAng2 = dis(gen) % 41 - 20;
+			int tempAng3 = 0;
+			//tempAng3 = dis(gen) % 41 - 20;
+			int tempAng4 = 0;
+			//tempAng4 = dis(gen) % 41 - 20;
+
+			int tempSpeed = 0;
+			//tempSpeed = dis(gen) % 6 + 6;
+			int tempSpeed2 = 0;
+			//tempSpeed2 = dis(gen) % 6 + 6;
+			int tempSpeed3 = 0;
+			//tempSpeed3 = dis(gen) % 6 + 6;
+			int tempSpeed4 = 0;
+			//tempSpeed4 = dis(gen) % 6 + 6;
+
+			CObj* pObj = AbstractFactory<CBullet2>::Create();
+			pObj->SetPos(m_vWorldPosinPoint);
+			pObj->SetDir(m_tINFO.vDir);
+			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj);
+			D3DXVECTOR3 m_vNewDir;
+			CObj* pObj1 = AbstractFactory<CBullet2>::Create();
+			pObj1->SetPos(m_vWorldPosinPoint);
+			D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(20.f));
+			D3DXVec3TransformNormal(&m_vNewDir, &m_tINFO.vDir, &matRotZ);
+			pObj1->SetDir(m_vNewDir);
+			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj1);
+			D3DXVECTOR3 m_vNewDir2;
+			CObj* pObj2 = AbstractFactory<CBullet2>::Create();
+			pObj2->SetPos(m_vWorldPosinPoint);
+			D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(-20.f));
+			D3DXVec3TransformNormal(&m_vNewDir2, &m_tINFO.vDir, &matRotZ);
+			pObj2->SetDir(m_vNewDir2);
+			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj2);
+			D3DXVECTOR3 m_vNewDir3;
+			CObj* pObj3 = AbstractFactory<CBullet2>::Create();
+			pObj3->SetPos(m_vWorldPosinPoint);
+			D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(10.f));
+			D3DXVec3TransformNormal(&m_vNewDir3, &m_tINFO.vDir, &matRotZ);
+			pObj3->SetDir(m_vNewDir3);
+			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj3);
+			D3DXVECTOR3 m_vNewDir4;
+			CObj* pObj4 = AbstractFactory<CBullet2>::Create();
+			pObj4->SetPos(m_vWorldPosinPoint);
+			D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(-10.f));
+			D3DXVec3TransformNormal(&m_vNewDir4, &m_tINFO.vDir, &matRotZ);
+			pObj4->SetDir(m_vNewDir4);
+			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj4);
+		}
+		else
+		{
+			D3DXMATRIX matRotZ;
+			D3DXMatrixRotationZ(&matRotZ, m_fRadian);
+			D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
+
+			CObj* pObj = AbstractFactory<CBullet2>::Create();
+			pObj->SetPos(m_vWorldPosinPoint);
+			pObj->SetDir(m_tINFO.vDir);
+			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj);
+
+			m_tINFO.vPos -= m_tINFO.vDir * 2.f;
+		}
 	}
 }
