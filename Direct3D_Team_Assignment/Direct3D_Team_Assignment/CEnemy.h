@@ -21,6 +21,7 @@ private:
     void KeyInput();
 
 private:
+
     D3DXVECTOR3 m_vLocalBodyPoints[4];
     D3DXVECTOR3 m_vWorldBodyPoints[4];
 
