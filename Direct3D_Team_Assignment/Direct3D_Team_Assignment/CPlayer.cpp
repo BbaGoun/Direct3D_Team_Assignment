@@ -49,8 +49,8 @@ void CPlayer::LateUpdate()
 
 void CPlayer::Render(HDC _hDC)
 {
-	//HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
-	//HPEN hOldPen = (HPEN)SelectObject(_hDC, hPen);
+	HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
+	HPEN hOldPen = (HPEN)SelectObject(_hDC, hPen);
 
 	MoveToEx(_hDC, m_vWorldBodyPoints[0].x, m_vWorldBodyPoints[0].y, nullptr);
 	for (int i = 1; i <= 4; ++i) {
@@ -72,8 +72,8 @@ void CPlayer::Render(HDC _hDC)
 	MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
 	LineTo(_hDC, m_vWorldPosinPoint.x, m_vWorldPosinPoint.y);
 
-	//SelectObject(_hDC, hOldPen);
-	//DeleteObject(hPen);
+	SelectObject(_hDC, hOldPen);
+	DeleteObject(hPen);
 }
 
 void CPlayer::Release()
