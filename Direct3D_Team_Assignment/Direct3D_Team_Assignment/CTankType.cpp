@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CTankType.h"
 #include "Define.h"
 
@@ -17,7 +17,7 @@ CTankNomal::~CTankNomal()
 
 void CTankNomal::Fire(D3DXVECTOR3 _vDir, D3DXVECTOR3 _vPos, float _fSpeed)
 {
-	ObjMgr::GetInstance().AddObject(OBJ_ENEMY_BULLET, AbstractFactory<CBullet1>::Create(_vDir, _vPos, _fSpeed));
+	ObjMgr::GetInstance().AddObject(OBJ_BULLET, AbstractFactory<CBullet1>::Create(_vDir, _vPos, _fSpeed));
 }
 
 CTankShotGun::CTankShotGun()
@@ -35,6 +35,6 @@ void CTankShotGun::Fire(D3DXVECTOR3 _vDir, D3DXVECTOR3 _vPos, float _fSpeed)
 		D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(rand() % (15-(-15)+1)+(-15)));
 		
 		D3DXVec3TransformNormal(&_vDir, &_vDir, &matRotZ);
-		ObjMgr::GetInstance().AddObject(OBJ_ENEMY_BULLET, AbstractFactory<CBullet1>::Create(_vDir, _vPos, _fSpeed));
+		ObjMgr::GetInstance().AddObject(OBJ_BULLET, AbstractFactory<CBullet1>::Create(_vDir, _vPos, _fSpeed));
 	}
 }

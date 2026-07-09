@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CollisionProcess.h"
 #include "ObjMgr.h"
 #include <limits>
@@ -37,7 +37,7 @@ void CollisionProcess::CollisionBulletToObstacle(CObj* _pBullet, CObj* _pObstacl
 		ObjMgr::GetInstance().DeleteSpecificObj(OBJ_BULLET, _pBullet);
 }
 
-void CollisionProcess::CollisionBulletToObj(CObj* _pBullet, CObj* pObj)
+void CollisionProcess::CollisionBulletToObj(CObj* _pBullet, CObj* _pObj)
 {
 	D3DXVECTOR3 point = _pBullet->GetPos();
 	vector<D3DXVECTOR3> vertexVec = pObj->GetWorldVertex();
@@ -68,8 +68,10 @@ void CollisionProcess::CollisionBulletToObj(CObj* _pBullet, CObj* pObj)
 	//float radius = static_cast<CBullet*>(_pBullet)->GetRadius();
 	float radius = 5;
 	if (minDistance < radius) {
-		// ÃÑ¾Ë¿¡°Ô ¿ÀºêÁ§Æ®ÀÇ µ¥¹ÌÁö
-		// ¿ÀºêÁ§Æ®¿¡°Ô ÃÑ¾ËÀÇ µ¥¹ÌÁö
+		// ì´ì•Œì—ê²Œ ì˜¤ë¸Œì íŠ¸ì˜ ë°ë¯¸ì§€
+		_pBullet->SetHP(_pBullet->GetHP() - _pObj->GetDamage());
+		// ì˜¤ë¸Œì íŠ¸ì—ê²Œ ì´ì•Œì˜ ë°ë¯¸ì§€
+		_pObj->SetHP(_pObj->GetHP() - _pBullet->GetDamage());
 	}
 }
 
@@ -86,8 +88,10 @@ void CollisionProcess::CollisionBulletToBullet(CObj* _pDstObj, CObj* _pSrcObj)
 	float distance = D3DXVec3Length(&srcToDst);
 
 	if (distance < radiusDst + radiusSrc) {
-		// dst ÃÑ¾Ë¿¡°Ô src ÃÑ¾ËÀÇ µ¥¹ÌÁö
-		// src ÃÑ¾Ë¿¡°Ô dst ÃÑ¾ËÀÇ µ¥¹ÌÁö
+		// dst ì´ì•Œì—ê²Œ src ì´ì•Œì˜ ë°ë¯¸ì§€
+		_pDstObj->SetHP(_pDstObj->GetHP() - _pSrcObj->GetDamage());
+		// src ì´ì•Œì—ê²Œ dst ì´ì•Œì˜ ë°ë¯¸ì§€
+		_pSrcObj->SetHP(_pSrcObj->GetHP() - _pDstObj->GetDamage());
 	}
 }
 
@@ -115,8 +119,10 @@ void CollisionProcess::CollisionObjToObj(CObj* _pDstObj, CObj* _pSrcObj)
 	D3DXVECTOR3 MTV;
 
 	if (CheckSAT(playerVertexVec, obstacleVertexVec, &MTV)) {
-		// dst¿¡°Ô srcÀÇ µ¥¹ÌÁö
-		// src¿¡°Ô dstÀÇ µ¥¹ÌÁö
+		// dstì—ê²Œ srcì˜ ë°ë¯¸ì§€
+		_pDstObj->SetHP(_pDstObj->GetHP() - _pSrcObj->GetDamage());
+		// srcì—ê²Œ dstì˜ ë°ë¯¸ì§€
+		_pSrcObj->SetHP(_pSrcObj->GetHP() - _pDstObj->GetDamage());
 	}
 }
 
