@@ -111,12 +111,6 @@
     <ClInclude Include="CStage.h">
       <Filter>MainGame\03. Scene\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="CBullet1.h">
-      <Filter>MainGame\00. Obj\Bullet1</Filter>
-    </ClInclude>
-    <ClInclude Include="CTank.h">
-      <Filter>MainGame\00. Obj\Tank</Filter>
-    </ClInclude>
     <ClInclude Include="CObj.h">
       <Filter>MainGame\00. Obj</Filter>
     </ClInclude>
@@ -152,6 +146,12 @@
     </ClInclude>
     <ClInclude Include="CBullet1.h">
       <Filter>MainGame\00. Obj\02. Enemy\CBullet1</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet1.h">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1</Filter>
+    </ClInclude>
+    <ClInclude Include="CTank.h">
+      <Filter>MainGame\00. Obj\02. Enemy\Tank</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -210,9 +210,6 @@
     <ClCompile Include="CBreakableObj.cpp">
       <Filter>MainGame\00. Obj\BreakableObj</Filter>
     </ClCompile>
-    <ClCompile Include="CTank.cpp">
-      <Filter>MainGame\00. Obj\Tank</Filter>
-    </ClCompile>
     <ClCompile Include="CScene.cpp">
       <Filter>MainGame\03. Scene</Filter>
     </ClCompile>
@@ -230,6 +227,9 @@
     </ClCompile>
     <ClCompile Include="CBullet1.cpp">
       <Filter>MainGame\00. Obj\02. Enemy\CBullet1</Filter>
+    </ClCompile>
+    <ClCompile Include="CTank.cpp">
+      <Filter>MainGame\00. Obj\02. Enemy\Tank</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
