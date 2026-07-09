@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 #include "CObj.h"
 
 class CollisionProcess
 {
 public:
 	static void CollisionBulletToObstacle(CObj* _pBullet, CObj* _pObstacle);
-	static void CollisionBulletToObj(CObj* _pBullet, CObj* pObj);
+	static void CollisionBulletToObj(CObj* _pBullet, CObj* _pObj);
 	static void CollisionBulletToBullet(CObj* _pDstObj, CObj* _pSrcObj);
 	static void CollisionPlayerToObstacle(CObj* _pPlayer, CObj* _pObstacle);
 	static void CollisionObjToObj(CObj* _pDstObj, CObj* _pSrcObj);
