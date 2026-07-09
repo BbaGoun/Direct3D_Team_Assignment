@@ -16,6 +16,7 @@ public:
     void Release() override;
 
 public:
+    //vector GetWorldPoints() { return vector<D3DXVECTOR3> playerBodyWorldPoint = m_vWorldBodyPoints; }
 
 private:
     void KeyInput();
@@ -26,4 +27,6 @@ private:
 
     D3DXVECTOR3 m_vLocalPosinPoint;
     D3DXVECTOR3 m_vWorldPosinPoint;
+
+    bool m_bIsShootGun;
 };

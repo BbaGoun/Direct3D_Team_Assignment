@@ -8,16 +8,21 @@ CEnemy::CEnemy()
 
 CEnemy::~CEnemy()
 {
+	Release();
 }
 
 void CEnemy::Initialize()
 {
-	m_eTankID = TANK_NOMAL;
+	m_eCurTankID = TANK_NOMAL;
+	m_eNextTankID = TANK_END;
+
+	m_pTankStat = new CTankNomal;
 
 	m_iEXP = 0;
 	m_iMaxEXP = 0;
 	m_iLevel = 1;
 
+	m_iDelay = 0;
 	//오브젝트의 월드 스폰 지점을 초기화 (vPos)
 	m_tINFO.vPos = { WINCX * 0.5f, WINCY * 0.5f, 0 };
 	//오브젝트의 로컬 방향값을 초기화 합니다.
@@ -32,45 +37,39 @@ void CEnemy::Initialize()
 	m_vLocalBodyPoints[2] = { 50.f, 50.f, 0 };
 	m_vLocalBodyPoints[3] = { -50.f, 50.f, 0 };
 
-	//오브젝트의 포신(총알이 생성될 부분)의 로컬 포인트.
-	m_vLocalPosinPoint = { 0, -100.f, 0 };
-	
+	m_vLocalPosinPoint = { 0.f, -100.f, 0 };
+
 	//최초 생성시 방향값은 0.
 	m_fRadian = 0;
+
 }
 
 void CEnemy::Update()
 {
 	KeyInput();
 
-	//월드에 적용될 임시 행렬.
-	//월드 행렬의 경우 기본 구조체 내에 생성되어있으며, 필요시에만 행렬 갱신을 할수 있도록 제작되고 있음. 아직 미구현(0708)
-	//현재 코드에서는 지역 변수를 사용 중.
 	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
 	D3DXMatrixScaling(&matScale, 1, 1, 1);
 	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
 	D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
 
-	//월드 행렬 초기화
-	D3DXMatrixIdentity(&matWorld);
-
 	//월드 행렬에 구성 요소 적용. 크기/자전/이동/공전/위치(부모)<- 순서 잊지 말것!
+	D3DXMatrixIdentity(&matWorld);
 	matWorld = matScale * matRotZ * matTrans;
-
-
-	//사각형의 구성 요소에 월드 행렬 적용
 	for (int i = 0; i < 4; ++i) {
 		D3DXVec3TransformCoord(&m_vWorldBodyPoints[i], &m_vLocalBodyPoints[i], &matWorld);
 	}
-	//포신의 구성 요소에 월드 행렬 적용
 	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
 
 	//행렬 적용 파트를 함수로 따로 분리하는것을 고려해보는중. LateUpdate에서 호출해도 문제 없나? 잘 모르겠다.
-
 }
 
 void CEnemy::LateUpdate()
 {
+	if (m_iDelay > 0)
+	{
+		--m_iDelay;
+	}
 }
 
 void CEnemy::Render(HDC _hDC)
@@ -105,6 +104,7 @@ void CEnemy::Render(HDC _hDC)
 	//펜 할당 해제
 	SelectObject(_hDC, hOldPen);
 	DeleteObject(hPen);
+
 }
 
 void CEnemy::Release()
@@ -124,7 +124,6 @@ void CEnemy::KeyInput()
 	}
 
 	if (GetAsyncKeyState(VK_UP)) {
-
 		D3DXMATRIX matRotZ;
 		D3DXMatrixRotationZ(&matRotZ, m_fRadian);
 		D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
@@ -138,11 +137,54 @@ void CEnemy::KeyInput()
 
 		m_tINFO.vPos -= m_tINFO.vDir * m_fSpeed;
 	}
+
+	if (GetAsyncKeyState(VK_RSHIFT)) {
+		if (m_iDelay <= 0)
+		{
+			D3DXMATRIX matRotZ, matTrans, matWorld;
+			D3DXMatrixRotationZ(&matRotZ, m_fRadian);
+			D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
+
+			D3DXMatrixIdentity(&matWorld);
+			matWorld = matRotZ * matTrans;
+
+			D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
+			D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
+
+			m_pTankStat->Fire(m_tINFO.vDir, m_vWorldPosinPoint, 3.f);
+			m_iDelay += 15;//일단 좀 비효율적으로 가는걸로
+		}
+	}
+	if (GetAsyncKeyState('P')) {
+		ChaingeTankType(TANK_SHOTGUN);
+	}
 }
 
-void CEnemy::SwabTank()
+void CEnemy::ChaingeTankType(TANKID _eID)
 {
-	
+	m_eNextTankID = _eID;
+	if (m_eNextTankID != m_eCurTankID)
+	{
+		Safe_Delete(m_pTankStat);
+		switch (m_eNextTankID)
+		{
+		case TANK_NOMAL:
+			m_pTankStat = new CTankNomal;
+			break;
+		case TANK_SHOTGUN:
+			m_pTankStat = new CTankShotGun;
+			break;
+		case TANK_GUIDED:
+			break;
+		case TANK_BOOSTER:
+			break;
+		case TANK_SOMMONER:
+			break;
+		case TANK_END:
+			break;
+		default:
+			break;
+		}
+		m_eNextTankID = m_eCurTankID;
+	}
 }
-
-

@@ -16,9 +16,13 @@ public:
 	void Render(HDC _hDC) override;
 	void Release() override;
 
-	void TrakingObject();
+	float GetPi() { return m_fSize/2; }//동적으로 바꿀거임(곧)
 
 private:
 
+	D3DXVECTOR3 m_vWorldPoint;
+	D3DXVECTOR3 m_vLocalPoint;
+
+	float m_fSize;
 	//각종 총알용 스탯 정보 
 };
