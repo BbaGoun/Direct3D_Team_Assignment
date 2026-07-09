@@ -1,6 +1,6 @@
 #pragma once
 #include "CTank.h"
-#include "Define.h"
+
 
 class CTankNomal :
     public CTank

@@ -22,6 +22,7 @@ void CEnemy::Initialize()
 	m_iMaxEXP = 0;
 	m_iLevel = 1;
 
+	m_iDelay = 0;
 	//오브젝트의 월드 스폰 지점을 초기화 (vPos)
 	m_tINFO.vPos = { WINCX * 0.5f, WINCY * 0.5f, 0 };
 	//오브젝트의 로컬 방향값을 초기화 합니다.
@@ -65,6 +66,10 @@ void CEnemy::Update()
 
 void CEnemy::LateUpdate()
 {
+	if (m_iDelay > 0)
+	{
+		--m_iDelay;
+	}
 }
 
 void CEnemy::Render(HDC _hDC)
@@ -134,17 +139,21 @@ void CEnemy::KeyInput()
 	}
 
 	if (GetAsyncKeyState(VK_RSHIFT)) {
-		D3DXMATRIX matRotZ, matTrans , matWorld;
-		D3DXMatrixRotationZ(&matRotZ, m_fRadian);
-		D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
+		if (m_iDelay <= 0)
+		{
+			D3DXMATRIX matRotZ, matTrans, matWorld;
+			D3DXMatrixRotationZ(&matRotZ, m_fRadian);
+			D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
 
-		D3DXMatrixIdentity(&matWorld);
-		matWorld = matRotZ * matTrans;
+			D3DXMatrixIdentity(&matWorld);
+			matWorld = matRotZ * matTrans;
 
-		D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
-		D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
+			D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
+			D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
 
-		m_pTankStat->Fire(m_tINFO.vDir, m_vWorldPosinPoint, 3.f);
+			m_pTankStat->Fire(m_tINFO.vDir, m_vWorldPosinPoint, 3.f);
+			m_iDelay += 15;//일단 좀 비효율적으로 가는걸로
+		}
 	}
 	if (GetAsyncKeyState('P')) {
 		ChaingeTankType(TANK_SHOTGUN);

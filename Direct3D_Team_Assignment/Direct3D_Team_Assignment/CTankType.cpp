@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CTankType.h"
+#include "Define.h"
 
 #include "CBullet1.h"
 
@@ -29,8 +30,11 @@ CTankShotGun::~CTankShotGun()
 void CTankShotGun::Fire(D3DXVECTOR3 _vDir, D3DXVECTOR3 _vPos, float _fSpeed)
 {
 	D3DXMATRIX matRotZ;
-	//D3DXMatrixRotationZ(&matRotZ, );
-
-	//D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
-	ObjMgr::GetInstance().AddObject(OBJ_ENEMY_BULLET, AbstractFactory<CBullet1>::Create(_vDir, _vPos, _fSpeed));
+	for (int i(0); i < 5; ++i)
+	{
+		D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(rand() % (15-(-15)+1)+(-15)));
+		
+		D3DXVec3TransformNormal(&_vDir, &_vDir, &matRotZ);
+		ObjMgr::GetInstance().AddObject(OBJ_ENEMY_BULLET, AbstractFactory<CBullet1>::Create(_vDir, _vPos, _fSpeed));
+	}
 }
