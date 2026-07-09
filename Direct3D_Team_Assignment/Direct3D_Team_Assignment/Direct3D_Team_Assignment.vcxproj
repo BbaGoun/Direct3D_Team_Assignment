@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(DXSDK_DIR)/Include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)/Lib/x64;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)/Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)/Lib/x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(DXSDK_DIR)/Include;$(IncludePath)</IncludePath>
@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFactory.h" />
+    <ClInclude Include="CBreakableObj.h" />
     <ClInclude Include="CameraMgr.h" />
     <ClInclude Include="CBullet2.h" />
     <ClInclude Include="CBullet1.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMenu.h" />
     <ClInclude Include="CObj.h" />
+    <ClInclude Include="CollisionProcess.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CStage.h" />
     <ClInclude Include="CTank.h" />
@@ -155,6 +157,7 @@
     <ClInclude Include="TimeMgr.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CBreakableObj.cpp" />
     <ClCompile Include="CameraMgr.cpp" />
     <ClCompile Include="CBullet2.cpp" />
     <ClCompile Include="CBullet1.cpp" />
@@ -162,9 +165,11 @@
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMenu.cpp" />
     <ClCompile Include="CObj.cpp" />
+    <ClCompile Include="CollisionProcess.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CStage.cpp" />
+    <ClCompile Include="Define.cpp" />
     <ClCompile Include="CTank.cpp" />
     <ClCompile Include="CTankType.cpp" />
     <ClCompile Include="Direct3D_Team_Assignment.cpp" />
