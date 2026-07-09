@@ -25,11 +25,11 @@ void CStage::Initialize()
 	pObj->SetPos({ 980, 360, 0 });
 	ObjMgr::GetInstance().AddObject(OBJ_ENEMY, pObj);
 
-	for (int i = 0; i < 20; ++i) {
+	/*for (int i = 0; i < 20; ++i) {
 		pObj = AbstractFactory<CBreakableObj>::Create();
 		pObj->SetPos({ dis(gen)/99.f * 1080 + 100, dis(gen)/99.f * 620 + 50, 0});
 		ObjMgr::GetInstance().AddObject(OBJ_BREAKABLE, pObj);
-	}
+	}*/
 
 	m_bIsCameraRestricted = true;
 	m_CameraRestrictZone = { 0, 0, 2560, 1440 };
