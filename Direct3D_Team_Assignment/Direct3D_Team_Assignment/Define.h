@@ -9,6 +9,12 @@
 
 extern HWND g_hWnd;
 
+#include <random>
+
+extern std::random_device rd;
+extern std::mt19937 gen;
+extern std::uniform_int_distribution<int> dis;
+
 typedef struct tagInfo
 {
 	D3DXVECTOR3		vPos;		// 위치 벡터
@@ -21,19 +27,6 @@ typedef struct tagInfo
 
 	bool			bChanged;	// 월드 변환 벡터가 수정되었는지
 }INFO;
-
-typedef struct tagStat
- {
-     int iHP;
-     int iMaxHP;
-
-     int iLevel;
-     int iMaxLevel;
-
-     int iEXP;
-     int iMaxEXP;
-
- }PLAYERSTAT;
 
 template<typename T>
 void Safe_Delete(T*& p)

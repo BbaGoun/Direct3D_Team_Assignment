@@ -106,6 +106,12 @@
     <Filter Include="소스 파일\03. Scene\Stage">
       <UniqueIdentifier>{e0b55b12-acbf-409c-8f60-86f8a148ad98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\00. Obj\03. BreakableObj">
+      <UniqueIdentifier>{7f622fb3-d979-4567-af07-014177ec4148}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\00. Obj\03. BreakableObj">
+      <UniqueIdentifier>{440a8e3c-5410-4991-82d3-2bb0dce56853}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -162,6 +168,9 @@
     <ClInclude Include="CMenu.h">
       <Filter>헤더 파일\03. Scene\Menu</Filter>
     </ClInclude>
+    <ClInclude Include="BreakableObj.h">
+      <Filter>헤더 파일\00. Obj\03. BreakableObj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Direct3D_Team_Assignment.rc">
@@ -215,6 +224,12 @@
     </ClCompile>
     <ClCompile Include="CMenu.cpp">
       <Filter>소스 파일\03. Scene\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="BreakableObj.cpp">
+      <Filter>소스 파일\00. Obj\03. BreakableObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Define.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

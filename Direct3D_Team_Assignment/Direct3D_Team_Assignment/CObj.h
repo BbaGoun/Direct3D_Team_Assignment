@@ -31,5 +31,10 @@ protected:
 	INFO m_tINFO;
 	float m_fSpeed;
 	float m_fRadian;
+
+	int iHP;
+	int iMaxHP;
+
+	int iDamage;
 };
 

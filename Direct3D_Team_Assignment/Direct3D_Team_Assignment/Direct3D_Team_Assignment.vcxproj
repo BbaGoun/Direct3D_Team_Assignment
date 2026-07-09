@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(DXSDK_DIR)/Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(DXSDK_DIR)/Lib/x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)/Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)/Lib/x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(DXSDK_DIR)/Include;$(IncludePath)</IncludePath>
@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFactory.h" />
+    <ClInclude Include="BreakableObj.h" />
     <ClInclude Include="CameraMgr.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CMainGame.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="TimeMgr.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BreakableObj.cpp" />
     <ClCompile Include="CameraMgr.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CMainGame.cpp" />
@@ -159,6 +161,7 @@
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CStage.cpp" />
+    <ClCompile Include="Define.cpp" />
     <ClCompile Include="Direct3D_Team_Assignment.cpp" />
     <ClCompile Include="ObjMgr.cpp" />
     <ClCompile Include="pch.cpp" />
