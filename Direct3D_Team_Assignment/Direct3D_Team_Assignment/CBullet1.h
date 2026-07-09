@@ -19,5 +19,6 @@ public:
 	void TrakingObject();
 
 private:
+
 	//각종 총알용 스탯 정보 
 };
