@@ -132,7 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFactory.h" />
-    <ClInclude Include="BreakableObj.h" />
+    <ClInclude Include="CBreakableObj.h" />
     <ClInclude Include="CameraMgr.h" />
     <ClInclude Include="CBullet2.h" />
     <ClInclude Include="CBullet1.h" />
@@ -155,7 +155,7 @@
     <ClInclude Include="TimeMgr.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BreakableObj.cpp" />
+    <ClCompile Include="CBreakableObj.cpp" />
     <ClCompile Include="CameraMgr.cpp" />
     <ClCompile Include="CBullet2.cpp" />
     <ClCompile Include="CBullet1.cpp" />

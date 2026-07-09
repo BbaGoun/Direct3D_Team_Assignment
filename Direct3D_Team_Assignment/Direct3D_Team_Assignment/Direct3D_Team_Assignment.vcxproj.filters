@@ -106,13 +106,14 @@
     <Filter Include="소스 파일\03. Scene\Stage">
       <UniqueIdentifier>{e0b55b12-acbf-409c-8f60-86f8a148ad98}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\00. Obj\03. BreakableObj">
-      <UniqueIdentifier>{7f622fb3-d979-4567-af07-014177ec4148}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\00. Obj\03. BreakableObj">
-      <UniqueIdentifier>{440a8e3c-5410-4991-82d3-2bb0dce56853}</UniqueIdentifier>
     <Filter Include="소스 파일\00. Obj\03.Bullet2">
       <UniqueIdentifier>{37697e54-99a4-447d-9f65-08de96d99f0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Obj\BreakableObj">
+      <UniqueIdentifier>{0b35914f-ec81-47fb-a0c3-7e2fb8d0c1c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\00. Obj\BreakableObj">
+      <UniqueIdentifier>{32caa196-fb5e-4c1f-bd37-8ba605ea36b7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -170,10 +171,17 @@
     <ClInclude Include="CMenu.h">
       <Filter>헤더 파일\03. Scene\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="BreakableObj.h">
-      <Filter>헤더 파일\00. Obj\03. BreakableObj</Filter>
     <ClInclude Include="CBullet2.h">
       <Filter>소스 파일\00. Obj\03.Bullet2</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet1.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CTank.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CBreakableObj.h">
+      <Filter>헤더 파일\00. Obj\BreakableObj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -229,13 +237,20 @@
     <ClCompile Include="CMenu.cpp">
       <Filter>소스 파일\03. Scene\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="BreakableObj.cpp">
-      <Filter>소스 파일\00. Obj\03. BreakableObj</Filter>
+    <ClCompile Include="CBullet2.cpp">
+      <Filter>소스 파일\00. Obj\03.Bullet2</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet1.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Define.cpp">
       <Filter>소스 파일</Filter>
-    <ClCompile Include="CBullet2.cpp">
-      <Filter>소스 파일\00. Obj\03.Bullet2</Filter>
+    </ClCompile>
+    <ClCompile Include="CTank.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CBreakableObj.cpp">
+      <Filter>소스 파일\00. Obj\BreakableObj</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -8,12 +8,12 @@ enum BREAKABLE_ID {
     BREAKABLE_HEXAGON
 };
 
-class BreakableObj :
+class CBreakableObj :
     public CObj
 {
 public:
-    BreakableObj();
-    ~BreakableObj() override;
+    CBreakableObj();
+    ~CBreakableObj() override;
 
 public:
     // CObj을(를) 통해 상속됨
@@ -28,9 +28,11 @@ private:
 public:
 
 private:
-    list<D3DXVECTOR3> m_vList;
+    vector<D3DXVECTOR3> m_vLocalPointVec;
+    vector<D3DXVECTOR3> m_vWorldPointVec;
     bool m_bDamaged;
     float m_fInvincibleTimer;
     float m_fInvincibleTime;
+    BREAKABLE_ID m_eType;
 };
 
