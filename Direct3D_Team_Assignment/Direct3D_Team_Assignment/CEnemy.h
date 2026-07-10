@@ -26,7 +26,7 @@ public:
 
 public:
 
-    // CObjÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
+    // CObjÃ€Â»(Â¸Â¦) Ã…Ã«Ã‡Ã˜ Â»Ã³Â¼Ã“ÂµÃŠ
     void Initialize() override;
     void Update() override;
     void LateUpdate() override;
@@ -34,6 +34,13 @@ public:
     void Release() override;
 
 public:
+    //vector<D3DXVECTOR3> GetWorldBodyPoints() {
+    //    return m_vWorldBodyPoints;}
+
+public:
+    void TakeDamage(int _iDamage) override {}
+
+private:
     void DecelerationCurrentSpeed();
     void Accelerate(float _fFactor);
 
