@@ -2,14 +2,17 @@
 #include "CollisionProcess.h"
 #include "ObjMgr.h"
 #include <limits>
+#include "CBullet1.h"
 
-void CollisionProcess::CollisionBulletToObstacle(CObj* _pBullet, CObj* _pObstacle)
+bool CollisionProcess::CollisionBulletToObstacle(CObj* _pBullet, CObj* _pObstacle)
 {
 	D3DXVECTOR3 point = _pBullet->GetPos();
 	vector<D3DXVECTOR3> vertexVec = _pObstacle->GetWorldVertex();
 
-	if (CheckPointInPolygon(point, vertexVec))
+	if (CheckPointInPolygon(point, vertexVec)) {
 		ObjMgr::GetInstance().DeleteSpecificObj(OBJ_BULLET, _pBullet);
+		return true;
+	}
 
 	int m = vertexVec.size();
 	float minDistance = std::numeric_limits<float>::infinity();
@@ -31,19 +34,26 @@ void CollisionProcess::CollisionBulletToObstacle(CObj* _pBullet, CObj* _pObstacl
 			minDistance = distance;
 	}
 
-	//float radius = static_cast<CBullet*>(_pBullet)->GetRadius();
-	float radius = 5;
-	if(minDistance < radius)
+	float radius = static_cast<CBullet1*>(_pBullet)->GetRadius();
+	if (minDistance < radius) {
 		ObjMgr::GetInstance().DeleteSpecificObj(OBJ_BULLET, _pBullet);
+		return true;
+	}
+	return false;
 }
 
-void CollisionProcess::CollisionBulletToObj(CObj* _pBullet, CObj* _pObj)
+bool CollisionProcess::CollisionBulletToObj(CObj* _pBullet, CObj* _pObj)
 {
 	D3DXVECTOR3 point = _pBullet->GetPos();
-	vector<D3DXVECTOR3> vertexVec = pObj->GetWorldVertex();
+	vector<D3DXVECTOR3> vertexVec = _pObj->GetWorldVertex();
 
-	if (CheckPointInPolygon(point, vertexVec))
-		ObjMgr::GetInstance().DeleteSpecificObj(OBJ_BULLET, _pBullet);
+	if (CheckPointInPolygon(point, vertexVec)) {
+		// 총알에게 오브젝트의 데미지
+		_pBullet->TakeDamage(_pObj->GetDamage());
+		// 오브젝트에게 총알의 데미지
+		_pObj->TakeDamage(_pBullet->GetDamage()); 
+		return true;
+	}
 
 	int m = vertexVec.size();
 	float minDistance = std::numeric_limits<float>::infinity();
@@ -65,22 +75,21 @@ void CollisionProcess::CollisionBulletToObj(CObj* _pBullet, CObj* _pObj)
 			minDistance = distance;
 	}
 
-	//float radius = static_cast<CBullet*>(_pBullet)->GetRadius();
-	float radius = 5;
+	float radius = static_cast<CBullet1*>(_pBullet)->GetRadius();
 	if (minDistance < radius) {
 		// 총알에게 오브젝트의 데미지
-		_pBullet->SetHP(_pBullet->GetHP() - _pObj->GetDamage());
+		_pBullet->TakeDamage(_pObj->GetDamage());
 		// 오브젝트에게 총알의 데미지
-		_pObj->SetHP(_pObj->GetHP() - _pBullet->GetDamage());
+		_pObj->TakeDamage(_pBullet->GetDamage());
+		return true;
 	}
+	return false;
 }
 
-void CollisionProcess::CollisionBulletToBullet(CObj* _pDstObj, CObj* _pSrcObj)
+bool CollisionProcess::CollisionBulletToBullet(CObj* _pDstObj, CObj* _pSrcObj)
 {
-	//float radius = static_cast<CBullet*>(_pBullet)->GetRadius();
-	float radiusDst = 5;
-	//float radius = static_cast<CBullet*>(_pBullet)->GetRadius();
-	float radiusSrc = 5;
+	float radiusDst = static_cast<CBullet1*>(_pDstObj)->GetRadius();
+	float radiusSrc = static_cast<CBullet1*>(_pSrcObj)->GetRadius();
 
 	D3DXVECTOR3 dstPos = _pDstObj->GetPos();
 	D3DXVECTOR3 srcPos = _pSrcObj->GetPos();
@@ -89,13 +98,15 @@ void CollisionProcess::CollisionBulletToBullet(CObj* _pDstObj, CObj* _pSrcObj)
 
 	if (distance < radiusDst + radiusSrc) {
 		// dst 총알에게 src 총알의 데미지
-		_pDstObj->SetHP(_pDstObj->GetHP() - _pSrcObj->GetDamage());
+		_pDstObj->TakeDamage(_pSrcObj->GetDamage());
 		// src 총알에게 dst 총알의 데미지
-		_pSrcObj->SetHP(_pSrcObj->GetHP() - _pDstObj->GetDamage());
+		_pSrcObj->TakeDamage(_pDstObj->GetDamage());
+		return true;
 	}
+	return false;
 }
 
-void CollisionProcess::CollisionPlayerToObstacle(CObj* _pPlayer, CObj* _pObstacle)
+bool CollisionProcess::CollisionPlayerToObstacle(CObj* _pPlayer, CObj* _pObstacle)
 {
 	vector<D3DXVECTOR3> playerVertexVec = _pPlayer->GetWorldVertex();
 	vector<D3DXVECTOR3> obstacleVertexVec = _pObstacle->GetWorldVertex();
@@ -109,10 +120,14 @@ void CollisionProcess::CollisionPlayerToObstacle(CObj* _pPlayer, CObj* _pObstacl
 		D3DXVECTOR3 oldPos = _pPlayer->GetPos();
 		D3DXVECTOR3 newPos = oldPos + MTV;
 		_pPlayer->SetPos(newPos);
+
+		return true;
 	}
+
+	return false;
 }
 
-void CollisionProcess::CollisionObjToObj(CObj* _pDstObj, CObj* _pSrcObj)
+bool CollisionProcess::CollisionObjToObj(CObj* _pDstObj, CObj* _pSrcObj)
 {
 	vector<D3DXVECTOR3> playerVertexVec = _pDstObj->GetWorldVertex();
 	vector<D3DXVECTOR3> obstacleVertexVec = _pSrcObj->GetWorldVertex();
@@ -120,10 +135,14 @@ void CollisionProcess::CollisionObjToObj(CObj* _pDstObj, CObj* _pSrcObj)
 
 	if (CheckSAT(playerVertexVec, obstacleVertexVec, &MTV)) {
 		// dst에게 src의 데미지
-		_pDstObj->SetHP(_pDstObj->GetHP() - _pSrcObj->GetDamage());
+		_pDstObj->TakeDamage(_pSrcObj->GetDamage());
 		// src에게 dst의 데미지
-		_pSrcObj->SetHP(_pSrcObj->GetHP() - _pDstObj->GetDamage());
+		_pSrcObj->TakeDamage(_pDstObj->GetDamage());
+
+		return true;
 	}
+
+	return false;
 }
 
 bool CollisionProcess::CheckPointInPolygon(D3DXVECTOR3 _vPoint, vector<D3DXVECTOR3>& _VertexVec)

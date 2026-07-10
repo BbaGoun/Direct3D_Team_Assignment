@@ -16,7 +16,7 @@ public:
 	void Render(HDC _hDC) override;
 	void Release() override;
 
-	float GetPi() { return m_fSize/2; }//동적으로 바꿀거임(곧)
+	float GetRadius() { return m_fSize/2; }//동적으로 바꿀거임(곧)
 
 private:
 
