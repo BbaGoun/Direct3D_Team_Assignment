@@ -48,10 +48,6 @@ bool CollisionProcess::CollisionBulletToObj(CObj* _pBullet, CObj* _pObj)
 	vector<D3DXVECTOR3> vertexVec = _pObj->GetWorldVertex();
 
 	if (CheckPointInPolygon(point, vertexVec)) {
-		// 총알에게 오브젝트의 데미지
-		_pBullet->TakeDamage(_pObj->GetDamage());
-		// 오브젝트에게 총알의 데미지
-		_pObj->TakeDamage(_pBullet->GetDamage()); 
 		return true;
 	}
 
@@ -77,10 +73,6 @@ bool CollisionProcess::CollisionBulletToObj(CObj* _pBullet, CObj* _pObj)
 
 	float radius = static_cast<CBullet1*>(_pBullet)->GetRadius();
 	if (minDistance < radius) {
-		// 총알에게 오브젝트의 데미지
-		_pBullet->TakeDamage(_pObj->GetDamage());
-		// 오브젝트에게 총알의 데미지
-		_pObj->TakeDamage(_pBullet->GetDamage());
 		return true;
 	}
 	return false;
@@ -97,29 +89,20 @@ bool CollisionProcess::CollisionBulletToBullet(CObj* _pDstObj, CObj* _pSrcObj)
 	float distance = D3DXVec3Length(&srcToDst);
 
 	if (distance < radiusDst + radiusSrc) {
-		// dst 총알에게 src 총알의 데미지
-		_pDstObj->TakeDamage(_pSrcObj->GetDamage());
-		// src 총알에게 dst 총알의 데미지
-		_pSrcObj->TakeDamage(_pDstObj->GetDamage());
 		return true;
 	}
 	return false;
 }
 
-bool CollisionProcess::CollisionPlayerToObstacle(CObj* _pPlayer, CObj* _pObstacle)
+bool CollisionProcess::CollisionPlayerToObstacle(CObj* _pPlayer, CObj* _pObstacle, D3DXVECTOR3* _MTV)
 {
 	vector<D3DXVECTOR3> playerVertexVec = _pPlayer->GetWorldVertex();
 	vector<D3DXVECTOR3> obstacleVertexVec = _pObstacle->GetWorldVertex();
-	D3DXVECTOR3 MTV;
 
-	if (CheckSAT(playerVertexVec, obstacleVertexVec, &MTV)) {
-		D3DXVECTOR3 playerDir = _pPlayer->GetDir();
-		if (D3DXVec3Dot(&playerDir, &MTV) > 0)
-			MTV = -MTV;
-
-		D3DXVECTOR3 oldPos = _pPlayer->GetPos();
-		D3DXVECTOR3 newPos = oldPos + MTV;
-		_pPlayer->SetPos(newPos);
+	if (CheckSAT(playerVertexVec, obstacleVertexVec, _MTV)) {
+		D3DXVECTOR3 exitDir = _pPlayer->GetPos() - _pObstacle->GetPos();
+		if (D3DXVec3Dot(&exitDir, _MTV) < 0)
+			*_MTV = -(*_MTV);
 
 		return true;
 	}
@@ -175,6 +158,7 @@ bool CollisionProcess::CheckSAT(vector<D3DXVECTOR3>& _SrcVertexVec, vector<D3DXV
 	D3DXVECTOR3 closestAxis;
 	for (int i = 0; i < n; ++i) {
 		D3DXVECTOR3 edge = _SrcVertexVec[(i + 1) % n] - _SrcVertexVec[i];
+		D3DXVec3Normalize(&edge, &edge);
 		D3DXVECTOR3 normal = { -edge.y, edge.x, 0 };
 
 		float srcMin = std::numeric_limits<float>::infinity();
@@ -216,7 +200,8 @@ bool CollisionProcess::CheckSAT(vector<D3DXVECTOR3>& _SrcVertexVec, vector<D3DXV
 		}
 	}
 	for (int i = 0; i < m; ++i) {
-		D3DXVECTOR3 edge = _DstVertexVec[(i + 1) % n] - _DstVertexVec[i];
+		D3DXVECTOR3 edge = _DstVertexVec[(i + 1) % m] - _DstVertexVec[i];
+		D3DXVec3Normalize(&edge, &edge);
 		D3DXVECTOR3 normal = { -edge.y, edge.x, 0 };
 
 		float srcMin = std::numeric_limits<float>::infinity();

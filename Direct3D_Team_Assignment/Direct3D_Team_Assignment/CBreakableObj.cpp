@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CBreakableObj.h"
+#include "ObjMgr.h"
 
 CBreakableObj::CBreakableObj()
 {
@@ -7,6 +8,7 @@ CBreakableObj::CBreakableObj()
 
 CBreakableObj::~CBreakableObj()
 {
+	Release();
 }
 
 void CBreakableObj::Initialize()
@@ -16,24 +18,24 @@ void CBreakableObj::Initialize()
 		float halfSide = side * 0.5f;
 		float height = side * sqrtf(3) * 0.5f;
 
-		m_vLocalPointVec.push_back({ 0, -height * 2.f / 3.f, 0 });
-		m_vLocalPointVec.push_back({ halfSide, height / 3.f, 0 });
-		m_vLocalPointVec.push_back({ -halfSide, height / 3.f, 0 });
+		m_vLocalVec.push_back({ 0, -height * 2.f / 3.f, 0 });
+		m_vLocalVec.push_back({ halfSide, height / 3.f, 0 });
+		m_vLocalVec.push_back({ -halfSide, height / 3.f, 0 });
 		m_eType = BREAKABLE_TRIANGLE;
 	}
 	else if (dis(gen) < 50) { // 정사각형
 		float halfLength = 75 * 0.5f;
-		m_vLocalPointVec.push_back({ -halfLength, -halfLength, 0 });
-		m_vLocalPointVec.push_back({ halfLength, -halfLength, 0 });
-		m_vLocalPointVec.push_back({ halfLength, halfLength, 0 });
-		m_vLocalPointVec.push_back({ -halfLength, halfLength, 0 });
+		m_vLocalVec.push_back({ -halfLength, -halfLength, 0 });
+		m_vLocalVec.push_back({ halfLength, -halfLength, 0 });
+		m_vLocalVec.push_back({ halfLength, halfLength, 0 });
+		m_vLocalVec.push_back({ -halfLength, halfLength, 0 });
 		m_eType = BREAKABLE_SQUARE;
 	}
 	else if (dis(gen) < 75) { // 정오각형
 		for (int i = 0; i < 5; ++i) {
 			float x = 45 * sinf(PI * i * 0.4);
 			float y = 45 * cosf(PI * i * 0.4);
-			m_vLocalPointVec.push_back({ x, y, 0 });
+			m_vLocalVec.push_back({ x, y, 0 });
 		}
 		m_eType = BREAKABLE_PENTAGON;
 	}
@@ -41,17 +43,17 @@ void CBreakableObj::Initialize()
 		float r = 45;
 		float deltaX = r * sqrtf(3) * 0.5f;
 		float deltaY = r * 0.5f;
-		m_vLocalPointVec.push_back({0, -r, 0});
-		m_vLocalPointVec.push_back({deltaX, -deltaY, 0});
-		m_vLocalPointVec.push_back({deltaX, deltaY, 0});
-		m_vLocalPointVec.push_back({0, r, 0});
-		m_vLocalPointVec.push_back({-deltaX, deltaY, 0});
-		m_vLocalPointVec.push_back({ -deltaX, -deltaY, 0 });
+		m_vLocalVec.push_back({0, -r, 0});
+		m_vLocalVec.push_back({deltaX, -deltaY, 0});
+		m_vLocalVec.push_back({deltaX, deltaY, 0});
+		m_vLocalVec.push_back({0, r, 0});
+		m_vLocalVec.push_back({-deltaX, deltaY, 0});
+		m_vLocalVec.push_back({ -deltaX, -deltaY, 0 });
 		m_eType = BREAKABLE_HEXAGON;
 	}
 
 	m_fRadian = dis(gen) * 3.6f;
-	m_vWorldPointVec.resize(m_vLocalPointVec.size());
+	m_vWorldVec.resize(m_vLocalVec.size());
 }
 
 void CBreakableObj::Update()
@@ -64,8 +66,8 @@ void CBreakableObj::Update()
 	D3DXMatrixIdentity(&matWorld);
 	matWorld = matScale * matRotZ * matTrans;
 
-	for (int i = 0; i < m_vLocalPointVec.size(); ++i) {
-		D3DXVec3TransformCoord(&m_vWorldPointVec[i], &m_vLocalPointVec[i], &matWorld);
+	for (int i = 0; i < m_vLocalVec.size(); ++i) {
+		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
 }
 
@@ -75,9 +77,9 @@ void CBreakableObj::LateUpdate()
 
 void CBreakableObj::Render(HDC _hDC)
 {
-	POINT* points = new POINT[m_vLocalPointVec.size()];
-	for (int i = 0; i < m_vLocalPointVec.size(); ++i) {
-		points[i] = { int(m_vWorldPointVec[i].x), int(m_vWorldPointVec[i].y) };
+	POINT* points = new POINT[m_vLocalVec.size()];
+	for (int i = 0; i < m_vLocalVec.size(); ++i) {
+		points[i] = { int(m_vWorldVec[i].x), int(m_vWorldVec[i].y) };
 	}
 
 	HBRUSH hBrush = nullptr;
@@ -97,14 +99,38 @@ void CBreakableObj::Render(HDC _hDC)
 	}
 
 	HBRUSH hOldBrush = (HBRUSH)SelectObject(_hDC, hBrush);
-	Polygon(_hDC, points, m_vLocalPointVec.size());
+	Polygon(_hDC, points, m_vLocalVec.size());
 
 	SelectObject(_hDC, hOldBrush);
 	DeleteObject(hBrush);
-	delete points;
+	delete[] points;
 	points = nullptr;
 }
 
 void CBreakableObj::Release()
 {
+}
+
+void CBreakableObj::TakeDamage(int _iDamage)
+{
+}
+
+void CBreakableObj::TakeDamageByBullet(int _iDamage, CObj* pBullet)
+{
+	m_iHP -= _iDamage;
+	if (m_iHP <= 0) {
+		pBullet->GetParent()->GainExp(m_iDropExp);
+		ObjMgr::GetInstance().DeleteSpecificObj(OBJ_BREAKABLE, this);
+		m_bDead = true;
+	}
+}
+
+void CBreakableObj::TakeDamageByPlayer(int _iDamage, CObj* pPlayer)
+{
+	m_iHP -= _iDamage;
+	if (m_iHP <= 0) {
+		pPlayer->GainExp(m_iDropExp);
+		ObjMgr::GetInstance().DeleteSpecificObj(OBJ_BREAKABLE, this);
+		m_bDead = true;
+	}
 }

@@ -73,6 +73,27 @@
     <Filter Include="MainGame\00. Obj\02. Enemy\Tank\TankType">
       <UniqueIdentifier>{b2be7382-7bb9-471d-91c2-2cdf8414ae14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\04. UI">
+      <UniqueIdentifier>{b1d36fa3-f771-44a1-91f3-dbe3ec02bde5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\04. UI\Preview">
+      <UniqueIdentifier>{d903a8c5-e91c-414b-9a01-eb79b6b78a20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\04. UI\HPBar">
+      <UniqueIdentifier>{db7230be-f4d3-48cb-a1a8-28ce9ee091a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\04. UI\ExpBar">
+      <UniqueIdentifier>{e6445066-e90c-4dc4-a62f-33d5f246282a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\01. Manager\04. UIMgr">
+      <UniqueIdentifier>{140f94cd-e446-41a7-b327-ba5239af2949}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\02. Utility\UIFactory">
+      <UniqueIdentifier>{1928b878-7295-4cbd-9b33-c5152a2628fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\Obstacle">
+      <UniqueIdentifier>{d6ec1155-c992-4b34-b7a1-a2c5fcf514de}</UniqueIdentifier>
+    </Filter>
     <Filter Include="MainGame\00. Obj\01. Player\Summonee">
       <UniqueIdentifier>{907e8cc4-e63b-411f-8ff4-e1fe93f9c84d}</UniqueIdentifier>
     </Filter>
@@ -162,6 +183,27 @@
     <ClInclude Include="CTank.h">
       <Filter>MainGame\00. Obj\02. Enemy\Tank</Filter>
     </ClInclude>
+    <ClInclude Include="CUI.h">
+      <Filter>MainGame\04. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIMgr.h">
+      <Filter>MainGame\01. Manager\04. UIMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CExpBar.h">
+      <Filter>MainGame\04. UI\ExpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="CHPBar.h">
+      <Filter>MainGame\04. UI\HPBar</Filter>
+    </ClInclude>
+    <ClInclude Include="CPreview.h">
+      <Filter>MainGame\04. UI\Preview</Filter>
+    </ClInclude>
+    <ClInclude Include="UIFactory.h">
+      <Filter>MainGame\02. Utility\UIFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="CObstacle.h">
+      <Filter>MainGame\00. Obj\Obstacle</Filter>
+    </ClInclude>
     <ClInclude Include="CSummonee.h">
       <Filter>MainGame\00. Obj\01. Player\Summonee</Filter>
     </ClInclude>
@@ -245,6 +287,24 @@
     </ClCompile>
     <ClCompile Include="CTank.cpp">
       <Filter>MainGame\00. Obj\02. Enemy\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="CUI.cpp">
+      <Filter>MainGame\04. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMgr.cpp">
+      <Filter>MainGame\01. Manager\04. UIMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CExpBar.cpp">
+      <Filter>MainGame\04. UI\ExpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="CHPBar.cpp">
+      <Filter>MainGame\04. UI\HPBar</Filter>
+    </ClCompile>
+    <ClCompile Include="CPreview.cpp">
+      <Filter>MainGame\04. UI\Preview</Filter>
+    </ClCompile>
+    <ClCompile Include="CObstacle.cpp">
+      <Filter>MainGame\00. Obj\Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="CSummonee.cpp">
       <Filter>MainGame\00. Obj\01. Player\Summonee</Filter>
