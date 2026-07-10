@@ -36,6 +36,10 @@ public:
 public:
     //vector<D3DXVECTOR3> GetWorldBodyPoints() {
     //    return m_vWorldBodyPoints;}
+
+public:
+    void TakeDamage(int _iDamage) override {}
+
 private:
 
     void KeyInput();

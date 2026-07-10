@@ -18,6 +18,9 @@ public:
 
 	float GetRadius() { return m_fSize/2; }//동적으로 바꿀거임(곧)
 
+public:
+	void TakeDamage(int _iDamage) override {}
+
 private:
 
 	D3DXVECTOR3 m_vWorldPoint;

@@ -73,6 +73,9 @@
     <Filter Include="MainGame\00. Obj\02. Enemy\Tank\TankType">
       <UniqueIdentifier>{b2be7382-7bb9-471d-91c2-2cdf8414ae14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\00. Obj\01. Player\Summonee">
+      <UniqueIdentifier>{907e8cc4-e63b-411f-8ff4-e1fe93f9c84d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -153,6 +156,9 @@
     <ClInclude Include="CTank.h">
       <Filter>MainGame\00. Obj\02. Enemy\Tank</Filter>
     </ClInclude>
+    <ClInclude Include="CSummonee.h">
+      <Filter>MainGame\00. Obj\01. Player\Summonee</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Direct3D_Team_Assignment.rc">
@@ -230,6 +236,9 @@
     </ClCompile>
     <ClCompile Include="CTank.cpp">
       <Filter>MainGame\00. Obj\02. Enemy\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="CSummonee.cpp">
+      <Filter>MainGame\00. Obj\01. Player\Summonee</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

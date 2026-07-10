@@ -18,8 +18,12 @@ public:
 public:
     //vector GetWorldPoints() { return vector<D3DXVECTOR3> playerBodyWorldPoint = m_vWorldBodyPoints; }
 
+public:
+    void TakeDamage(int _iDamage) override;
+
 private:
     void KeyInput();
+    void AttackKeyInput();
 
 private:
     D3DXVECTOR3 m_vLocalBodyPoints[4];
@@ -28,5 +32,20 @@ private:
     D3DXVECTOR3 m_vLocalPosinPoint;
     D3DXVECTOR3 m_vWorldPosinPoint;
 
+    D3DXVECTOR3 m_vLocalShotPosinPoint[2];
+    D3DXVECTOR3 m_vWorldShotPosinPoint[2];
+
+    D3DXVECTOR3 m_vLocalBackPosinPoint[2];
+    D3DXVECTOR3 m_vWorldBackPosinPoint[2];
+
+    D3DXVECTOR3 m_vLocalSummonerPosinPoint[8];
+    D3DXVECTOR3 m_vWorldSummonerPosinPoint[8];
+
     bool m_bIsShootGun;
+    bool m_bIsTargeted;
+    bool m_bIsBooster;
+    bool m_bIsSummoner;
+
+    bool m_bAttacked;
+    int m_iAttackDelay;
 };
