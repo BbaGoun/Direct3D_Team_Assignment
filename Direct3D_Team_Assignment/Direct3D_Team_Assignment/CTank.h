@@ -2,6 +2,8 @@
 #include "Define.h"
 #include "CObj.h"
 
+class CEnemy;
+
 class CTank
 {
 public:
@@ -9,8 +11,14 @@ public:
     ~CTank();
 
 public:
-    //virtual void Rebound() PURE;
-    virtual void Fire(D3DXVECTOR3 _vDir, D3DXVECTOR3 _vPos, float _fSpeed) PURE;
-};
 
-//할일: 반동 구현 완성. 가속도 넣을지 고민...우선순위에서는 밀림
+    virtual void Initialize() PURE;
+
+    virtual void Fire(CEnemy* _Enemy) PURE;
+    virtual void RanderPosin(HDC _hdc) PURE;
+
+protected:
+
+    D3DXVECTOR3 m_vLocalPosinPoint;
+    D3DXVECTOR3 m_vWorldPosinPoint;
+};

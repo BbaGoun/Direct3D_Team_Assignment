@@ -27,5 +27,8 @@ private:
 	D3DXVECTOR3 m_vLocalPoint;
 
 	float m_fSize;
+
+	// CObj을(를) 통해 상속됨
+	void TakeDamage(int _iDamage) override;
 	//각종 총알용 스탯 정보 
 };

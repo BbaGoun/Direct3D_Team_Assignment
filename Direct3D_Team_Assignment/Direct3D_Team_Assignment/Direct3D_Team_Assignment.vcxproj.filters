@@ -76,6 +76,12 @@
     <Filter Include="MainGame\00. Obj\01. Player\Summonee">
       <UniqueIdentifier>{907e8cc4-e63b-411f-8ff4-e1fe93f9c84d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\00. Obj\02. Enemy\CBullet1\Drone">
+      <UniqueIdentifier>{f9b906f9-f119-45c8-b770-37f040ca46a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\02. Enemy\CBullet1\TakingBullet">
+      <UniqueIdentifier>{feb555e6-74e9-4b24-a9e1-85380455042e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -159,6 +165,9 @@
     <ClInclude Include="CSummonee.h">
       <Filter>MainGame\00. Obj\01. Player\Summonee</Filter>
     </ClInclude>
+    <ClInclude Include="CDrone.h">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\Drone</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Direct3D_Team_Assignment.rc">
@@ -239,6 +248,9 @@
     </ClCompile>
     <ClCompile Include="CSummonee.cpp">
       <Filter>MainGame\00. Obj\01. Player\Summonee</Filter>
+    </ClCompile>
+    <ClCompile Include="CDrone.cpp">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\Drone</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

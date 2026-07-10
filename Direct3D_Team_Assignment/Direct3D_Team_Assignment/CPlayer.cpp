@@ -449,3 +449,7 @@ void CPlayer::AttackKeyInput()
 		}
 	}
 }
+
+void CPlayer::TakeDamage(int _iDamage)
+{
+}
