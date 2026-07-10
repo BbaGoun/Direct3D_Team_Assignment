@@ -174,7 +174,7 @@ void CEnemy::KeyInput()
 		Accelerate(-1.f);
 	}
 
-#pragma region 관성 미적용
+#pragma region inertia_yet
 	//if (GetAsyncKeyState(VK_UP)) {
 	//	D3DXMATRIX matRotZ;
 	//	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
@@ -239,8 +239,4 @@ void CEnemy::ChaingeTankType(TANKID _eID)
 		//m_pTankStat->Initialize();
 		//이니셜라이저 구현 안끝남.
 	}
-}
-
-void CEnemy::TakeDamage(int _iDamage)
-{
 }

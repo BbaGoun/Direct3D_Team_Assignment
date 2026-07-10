@@ -47,7 +47,3 @@ void CBullet1::Render(HDC _hDC)
 void CBullet1::Release()
 {
 }
-
-void CBullet1::TakeDamage(int _iDamage)
-{
-}

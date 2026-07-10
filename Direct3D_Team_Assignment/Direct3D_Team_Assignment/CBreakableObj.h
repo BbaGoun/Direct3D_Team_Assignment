@@ -26,9 +26,8 @@ public:
 private:
 
 public:
-    void TakeDamage(int _iDamage) override;
     void TakeDamageByBullet(int _iDamage, CObj* pBullet);
-    void TakeDamageByPlayer(int _iDamage, CObj* pPlayer);
+    void TakeDamageByObj(int _iDamage, CObj* pPlayer);
 
 private:
     BREAKABLE_ID m_eType;

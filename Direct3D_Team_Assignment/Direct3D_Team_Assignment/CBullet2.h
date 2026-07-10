@@ -21,7 +21,4 @@ public:
 private:
     D3DXVECTOR3 m_vLocalBodyPoint[4];
     D3DXVECTOR3 m_vWorldBodyPoint[4];
-
-    // CObj을(를) 통해 상속됨
-    void TakeDamage(int _iDamage) override;
 };

@@ -1,5 +1,6 @@
 #pragma once
-#include "CObj.h"
+
+class CObj;
 
 enum OBJID {
 	OBJ_OBSTACLE,

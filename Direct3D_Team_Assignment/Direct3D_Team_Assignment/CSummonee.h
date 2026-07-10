@@ -15,9 +15,6 @@ public:
 	void Render(HDC _hDC) override;
 	void Release() override;
 
-public:
-	void TakeDamage(int _iDamage) override;
-
 private:
 	D3DXVECTOR3 m_vLocalBodyPoints[4];
 	D3DXVECTOR3 m_vWorldBodyPoints[4];

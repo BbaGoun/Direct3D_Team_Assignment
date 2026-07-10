@@ -76,8 +76,3 @@ void CSummonee::Release()
 {
 
 }
-
-void CSummonee::TakeDamage(int _iDamage)
-{
-
-}

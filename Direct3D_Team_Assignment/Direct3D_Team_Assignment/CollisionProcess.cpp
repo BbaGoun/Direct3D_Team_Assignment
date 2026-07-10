@@ -117,11 +117,6 @@ bool CollisionProcess::CollisionObjToObj(CObj* _pDstObj, CObj* _pSrcObj)
 	D3DXVECTOR3 MTV;
 
 	if (CheckSAT(playerVertexVec, obstacleVertexVec, &MTV)) {
-		// dst에게 src의 데미지
-		_pDstObj->TakeDamage(_pSrcObj->GetDamage());
-		// src에게 dst의 데미지
-		_pSrcObj->TakeDamage(_pDstObj->GetDamage());
-
 		return true;
 	}
 
