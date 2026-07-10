@@ -189,7 +189,7 @@ void CEnemy::KeyInput()
 	}
 	if (GetAsyncKeyState('I')) {
 		ChaingeTankType(TANK_NOMAL);
-	}
+	}//
 }
 
 void CEnemy::ChaingeTankType(TANKID _eID)
@@ -210,7 +210,6 @@ void CEnemy::ChaingeTankType(TANKID _eID)
 			break;
 		case TANK_BOOSTER:
 			m_pTankStat = new CTankBooster;
-			//허접하게 구현만 한 상태임.
 			break;
 		case TANK_SOMMONER:
 			break;
@@ -220,6 +219,9 @@ void CEnemy::ChaingeTankType(TANKID _eID)
 			break;
 		}
 		m_eNextTankID = m_eCurTankID;
+
+		//m_pTankStat->Initialize();
+		//이니셜라이저 구현 안끝남.
 	}
 }
 
