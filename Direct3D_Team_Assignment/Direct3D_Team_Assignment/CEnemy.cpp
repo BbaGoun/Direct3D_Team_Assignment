@@ -18,58 +18,65 @@ void CEnemy::Initialize()
 
 	m_pTankStat = new CTankNomal;
 
-	m_iEXP = 0;
-	m_iMaxEXP = 0;
-	m_iLevel = 1;
-
-	m_iDelay = 0;
-	//오브젝트의 월드 스폰 지점을 초기화 (vPos)
+	m_fDelay = 0;
 	m_tINFO.vPos = { WINCX * 0.5f, WINCY * 0.5f, 0 };
-	//오브젝트의 로컬 방향값을 초기화 합니다.
 	m_tINFO.vLook = { 0, -1, 0 };
-	//각종 움직임을 적용할 스피드값을 초기화
-	m_fSpeed = 8;
 
-	//사각형 형태를 렌더하기 위해 각 포인트를 지정했음 (로컬). 현재 오브젝트의 중점은 정 중앙으로 지정되어 있는 상태.
-	//로컬 스케일 값을 따로 저장해 변환하는것을 고려중.
-	m_vLocalBodyPoints[0] = { -50.f, -50.f, 0 };
-	m_vLocalBodyPoints[1] = { 50.f, -50.f, 0 };
-	m_vLocalBodyPoints[2] = { 50.f, 50.f, 0 };
-	m_vLocalBodyPoints[3] = { -50.f, 50.f, 0 };
+	m_vLocalVec.resize(4);
+	m_vWorldVec.resize(4);
+
+	m_vLocalVec[0] = { -50.f, -50.f, 0 };
+	m_vLocalVec[1] = { 50.f, -50.f, 0 };
+	m_vLocalVec[2] = { 50.f, 50.f, 0 };
+	m_vLocalVec[3] = { -50.f, 50.f, 0 };
 
 	m_vLocalPosinPoint = { 0.f, -100.f, 0 };
 
-	//최초 생성시 방향값은 0.
 	m_fRadian = 0;
+
+	//가속도 세팅
+	m_fSpeed = 8;
+
+	m_fCurrentSpeed = 0.f;
+	m_fAccel = 0.4f;      
+	m_fDecel = 0.2f;        
+
+	m_bMove = false;
 
 }
 
 void CEnemy::Update()
 {
 	KeyInput();
+	//월드 행렬에 구성 요소 적용. 크기/자전/이동/공전/위치(부모)<- 순서 잊지 말것!
+	if (m_bMove == true)
+		m_bMove = false;
+
 
 	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
 	D3DXMatrixScaling(&matScale, 1, 1, 1);
 	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
 	D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
 
-	//월드 행렬에 구성 요소 적용. 크기/자전/이동/공전/위치(부모)<- 순서 잊지 말것!
 	D3DXMatrixIdentity(&matWorld);
 	matWorld = matScale * matRotZ * matTrans;
 	for (int i = 0; i < 4; ++i) {
-		D3DXVec3TransformCoord(&m_vWorldBodyPoints[i], &m_vLocalBodyPoints[i], &matWorld);
+		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
 	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
 
-	//행렬 적용 파트를 함수로 따로 분리하는것을 고려해보는중. LateUpdate에서 호출해도 문제 없나? 잘 모르겠다.
+	D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
+	m_tINFO.vPos += m_tINFO.vDir * m_fCurrentSpeed;
+
 }
 
 void CEnemy::LateUpdate()
 {
-	if (m_iDelay > 0)
+	if (m_fDelay > 0)
 	{
-		--m_iDelay;
+		--m_fDelay;
 	}
+	DecelerationCurrentSpeed();
 }
 
 void CEnemy::Render(HDC _hDC)
@@ -79,23 +86,23 @@ void CEnemy::Render(HDC _hDC)
 	HPEN hOldPen = (HPEN)SelectObject(_hDC, hPen);
 
 	//몸통 렌더.
-	MoveToEx(_hDC, m_vWorldBodyPoints[0].x, m_vWorldBodyPoints[0].y, nullptr);
+	MoveToEx(_hDC, m_vWorldVec[0].x, m_vWorldVec[0].y, nullptr);
 	for (int i = 1; i <= 4; ++i) {
-		LineTo(_hDC, m_vWorldBodyPoints[i % 4].x, m_vWorldBodyPoints[i % 4].y);
+		LineTo(_hDC, m_vWorldVec[i % 4].x, m_vWorldVec[i % 4].y);
 	}
 
 	//정면 구분을 위한 원형 도형 렌더.
 	Ellipse(_hDC,
-		m_vWorldBodyPoints[0].x - 5,
-		m_vWorldBodyPoints[0].y - 5,
-		m_vWorldBodyPoints[0].x + 5,
-		m_vWorldBodyPoints[0].y + 5);
+		m_vWorldVec[0].x - 5,
+		m_vWorldVec[0].y - 5,
+		m_vWorldVec[0].x + 5,
+		m_vWorldVec[0].y + 5);
 
 	Ellipse(_hDC,
-		m_vWorldBodyPoints[1].x - 5,
-		m_vWorldBodyPoints[1].y - 5,
-		m_vWorldBodyPoints[1].x + 5,
-		m_vWorldBodyPoints[1].y + 5);
+		m_vWorldVec[1].x - 5,
+		m_vWorldVec[1].y - 5,
+		m_vWorldVec[1].x + 5,
+		m_vWorldVec[1].y + 5);
 
 	//포신 렌더
 	MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
@@ -112,6 +119,28 @@ void CEnemy::Release()
 	Safe_Delete(m_pTankStat);
 }
 
+void CEnemy::DecelerationCurrentSpeed()
+{
+	if (!m_bMove) {
+		if (m_fCurrentSpeed > 0.f) {
+			m_fCurrentSpeed -= m_fDecel;
+			if (m_fCurrentSpeed < 0.f) m_fCurrentSpeed = 0.f;
+		}
+		else if (m_fCurrentSpeed < 0.f) {
+			m_fCurrentSpeed += m_fDecel;
+			if (m_fCurrentSpeed > 0.f) m_fCurrentSpeed = 0.f;
+		}
+	}
+}
+
+void CEnemy::Accelerate(float _fFactor)
+{
+	m_fCurrentSpeed += m_fAccel * _fFactor;
+	if (m_fCurrentSpeed > m_fSpeed)  m_fCurrentSpeed = m_fSpeed;
+	if (m_fCurrentSpeed < -m_fSpeed) m_fCurrentSpeed = -m_fSpeed;
+	m_bMove = true;
+}
+
 void CEnemy::KeyInput()
 {
 	m_tINFO.vDir = { 0, 0, 0 };
@@ -122,41 +151,44 @@ void CEnemy::KeyInput()
 	if (GetAsyncKeyState(VK_RIGHT)) {
 		m_fRadian += D3DXToRadian(3);
 	}
-
 	if (GetAsyncKeyState(VK_UP)) {
-		D3DXMATRIX matRotZ;
-		D3DXMatrixRotationZ(&matRotZ, m_fRadian);
-		D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
-
-		m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
+		Accelerate(1.f);
 	}
-	if (GetAsyncKeyState(VK_DOWN)) {
-		D3DXMATRIX matRotZ;
-		D3DXMatrixRotationZ(&matRotZ, m_fRadian);
-		D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
-
-		m_tINFO.vPos -= m_tINFO.vDir * m_fSpeed;
+	else if (GetAsyncKeyState(VK_DOWN)) {
+		Accelerate(-1.f);
 	}
+
+#pragma region 관성 미적용
+	//if (GetAsyncKeyState(VK_UP)) {
+	//	D3DXMATRIX matRotZ;
+	//	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
+	//	D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
+
+	//	m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
+	//}
+	//if (GetAsyncKeyState(VK_DOWN)) {
+	//	D3DXMATRIX matRotZ;
+	//	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
+	//	D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
+
+	//	m_tINFO.vPos -= m_tINFO.vDir * m_fSpeed;
+	//}
+#pragma endregion
 
 	if (GetAsyncKeyState(VK_RSHIFT)) {
-		if (m_iDelay <= 0)
+		if (m_fDelay <= 0)
 		{
-			D3DXMATRIX matRotZ, matTrans, matWorld;
-			D3DXMatrixRotationZ(&matRotZ, m_fRadian);
-			D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
-
-			D3DXMatrixIdentity(&matWorld);
-			matWorld = matRotZ * matTrans;
-
-			D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
-			D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
-
-			m_pTankStat->Fire(m_tINFO.vDir, m_vWorldPosinPoint, 3.f);
-			m_iDelay += 15;//일단 좀 비효율적으로 가는걸로
+			m_pTankStat->Fire(this);
 		}
 	}
 	if (GetAsyncKeyState('P')) {
 		ChaingeTankType(TANK_SHOTGUN);
+	}
+	if (GetAsyncKeyState('O')) {
+		ChaingeTankType(TANK_BOOSTER);
+	}
+	if (GetAsyncKeyState('I')) {
+		ChaingeTankType(TANK_NOMAL);
 	}
 }
 
@@ -177,6 +209,8 @@ void CEnemy::ChaingeTankType(TANKID _eID)
 		case TANK_GUIDED:
 			break;
 		case TANK_BOOSTER:
+			m_pTankStat = new CTankBooster;
+			//허접하게 구현만 한 상태임.
 			break;
 		case TANK_SOMMONER:
 			break;
@@ -187,4 +221,8 @@ void CEnemy::ChaingeTankType(TANKID _eID)
 		}
 		m_eNextTankID = m_eCurTankID;
 	}
+}
+
+void CEnemy::TakeDamage(int _iDamage)
+{
 }

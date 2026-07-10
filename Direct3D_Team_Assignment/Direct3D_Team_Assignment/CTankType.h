@@ -1,24 +1,64 @@
 #pragma once
 #include "CTank.h"
 
-
 class CTankNomal :
     public CTank
 {
 public:
-    CTankNomal();
-    ~CTankNomal();
+    virtual ~CTankNomal() {}
 
-    void Fire(D3DXVECTOR3 _vDir, D3DXVECTOR3 _vPos, float _fSpeed) override;
+    // CTank을(를) 통해 상속됨
+    void Fire(CEnemy* _Enemy) override;
+    void RanderPosin(HDC _hdc) override;
 
+    // CTank을(를) 통해 상속됨
+    void Initialize() override;
 };
 class CTankShotGun :
     public CTank
 {
 public:
-    CTankShotGun();
-    ~CTankShotGun();
+    virtual ~CTankShotGun() {}
 
-    void Fire(D3DXVECTOR3 _vDir, D3DXVECTOR3 _vPos, float _fSpeed) override;
+    // CTank을(를) 통해 상속됨
+    void Fire(CEnemy* _Enemy) override;
+    void RanderPosin(HDC _hdc) override;
 
+    // CTank을(를) 통해 상속됨
+    void Initialize() override;
+};
+
+class CTankGuided :
+    public CTank
+{
+public:
+};
+
+class CTankBooster :
+    public CTank
+{
+public:
+
+    // CTank을(를) 통해 상속됨
+    void Fire(CEnemy* _Enemy) override;
+    void RanderPosin(HDC _hdc) override;
+
+    // CTank을(를) 통해 상속됨
+    void Initialize() override;
+protected:
+    vector<D3DXVECTOR3> m_vLBostedPosinPoint;
+    vector<D3DXVECTOR3> m_vWBostedPosinPoint;
+};
+
+class CTankSommoner :
+    public CTank
+{
+public:
+
+    // CTank을(를) 통해 상속됨
+    void Fire(CEnemy* _Enemy) override;
+    void RanderPosin(HDC _hdc) override;
+
+    // CTank을(를) 통해 상속됨
+    void Initialize() override;
 };

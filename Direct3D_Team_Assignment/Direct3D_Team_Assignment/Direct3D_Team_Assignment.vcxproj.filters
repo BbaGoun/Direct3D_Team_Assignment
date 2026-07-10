@@ -73,6 +73,12 @@
     <Filter Include="MainGame\00. Obj\02. Enemy\Tank\TankType">
       <UniqueIdentifier>{b2be7382-7bb9-471d-91c2-2cdf8414ae14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\00. Obj\02. Enemy\CBullet1\Drone">
+      <UniqueIdentifier>{f9b906f9-f119-45c8-b770-37f040ca46a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\02. Enemy\CBullet1\TakingBullet">
+      <UniqueIdentifier>{feb555e6-74e9-4b24-a9e1-85380455042e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -153,6 +159,9 @@
     <ClInclude Include="CTank.h">
       <Filter>MainGame\00. Obj\02. Enemy\Tank</Filter>
     </ClInclude>
+    <ClInclude Include="CDrone.h">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\Drone</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Direct3D_Team_Assignment.rc">
@@ -230,6 +239,9 @@
     </ClCompile>
     <ClCompile Include="CTank.cpp">
       <Filter>MainGame\00. Obj\02. Enemy\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="CDrone.cpp">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\Drone</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

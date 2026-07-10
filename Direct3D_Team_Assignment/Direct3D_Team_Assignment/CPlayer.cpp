@@ -187,3 +187,7 @@ void CPlayer::KeyInput()
 		}
 	}
 }
+
+void CPlayer::TakeDamage(int _iDamage)
+{
+}

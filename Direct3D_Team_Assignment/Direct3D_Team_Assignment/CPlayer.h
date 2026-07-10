@@ -29,4 +29,7 @@ private:
     D3DXVECTOR3 m_vWorldPosinPoint;
 
     bool m_bIsShootGun;
+
+    // CObj을(를) 통해 상속됨
+    void TakeDamage(int _iDamage) override;
 };
