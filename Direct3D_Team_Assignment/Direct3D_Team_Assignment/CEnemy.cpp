@@ -32,16 +32,17 @@ void CEnemy::Initialize()
 
 	//사각형 형태를 렌더하기 위해 각 포인트를 지정했음 (로컬). 현재 오브젝트의 중점은 정 중앙으로 지정되어 있는 상태.
 	//로컬 스케일 값을 따로 저장해 변환하는것을 고려중.
-	m_vLocalBodyPoints[0] = { -50.f, -50.f, 0 };
-	m_vLocalBodyPoints[1] = { 50.f, -50.f, 0 };
-	m_vLocalBodyPoints[2] = { 50.f, 50.f, 0 };
-	m_vLocalBodyPoints[3] = { -50.f, 50.f, 0 };
+	m_vLocalVec.push_back({ -50.f, -50.f, 0 });
+	m_vLocalVec.push_back({ 50.f, -50.f, 0 });
+	m_vLocalVec.push_back({ 50.f, 50.f, 0 });
+	m_vLocalVec.push_back({ -50.f, 50.f, 0 });
 
 	m_vLocalPosinPoint = { 0.f, -100.f, 0 };
 
 	//최초 생성시 방향값은 0.
 	m_fRadian = 0;
 
+	m_vWorldVec.resize(4);
 }
 
 void CEnemy::Update()
@@ -57,7 +58,7 @@ void CEnemy::Update()
 	D3DXMatrixIdentity(&matWorld);
 	matWorld = matScale * matRotZ * matTrans;
 	for (int i = 0; i < 4; ++i) {
-		D3DXVec3TransformCoord(&m_vWorldBodyPoints[i], &m_vLocalBodyPoints[i], &matWorld);
+		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
 	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
 
@@ -79,23 +80,23 @@ void CEnemy::Render(HDC _hDC)
 	HPEN hOldPen = (HPEN)SelectObject(_hDC, hPen);
 
 	//몸통 렌더.
-	MoveToEx(_hDC, m_vWorldBodyPoints[0].x, m_vWorldBodyPoints[0].y, nullptr);
+	MoveToEx(_hDC, m_vWorldVec[0].x, m_vWorldVec[0].y, nullptr);
 	for (int i = 1; i <= 4; ++i) {
-		LineTo(_hDC, m_vWorldBodyPoints[i % 4].x, m_vWorldBodyPoints[i % 4].y);
+		LineTo(_hDC, m_vWorldVec[i % 4].x, m_vWorldVec[i % 4].y);
 	}
 
 	//정면 구분을 위한 원형 도형 렌더.
 	Ellipse(_hDC,
-		m_vWorldBodyPoints[0].x - 5,
-		m_vWorldBodyPoints[0].y - 5,
-		m_vWorldBodyPoints[0].x + 5,
-		m_vWorldBodyPoints[0].y + 5);
+		m_vWorldVec[0].x - 5,
+		m_vWorldVec[0].y - 5,
+		m_vWorldVec[0].x + 5,
+		m_vWorldVec[0].y + 5);
 
 	Ellipse(_hDC,
-		m_vWorldBodyPoints[1].x - 5,
-		m_vWorldBodyPoints[1].y - 5,
-		m_vWorldBodyPoints[1].x + 5,
-		m_vWorldBodyPoints[1].y + 5);
+		m_vWorldVec[1].x - 5,
+		m_vWorldVec[1].y - 5,
+		m_vWorldVec[1].x + 5,
+		m_vWorldVec[1].y + 5);
 
 	//포신 렌더
 	MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
@@ -110,6 +111,22 @@ void CEnemy::Render(HDC _hDC)
 void CEnemy::Release()
 {
 	Safe_Delete(m_pTankStat);
+}
+
+void CEnemy::ReUpdateWorldVertex()
+{
+	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
+	D3DXMatrixScaling(&matScale, 1, 1, 1);
+	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
+	D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
+
+	//월드 행렬에 구성 요소 적용. 크기/자전/이동/공전/위치(부모)<- 순서 잊지 말것!
+	D3DXMatrixIdentity(&matWorld);
+	matWorld = matScale * matRotZ * matTrans;
+	for (int i = 0; i < 4; ++i) {
+		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
+	}
+	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
 }
 
 void CEnemy::KeyInput()
@@ -132,10 +149,10 @@ void CEnemy::KeyInput()
 	}
 	if (GetAsyncKeyState(VK_DOWN)) {
 		D3DXMATRIX matRotZ;
-		D3DXMatrixRotationZ(&matRotZ, m_fRadian);
+		D3DXMatrixRotationZ(&matRotZ, PI+m_fRadian);
 		D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
 
-		m_tINFO.vPos -= m_tINFO.vDir * m_fSpeed;
+		m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
 	}
 
 	if (GetAsyncKeyState(VK_RSHIFT)) {
@@ -187,4 +204,8 @@ void CEnemy::ChaingeTankType(TANKID _eID)
 		}
 		m_eNextTankID = m_eCurTankID;
 	}
+}
+
+void CEnemy::TakeDamage(int _iDamage)
+{
 }

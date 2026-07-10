@@ -19,13 +19,15 @@ void CPlayer::Initialize()
 	m_tINFO.vLook = { 0, -1, 0 };
 	m_fSpeed = 8;
 
-	m_vLocalBodyPoints[0] = { -50.f, -50.f, 0 };
-	m_vLocalBodyPoints[1] = { 50.f, -50.f, 0 };
-	m_vLocalBodyPoints[2] = { 50.f, 50.f, 0 };
-	m_vLocalBodyPoints[3] = { -50.f, 50.f, 0 };
+	m_vLocalVec.push_back({ -50.f, -50.f, 0 });
+	m_vLocalVec.push_back({ 50.f, -50.f, 0 });
+	m_vLocalVec.push_back({ 50.f, 50.f, 0 });
+	m_vLocalVec.push_back({ -50.f, 50.f, 0 });
 
 	m_vLocalPosinPoint = { 0, -100.f, 0 };
 	m_fRadian = 0;
+
+	m_vWorldVec.resize(4);
 }
 
 void CPlayer::Update()
@@ -41,7 +43,7 @@ void CPlayer::Update()
 	matWorld = matScale * matRotZ * matTrans;
 
 	for (int i = 0; i < 4; ++i) {
-		D3DXVec3TransformCoord(&m_vWorldBodyPoints[i], &m_vLocalBodyPoints[i], &matWorld);
+		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
 
 	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
@@ -56,22 +58,22 @@ void CPlayer::Render(HDC _hDC)
 	HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
 	HPEN hOldPen = (HPEN)SelectObject(_hDC, hPen);
 
-	MoveToEx(_hDC, m_vWorldBodyPoints[0].x, m_vWorldBodyPoints[0].y, nullptr);
+	MoveToEx(_hDC, m_vWorldVec[0].x, m_vWorldVec[0].y, nullptr);
 	for (int i = 1; i <= 4; ++i) {
-		LineTo(_hDC, m_vWorldBodyPoints[i % 4].x, m_vWorldBodyPoints[i % 4].y);
+		LineTo(_hDC, m_vWorldVec[i % 4].x, m_vWorldVec[i % 4].y);
 	}
 
 	Ellipse(_hDC,
-		m_vWorldBodyPoints[0].x - 5,
-		m_vWorldBodyPoints[0].y - 5,
-		m_vWorldBodyPoints[0].x + 5,
-		m_vWorldBodyPoints[0].y + 5);
+		m_vWorldVec[0].x - 5,
+		m_vWorldVec[0].y - 5,
+		m_vWorldVec[0].x + 5,
+		m_vWorldVec[0].y + 5);
 
 	Ellipse(_hDC,
-		m_vWorldBodyPoints[1].x - 5,
-		m_vWorldBodyPoints[1].y - 5,
-		m_vWorldBodyPoints[1].x + 5,
-		m_vWorldBodyPoints[1].y + 5);
+		m_vWorldVec[1].x - 5,
+		m_vWorldVec[1].y - 5,
+		m_vWorldVec[1].x + 5,
+		m_vWorldVec[1].y + 5);
 
 	MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
 	LineTo(_hDC, m_vWorldPosinPoint.x, m_vWorldPosinPoint.y);
@@ -82,6 +84,23 @@ void CPlayer::Render(HDC _hDC)
 
 void CPlayer::Release()
 {
+}
+
+void CPlayer::ReUpdateWorldVertex()
+{
+	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
+	D3DXMatrixScaling(&matScale, 1, 1, 1);
+	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
+	D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
+
+	D3DXMatrixIdentity(&matWorld);
+	matWorld = matScale * matRotZ * matTrans;
+
+	for (int i = 0; i < 4; ++i) {
+		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
+	}
+
+	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
 }
 
 void CPlayer::KeyInput()
@@ -105,10 +124,10 @@ void CPlayer::KeyInput()
 	}
 	if (GetAsyncKeyState('S')) {
 		D3DXMATRIX matRotZ;
-		D3DXMatrixRotationZ(&matRotZ, m_fRadian);
+		D3DXMatrixRotationZ(&matRotZ, PI+m_fRadian);
 		D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
 
-		m_tINFO.vPos -= m_tINFO.vDir * m_fSpeed;
+		m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
 	}
 
 	if (GetAsyncKeyState(VK_LSHIFT))
@@ -186,4 +205,8 @@ void CPlayer::KeyInput()
 			m_tINFO.vPos -= m_tINFO.vDir * 2.f;
 		}
 	}
+}
+
+void CPlayer::TakeDamage(int _iDamage)
+{
 }

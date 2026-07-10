@@ -8,8 +8,6 @@ enum OBJID {
 
 	OBJ_BULLET,
 
-	OBJ_ENEMY,
-
 	OBJ_PLAYER,
 
 	OBJ_UI,
@@ -44,6 +42,14 @@ public:
 	void DeleteListPostProcess();
 
 private:
+	void CollisionBulletToObstacle();
+	void CollisionBulletToBreakable();
+	void CollisionBulletToBullet();
+	void CollisionBulletToPlayer();
+
+	void CollisionPlayerToObstacle();
+	void CollisionPlayerToBreakable();
+	void CollisionPlayerToPlayer();
 
 private:
 	list<CObj*>		m_ObjList[OBJ_END];

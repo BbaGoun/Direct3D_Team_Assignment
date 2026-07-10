@@ -36,19 +36,13 @@ public:
 public:
     //vector<D3DXVECTOR3> GetWorldBodyPoints() {
     //    return m_vWorldBodyPoints;}
+    void ReUpdateWorldVertex() override;
 private:
 
     void KeyInput();
     void ChaingeTankType(TANKID _eID);
 
 private:
-
-    D3DXVECTOR3 m_vLocalBodyPoints[4];
-    D3DXVECTOR3 m_vWorldBodyPoints[4];
-
-    //vector<D3DXVECTOR3>m_vLocalBodyPoints;
-    //vector<D3DXVECTOR3>m_vWorldBodyPoints;
-    
     D3DXVECTOR3 m_vLocalPosinPoint;
     D3DXVECTOR3 m_vWorldPosinPoint;
 
@@ -62,6 +56,10 @@ private:
     int m_iLevel;
 
     int m_iDelay;
+
+
+    // CObj을(를) 통해 상속됨
+    void TakeDamage(int _iDamage) override;
 
     //스테이터스 패턴을 통한 현재 탱크 상태 변경
     //스테이터스 패턴을 통해 현재 탱크 상태에 따른 렌더 변경.

@@ -26,15 +26,11 @@ public:
 private:
 
 public:
+    void TakeDamage(int _iDamage) override;
+    void TakeDamageByBullet(int _iDamage, CObj* pBullet);
+    void TakeDamageByPlayer(int _iDamage, CObj* pPlayer);
 
 private:
-    vector<D3DXVECTOR3> m_vLocalPointVec;
-    vector<D3DXVECTOR3> m_vWorldPointVec;
-
-    bool m_bDamaged;
-    float m_fInvincibleTimer;
-    float m_fInvincibleTime;
-    
     BREAKABLE_ID m_eType;
 };
 

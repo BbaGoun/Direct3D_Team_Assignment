@@ -17,16 +17,17 @@ public:
 
 public:
     //vector GetWorldPoints() { return vector<D3DXVECTOR3> playerBodyWorldPoint = m_vWorldBodyPoints; }
+    void ReUpdateWorldVertex() override;
 
 private:
     void KeyInput();
 
 private:
-    D3DXVECTOR3 m_vLocalBodyPoints[4];
-    D3DXVECTOR3 m_vWorldBodyPoints[4];
-
     D3DXVECTOR3 m_vLocalPosinPoint;
     D3DXVECTOR3 m_vWorldPosinPoint;
 
     bool m_bIsShootGun;
+
+    // CObj을(를) 통해 상속됨
+    void TakeDamage(int _iDamage) override;
 };
