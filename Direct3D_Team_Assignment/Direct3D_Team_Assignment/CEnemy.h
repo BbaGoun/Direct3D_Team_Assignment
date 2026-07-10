@@ -34,37 +34,38 @@ public:
     void Release() override;
 
 public:
-    //vector<D3DXVECTOR3> GetWorldBodyPoints() {
-    //    return m_vWorldBodyPoints;}
-private:
+    void DecelerationCurrentSpeed();
+    void Accelerate(float _fFactor);
 
+    void SetDelay(float _fDelay) { m_fDelay = _fDelay;}
+    void SetBeMove(bool _bMove) { m_bMove = _bMove;}
+
+    bool GetDelay() { return m_bMove;}
+    float GetMove() { return m_fDelay;}
+
+private:
     void KeyInput();
     void ChaingeTankType(TANKID _eID);
-
 private:
-
-    D3DXVECTOR3 m_vLocalBodyPoints[4];
-    D3DXVECTOR3 m_vWorldBodyPoints[4];
-
-    //vector<D3DXVECTOR3>m_vLocalBodyPoints;
-    //vector<D3DXVECTOR3>m_vWorldBodyPoints;
-    
+   
     D3DXVECTOR3 m_vLocalPosinPoint;
     D3DXVECTOR3 m_vWorldPosinPoint;
 
     TANKID m_eNextTankID;
     TANKID m_eCurTankID;
     CTank* m_pTankStat;
+    //int m_iEXP;
+    //int m_iMaxEXP;
+    //int m_iLevel;
 
-    int m_iEXP;
-    int m_iMaxEXP;
+    float m_fDelay;
 
-    int m_iLevel;
+    float m_fCurrentSpeed;
+    float m_fAccel;        
+    float m_fDecel;        
 
-    int m_iDelay;
+    bool m_bMove;
 
-    //스테이터스 패턴을 통한 현재 탱크 상태 변경
-    //스테이터스 패턴을 통해 현재 탱크 상태에 따른 렌더 변경.
-    //포신의 위치와 형태를 스테이터스 내에서 변경하도록 하는걸로.
+    void TakeDamage(int _iDamage) override;
 };
 

@@ -58,3 +58,7 @@ void CBullet2::Release()
 {
 
 }
+
+void CBullet2::TakeDamage(int _iDamage)
+{
+}

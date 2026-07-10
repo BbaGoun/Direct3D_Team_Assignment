@@ -11,10 +11,7 @@ CBullet1::~CBullet1()
 
 void CBullet1::Initialize()
 {
-	//임시
-	m_fSpeed = 8.f;
 	m_fSize = 30.f;
-	//m_tINFO.vPos = { 300.f, 400.f, 0.f };
 	m_vLocalPoint = { 0,0,0 };
 }
 
@@ -45,11 +42,12 @@ void CBullet1::Render(HDC _hDC)
 		m_vWorldPoint.y - m_fSize/2,
 		m_vWorldPoint.x + m_fSize/2,
 		m_vWorldPoint.y + m_fSize/2);
-	//총알 생성 확인용
-	//Ellipse(_hDC,
-	//	300, 400, 50, 50);
 }
 
 void CBullet1::Release()
+{
+}
+
+void CBullet1::TakeDamage(int _iDamage)
 {
 }
