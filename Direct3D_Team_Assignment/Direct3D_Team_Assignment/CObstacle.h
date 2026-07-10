@@ -24,7 +24,6 @@ public:
     void LateUpdate() override;
     void Render(HDC _hDC) override;
     void Release() override;
-    void TakeDamage(int _iDamage) override;
 
 public:
     void SetObstacle(OBSTACLE_ID _eID, D3DXVECTOR3 _vPos,float _fRadian);

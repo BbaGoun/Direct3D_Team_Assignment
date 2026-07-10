@@ -2,6 +2,7 @@
 #include "ObjMgr.h"
 #include "CollisionProcess.h"
 #include "CBreakableObj.h"
+#include "CObj.h"
 
 ObjMgr::ObjMgr()
 {
@@ -81,6 +82,7 @@ void ObjMgr::Release()
 
 void ObjMgr::AddObject(OBJID eID, CObj* pObj)
 {
+	pObj->SetObjID(eID);
 	m_ObjList[eID].push_back(pObj);
 }
 
@@ -141,9 +143,9 @@ void ObjMgr::CollisionBulletToBreakable()
 				continue;
 			if (CollisionProcess::CollisionBulletToObj(pBullet, pBreakable)) {
 				// 총알에게 오브젝트의 데미지
-				pBullet->TakeDamage(pBreakable->GetDamage());
+				pBullet->TakeDamageByObj(pBreakable);
 				// 오브젝트에게 총알의 데미지
-				static_cast<CBreakableObj*>(pBreakable)->TakeDamageByBullet(pBullet->GetDamage(), pBullet);
+				pBreakable->TakeDamageByBullet(pBullet);
 			}
 		}
 	}
@@ -173,9 +175,9 @@ void ObjMgr::CollisionBulletToBullet()
 				continue;
 			if (CollisionProcess::CollisionBulletToBullet(pBullet1, pBullet2)) {
 				// pBullet1 총알에게 pBullet2 총알의 데미지
-				pBullet1->TakeDamage(pBullet2->GetDamage());
+				pBullet1->TakeDamageByBullet(pBullet2);
 				// pBullet2 총알에게 pBullet1 총알의 데미지
-				pBullet2->TakeDamage(pBullet1->GetDamage());
+				pBullet2->TakeDamageByBullet(pBullet1);
 			}
 		}
 		++i;
@@ -192,9 +194,9 @@ void ObjMgr::CollisionBulletToPlayer()
 				continue;
 			if (CollisionProcess::CollisionBulletToObj(pBullet, pPlayer)) {
 				// 총알에게 플레이어의 데미지
-				pBullet->TakeDamage(pPlayer->GetDamage());
+				pBullet->TakeDamageByObj(pPlayer);
 				// 플레이어에게 총알의 데미지
-				pPlayer->TakeDamage(pBullet->GetDamage());
+				pPlayer->TakeDamageByBullet(pBullet);
 			}
 		}
 	}
@@ -230,9 +232,9 @@ void ObjMgr::CollisionPlayerToBreakable()
 				continue;
 			if (CollisionProcess::CollisionObjToObj(pPlayer, pBreakable)) {
 				// 플레이어에게 오브젝트의 데미지
-				pPlayer->TakeDamage(pBreakable->GetDamage());
+				pPlayer->TakeDamageByObj(pBreakable);
 				// 오브젝트에게 플레이어의 데미지
-				static_cast<CBreakableObj*>(pBreakable)->TakeDamageByPlayer(pPlayer->GetDamage(), pPlayer);
+				pBreakable->TakeDamageByObj(pPlayer);
 			}
 		}
 	}
@@ -260,9 +262,9 @@ void ObjMgr::CollisionPlayerToPlayer()
 				continue;
 			if (CollisionProcess::CollisionObjToObj(pPlayer1, pPlayer2)) {
 				// pPlayer1에게 pPlayer2의 데미지
-				pPlayer1->TakeDamage(pPlayer2->GetDamage());
+				pPlayer1->TakeDamageByObj(pPlayer2);
 				// pPlayer2에게 pPlayer1의 데미지
-				pPlayer2->TakeDamage(pPlayer1->GetDamage());
+				pPlayer2->TakeDamageByObj(pPlayer1);
 			}
 		}
 		++i;

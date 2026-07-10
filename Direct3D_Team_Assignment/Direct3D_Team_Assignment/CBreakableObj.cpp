@@ -110,27 +110,3 @@ void CBreakableObj::Render(HDC _hDC)
 void CBreakableObj::Release()
 {
 }
-
-void CBreakableObj::TakeDamage(int _iDamage)
-{
-}
-
-void CBreakableObj::TakeDamageByBullet(int _iDamage, CObj* pBullet)
-{
-	m_iHP -= _iDamage;
-	if (m_iHP <= 0) {
-		pBullet->GetParent()->GainExp(m_iDropExp);
-		ObjMgr::GetInstance().DeleteSpecificObj(OBJ_BREAKABLE, this);
-		m_bDead = true;
-	}
-}
-
-void CBreakableObj::TakeDamageByPlayer(int _iDamage, CObj* pPlayer)
-{
-	m_iHP -= _iDamage;
-	if (m_iHP <= 0) {
-		pPlayer->GainExp(m_iDropExp);
-		ObjMgr::GetInstance().DeleteSpecificObj(OBJ_BREAKABLE, this);
-		m_bDead = true;
-	}
-}

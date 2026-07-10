@@ -28,7 +28,3 @@ void CDrone::Render(HDC _hDC)
 void CDrone::Release()
 {
 }
-
-void CDrone::TakeDamage(int _iDamage)
-{
-}

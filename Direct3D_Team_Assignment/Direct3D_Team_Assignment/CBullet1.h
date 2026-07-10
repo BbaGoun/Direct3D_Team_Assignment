@@ -18,9 +18,6 @@ public:
 
 	float GetRadius() { return m_fSize/2; }//동적으로 바꿀거임(곧)
 
-public:
-	void TakeDamage(int _iDamage) override {}
-
 private:
 
 	D3DXVECTOR3 m_vWorldPoint;
@@ -28,7 +25,5 @@ private:
 
 	float m_fSize;
 
-	// CObj을(를) 통해 상속됨
-	void TakeDamage(int _iDamage) override;
 	//각종 총알용 스탯 정보 
 };

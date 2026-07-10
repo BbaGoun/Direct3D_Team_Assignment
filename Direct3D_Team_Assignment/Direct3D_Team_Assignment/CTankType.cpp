@@ -16,7 +16,6 @@ void CTankNomal::Fire(CEnemy* _Enemy)
 	ObjMgr::GetInstance().AddObject(OBJ_BULLET, AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), 5.f));
 	_Enemy->Accelerate(-5.f);
 	_Enemy->SetDelay(15.f);
-
 }
 
 void CTankShotGun::Fire(CEnemy* _Enemy)

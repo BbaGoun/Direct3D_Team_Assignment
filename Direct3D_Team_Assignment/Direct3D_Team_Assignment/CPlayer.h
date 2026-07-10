@@ -19,9 +19,6 @@ public:
     //vector GetWorldPoints() { return vector<D3DXVECTOR3> playerBodyWorldPoint = m_vWorldBodyPoints; }
     void ReUpdateWorldVertex() override;
 
-public:
-    void TakeDamage(int _iDamage) override;
-
 private:
     void KeyInput();
     void AttackKeyInput();
@@ -48,7 +45,4 @@ private:
 
     bool m_bAttacked;
     int m_iAttackDelay;
-
-    // CObj을(를) 통해 상속됨
-    void TakeDamage(int _iDamage) override;
 };

@@ -42,10 +42,6 @@ void CObstacle::Release()
 {
 }
 
-void CObstacle::TakeDamage(int _iDamage)
-{
-}
-
 void CObstacle::SetObstacle(OBSTACLE_ID _eID, D3DXVECTOR3 _vPos, float _fRadian)
 {
 	switch (_eID) {

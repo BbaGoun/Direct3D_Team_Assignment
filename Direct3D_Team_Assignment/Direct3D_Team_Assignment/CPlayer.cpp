@@ -235,11 +235,6 @@ void CPlayer::ReUpdateWorldVertex()
 	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
 }
 
-void CPlayer::TakeDamage(int _iDamage)
-{
-
-}
-
 void CPlayer::KeyInput()
 {
 	m_tINFO.vDir = { 0, 0, 0 };
@@ -468,8 +463,4 @@ void CPlayer::AttackKeyInput()
 			m_tINFO.vPos -= m_tINFO.vDir * 2.f;
 		}
 	}
-}
-
-void CPlayer::TakeDamage(int _iDamage)
-{
 }

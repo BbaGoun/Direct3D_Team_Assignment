@@ -13,7 +13,6 @@ public:
     void LateUpdate() override;
     void Render(HDC _hDC) override;
     void Release() override;
-    void TakeDamage(int _iDamage) override;
 
 private:
     //다이렉션은 백터 추적으로,

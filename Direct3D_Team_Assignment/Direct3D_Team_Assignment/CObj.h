@@ -1,5 +1,6 @@
 #pragma once
 #include "Define.h"
+#include "ObjMgr.h"
 
 class CObj
 {
@@ -15,6 +16,7 @@ public:
 	virtual void Release() PURE;
 
 public:
+	const OBJID& GetObjID() { return m_eObjID; }
 	const D3DXVECTOR3& GetPos() { return m_tINFO.vPos; }
 	const D3DXVECTOR3& GetDir() { return m_tINFO.vDir; }
 	const D3DXVECTOR3& GetLook() { return m_tINFO.vLook; }
@@ -33,6 +35,7 @@ public:
 	const bool		GetInvincible() { return m_fInvincibleTimer > 0.f; }
 	const vector<D3DXVECTOR3>& GetWorldVertex() { return m_vWorldVec; }
 
+	void	SetObjID(OBJID _eID) { m_eObjID = _eID; }
 	void	SetPos(D3DXVECTOR3 _vPos) { m_tINFO.vPos = _vPos; }
 	void	SetDir(D3DXVECTOR3 _vDir) { m_tINFO.vDir = _vDir; }
 	void	SetLook(D3DXVECTOR3 _vLook) { m_tINFO.vLook = _vLook; }
@@ -51,13 +54,16 @@ public:
 	void	SetInvincible() { m_fInvincibleTimer = m_fInvincibleTime; }
 
 public:
-	virtual void TakeDamage(int _iDamage) PURE;
+	void TakeDamageByBullet(CObj* _pBullet);
+	void TakeDamageByObj(CObj* _pPlayer);
 	void GainExp(int _iExp);
 	virtual void ReUpdateWorldVertex() {};
 
 protected:
 
 protected:
+	OBJID m_eObjID;
+
 	INFO m_tINFO;
 	float m_fSpeed;
 	float m_fRadian;
