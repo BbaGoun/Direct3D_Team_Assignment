@@ -36,6 +36,9 @@ public:
 	void SetMaxHP(int _iMaxHP) { m_iMaxHP = _iMaxHP; }
 	void SetDamage(int _iDamage) { m_iDamage = _iDamage; }
 
+public:
+	virtual void TakeDamage(int _iDamage) PURE;
+
 protected:
 
 protected:
