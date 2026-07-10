@@ -17,6 +17,7 @@ public:
 
 		pObj->SetDir(_vDir);
 		pObj->SetPos(_vPos);
+		pObj->SetSpeed(_fSpeed);
 		//pObj->
 		return pObj;
 	}

@@ -8,7 +8,7 @@ public:
     ~CPlayer() override;
 
 public:
-    // CObjÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
+    // CObjì„(ë¥¼) í†µí•´ ìƒì†ë¨
     void Initialize() override;
     void Update() override;
     void LateUpdate() override;
@@ -19,15 +19,36 @@ public:
     //vector GetWorldPoints() { return vector<D3DXVECTOR3> playerBodyWorldPoint = m_vWorldBodyPoints; }
     void ReUpdateWorldVertex() override;
 
+public:
+    void TakeDamage(int _iDamage) override;
+
 private:
     void KeyInput();
+    void AttackKeyInput();
 
 private:
     D3DXVECTOR3 m_vLocalPosinPoint;
     D3DXVECTOR3 m_vWorldPosinPoint;
 
+    D3DXVECTOR3 m_vLocalShotPosinPoint[2];
+    D3DXVECTOR3 m_vWorldShotPosinPoint[2];
+
+    D3DXVECTOR3 m_vLocalBackPosinPoint[2];
+    D3DXVECTOR3 m_vWorldBackPosinPoint[2];
+
+    D3DXVECTOR3 m_vLocalSummonerPosinPoint[8];
+    D3DXVECTOR3 m_vWorldSummonerPosinPoint[8];
+
     bool m_bIsShootGun;
 
-    // CObjÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
+    // CObjï¿½ï¿½(ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Óµï¿½
+    bool m_bIsTargeted;
+    bool m_bIsBooster;
+    bool m_bIsSummoner;
+
+    bool m_bAttacked;
+    int m_iAttackDelay;
+
+    // CObjì„(ë¥¼) í†µí•´ ìƒì†ë¨
     void TakeDamage(int _iDamage) override;
 };

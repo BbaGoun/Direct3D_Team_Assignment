@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(DXSDK_DIR)/Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)/Lib/x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(DXSDK_DIR)/Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(DXSDK_DIR)/Lib/x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(DXSDK_DIR)/Include;$(IncludePath)</IncludePath>
@@ -134,8 +134,12 @@
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="CBreakableObj.h" />
     <ClInclude Include="CameraMgr.h" />
-    <ClInclude Include="CBullet2.h" />
+    <ClInclude Include="CBullet2.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="CBullet1.h" />
+    <ClInclude Include="CDrone.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CExpBar.h" />
     <ClInclude Include="CHPBar.h" />
@@ -147,6 +151,7 @@
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPreview.h" />
     <ClInclude Include="CStage.h" />
+    <ClInclude Include="CSummonee.h" />
     <ClInclude Include="CTank.h" />
     <ClInclude Include="CTankType.h" />
     <ClInclude Include="CUI.h" />
@@ -166,8 +171,12 @@
   <ItemGroup>
     <ClCompile Include="CBreakableObj.cpp" />
     <ClCompile Include="CameraMgr.cpp" />
-    <ClCompile Include="CBullet2.cpp" />
+    <ClCompile Include="CBullet2.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="CBullet1.cpp" />
+    <ClCompile Include="CDrone.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CExpBar.cpp" />
     <ClCompile Include="CHPBar.cpp" />
@@ -181,6 +190,7 @@
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CStage.cpp" />
     <ClCompile Include="CUI.cpp" />
+    <ClCompile Include="CSummonee.cpp" />
     <ClCompile Include="Define.cpp" />
     <ClCompile Include="CTank.cpp" />
     <ClCompile Include="CTankType.cpp" />
