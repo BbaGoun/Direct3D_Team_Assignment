@@ -28,6 +28,8 @@ void CBullet1::Initialize()
 
 void CBullet1::Update()
 {
+	m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
+
 	UpdateTimers();
 
 	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
