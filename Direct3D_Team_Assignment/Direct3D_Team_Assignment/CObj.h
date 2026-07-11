@@ -33,6 +33,7 @@ public:
 	const int&		GetLevel() {return m_iLevel;}
 	const int&		GetDropExp() { return m_iDropExp; }
 	const bool		GetInvincible() { return m_fInvincibleTimer > 0.f; }
+	const float		GetRadius() { return m_fRadius; }
 	const vector<D3DXVECTOR3>& GetWorldVertex() { return m_vWorldVec; }
 
 	void	SetObjID(OBJID _eID) { m_eObjID = _eID; }
@@ -52,6 +53,7 @@ public:
 	void	SetLevel(int _iLevel) { m_iLevel = _iLevel; }
 	void	SetDropExp(int _iDropExp) { m_iDropExp = _iDropExp; }
 	void	SetInvincible() { m_fInvincibleTimer = m_fInvincibleTime; }
+	void	SetRadius(float _radius) { m_fRadius = _radius; }
 
 public:
 	void TakeDamageByBullet(CObj* _pBullet);
@@ -86,6 +88,8 @@ protected:
 
 	float m_fInvincibleTimer;
 	float m_fInvincibleTime;
+
+	float m_fRadius;
 
 	vector<D3DXVECTOR3> m_vLocalVec;
 	vector<D3DXVECTOR3> m_vWorldVec;

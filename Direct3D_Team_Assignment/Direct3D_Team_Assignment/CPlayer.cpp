@@ -44,23 +44,23 @@ void CPlayer::Initialize()
 	m_vLocalVec[2] = { 50.f, 50.f, 0 };
 	m_vLocalVec[3] = { -50.f, 50.f, 0 };
 
-	m_vLocalPosinPoint = { 0, -100.f, 0 };
+	m_vLocalPosinVec = { 0, -100.f, 0 };
 	m_fRadian = 0;
 
-	m_vLocalShotPosinPoint[0] = {0, -100.f, 0};
-	m_vLocalShotPosinPoint[1] = {0, -100.f, 0};
+	m_vLocalShotPosinVec[0] = {0, -100.f, 0};
+	m_vLocalShotPosinVec[1] = {0, -100.f, 0};
 
-	m_vLocalBackPosinPoint[0] = {0, 100.f, 0};
-	m_vLocalBackPosinPoint[1] = {0, 100.f, 0};
+	m_vLocalBackPosinVec[0] = {0, 100.f, 0};
+	m_vLocalBackPosinVec[1] = {0, 100.f, 0};
 
-	m_vLocalSummonerPosinPoint[0] = { 0, 80.f, 0 };
-	m_vLocalSummonerPosinPoint[1] = { 0, 80.f, 0 };
-	m_vLocalSummonerPosinPoint[2] = { 0, 80.f, 0 };
-	m_vLocalSummonerPosinPoint[3] = { 0, 80.f, 0 };
-	m_vLocalSummonerPosinPoint[4] = { 0, 80.f, 0 };
-	m_vLocalSummonerPosinPoint[5] = { 0, 80.f, 0 };
-	m_vLocalSummonerPosinPoint[6] = { 0, 80.f, 0 };
-	m_vLocalSummonerPosinPoint[7] = { 0, 80.f, 0 };
+	m_vLocalSummonerPosinVec[0] = { 0, 80.f, 0 };
+	m_vLocalSummonerPosinVec[1] = { 0, 80.f, 0 };
+	m_vLocalSummonerPosinVec[2] = { 0, 80.f, 0 };
+	m_vLocalSummonerPosinVec[3] = { 0, 80.f, 0 };
+	m_vLocalSummonerPosinVec[4] = { 0, 80.f, 0 };
+	m_vLocalSummonerPosinVec[5] = { 0, 80.f, 0 };
+	m_vLocalSummonerPosinVec[6] = { 0, 80.f, 0 };
+	m_vLocalSummonerPosinVec[7] = { 0, 80.f, 0 };
 
 	m_iMaxExp = 100;
 	m_iCurrentExp = 0;
@@ -127,7 +127,7 @@ void CPlayer::Update()
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
 
-	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
+	D3DXVec3TransformCoord(&m_vWorldPosinVec, &m_vLocalPosinVec, &matWorld);
 
 	int tempDegree = -60;
 	for (int i = 0; i < 2; ++i)
@@ -147,8 +147,8 @@ void CPlayer::Update()
 
 		tempWorld = matScale * matRotZ * tempRotZ * matTrans;
 
-		D3DXVec3TransformCoord(&m_vWorldShotPosinPoint[i], &m_vLocalShotPosinPoint[i], &tempWorld);
-		D3DXVec3TransformCoord(&m_vWorldBackPosinPoint[i], &m_vLocalBackPosinPoint[i], &tempWorld);
+		D3DXVec3TransformCoord(&m_vWorldShotPosinVec[i], &m_vLocalShotPosinVec[i], &tempWorld);
+		D3DXVec3TransformCoord(&m_vWorldBackPosinVec[i], &m_vLocalBackPosinVec[i], &tempWorld);
 	}
 
 	tempDegree = -60;
@@ -169,7 +169,7 @@ void CPlayer::Update()
 
 		tempWorld = matScale * matRotZ * tempRotZ * matTrans;
 
-		D3DXVec3TransformCoord(&m_vWorldSummonerPosinPoint[i], &m_vLocalSummonerPosinPoint[i], &tempWorld);
+		D3DXVec3TransformCoord(&m_vWorldSummonerPosinVec[i], &m_vLocalSummonerPosinVec[i], &tempWorld);
 	}
 
 	// ���� -> �� -> ���� �����̽� ��ȯ
@@ -182,6 +182,28 @@ void CPlayer::Update()
 		// Z Division �� ��Ŀ� ���ԵǾ� ����.
 		D3DXVec3TransformCoord(&m_vProjVec[i], &m_vViewVec[i], &matProj);
 		m_vProjVec[i] += {640, 360, 0};
+	}
+
+	D3DXVec3TransformCoord(&m_vViewPosinVec, &m_vWorldPosinVec, &matView);
+	D3DXVec3TransformCoord(&m_vProjPosinVec, &m_vViewPosinVec, &matProj);
+	m_vProjPosinVec += {640, 360, 0};
+
+	for (int i = 0; i < 2; ++i)
+	{
+		D3DXVec3TransformCoord(&m_vViewShotPosinVec[i], &m_vWorldShotPosinVec[i], &matView);
+		D3DXVec3TransformCoord(&m_vProjShotPosinVec[i], &m_vViewShotPosinVec[i], &matProj);
+		m_vProjShotPosinVec[i] += {640, 360, 0};
+
+		D3DXVec3TransformCoord(&m_vViewBackPosinVec[i], &m_vWorldBackPosinVec[i], &matView);
+		D3DXVec3TransformCoord(&m_vProjBackPosinVec[i], &m_vViewBackPosinVec[i], &matProj);
+		m_vProjBackPosinVec[i] += {640, 360, 0};
+	}
+
+	for (int i = 0; i < 8; ++i)
+	{
+		D3DXVec3TransformCoord(&m_vViewSummonerPosinVec[i], &m_vWorldSummonerPosinVec[i], &matView);
+		D3DXVec3TransformCoord(&m_vProjSummonerPosinVec[i], &m_vViewSummonerPosinVec[i], &matProj);
+		m_vProjSummonerPosinVec[i] += {640, 360, 0};
 	}
 }
 
@@ -219,56 +241,58 @@ void CPlayer::Render(HDC _hDC)
 		m_vProjVec[1].x + 5 * projScale,
 		m_vProjVec[1].y + 5 * projScale);
 
-	/*if (m_bIsShootGun)
-	{
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldShotPosinPoint[0].x, m_vWorldShotPosinPoint[0].y);
+	D3DXVECTOR3 projPosinStart = m_vProjVec[0] + ((m_vProjVec[1] - m_vProjVec[0]) * 0.5f) + ((m_vProjVec[2] - m_vProjVec[1]) * 0.5f);
 
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldShotPosinPoint[1].x, m_vWorldShotPosinPoint[1].y);
+	if (m_bIsShootGun)
+	{
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjShotPosinVec[0].x, m_vProjShotPosinVec[0].y);
+
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjShotPosinVec[1].x, m_vProjShotPosinVec[1].y);
 	}
 	else if (m_bIsBooster)
 	{
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldPosinPoint.x, m_vWorldPosinPoint.y);
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjPosinVec.x, m_vProjPosinVec.y);
 
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldBackPosinPoint[0].x, m_vWorldBackPosinPoint[0].y);
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjBackPosinVec[0].x, m_vProjBackPosinVec[0].y);
 
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldBackPosinPoint[1].x, m_vWorldBackPosinPoint[1].y);
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjBackPosinVec[1].x, m_vProjBackPosinVec[1].y);
 	}
 	else if (m_bIsSummoner)
 	{
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldSummonerPosinPoint[0].x, m_vWorldSummonerPosinPoint[0].y);
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjSummonerPosinVec[0].x, m_vProjSummonerPosinVec[0].y);
 
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldSummonerPosinPoint[1].x, m_vWorldSummonerPosinPoint[1].y);
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjSummonerPosinVec[1].x, m_vProjSummonerPosinVec[1].y);
 
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldSummonerPosinPoint[2].x, m_vWorldSummonerPosinPoint[2].y);
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjSummonerPosinVec[2].x, m_vProjSummonerPosinVec[2].y);
 
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldSummonerPosinPoint[3].x, m_vWorldSummonerPosinPoint[3].y);
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjSummonerPosinVec[3].x, m_vProjSummonerPosinVec[3].y);
 
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldSummonerPosinPoint[4].x, m_vWorldSummonerPosinPoint[4].y);
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjSummonerPosinVec[4].x, m_vProjSummonerPosinVec[4].y);
 
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldSummonerPosinPoint[5].x, m_vWorldSummonerPosinPoint[5].y);
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjSummonerPosinVec[5].x, m_vProjSummonerPosinVec[5].y);
 
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldSummonerPosinPoint[6].x, m_vWorldSummonerPosinPoint[6].y);
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjSummonerPosinVec[6].x, m_vProjSummonerPosinVec[6].y);
 
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldSummonerPosinPoint[7].x, m_vWorldSummonerPosinPoint[7].y);
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjSummonerPosinVec[7].x, m_vProjSummonerPosinVec[7].y);
 	}
 	else
 	{
-		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-		LineTo(_hDC, m_vWorldPosinPoint.x, m_vWorldPosinPoint.y);
-	}*/
+		MoveToEx(_hDC, projPosinStart.x, projPosinStart.y, nullptr);
+		LineTo(_hDC, m_vProjPosinVec.x, m_vProjPosinVec.y);
+	}
 
 	SelectObject(_hDC, hOldPen);
 	DeleteObject(hPen);
@@ -292,7 +316,7 @@ void CPlayer::ReUpdateWorldVertex()
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
 
-	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
+	D3DXVec3TransformCoord(&m_vWorldPosinVec, &m_vLocalPosinVec, &matWorld);
 }
 
 void CPlayer::KeyInput()
@@ -376,7 +400,7 @@ void CPlayer::AttackKeyInput()
 
 				D3DXVECTOR3 m_vNewDir;
 				CObj* pObj = AbstractFactory<CBullet1>::Create();
-				pObj->SetPos(m_vWorldPosinPoint);
+				pObj->SetPos(m_vWorldPosinVec);
 				D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(tempAng));
 				D3DXVec3TransformNormal(&m_vNewDir, &m_tINFO.vDir, &matRotZ);
 				pObj->SetDir(m_vNewDir);
@@ -394,7 +418,7 @@ void CPlayer::AttackKeyInput()
 			D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
 
 			CObj* pObj = AbstractFactory<CTargetBullet2>::Create();
-			pObj->SetPos(m_vWorldPosinPoint);
+			pObj->SetPos(m_vWorldPosinVec);
 			pObj->SetDir(m_tINFO.vDir);
 			pObj->SetParent(this);
 			dynamic_cast<CTargetBullet2*>(pObj)->SetTarget(m_pParent);
@@ -409,14 +433,14 @@ void CPlayer::AttackKeyInput()
 			D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
 
 			CObj* pObj = AbstractFactory<CBullet1>::Create();
-			pObj->SetPos(m_vWorldPosinPoint);
+			pObj->SetPos(m_vWorldPosinVec);
 			pObj->SetDir(m_tINFO.vDir);
 			pObj->SetParent(this);
 			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj);
 
 			D3DXVECTOR3 m_vNewDir1;
 			CObj* pObj1 = AbstractFactory<CBullet1>::Create();
-			pObj1->SetPos(m_vWorldBackPosinPoint[0]);
+			pObj1->SetPos(m_vWorldBackPosinVec[0]);
 			D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(150));
 			D3DXVec3TransformNormal(&m_vNewDir1, &m_tINFO.vDir, &matRotZ);
 			pObj1->SetDir(m_vNewDir1);
@@ -425,7 +449,7 @@ void CPlayer::AttackKeyInput()
 
 			D3DXVECTOR3 m_vNewDir2;
 			CObj* pObj2 = AbstractFactory<CBullet1>::Create();
-			pObj2->SetPos(m_vWorldBackPosinPoint[1]);
+			pObj2->SetPos(m_vWorldBackPosinVec[1]);
 			D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(210));
 			D3DXVec3TransformNormal(&m_vNewDir2, &m_tINFO.vDir, &matRotZ);
 			pObj2->SetDir(m_vNewDir2);
@@ -452,7 +476,7 @@ void CPlayer::AttackKeyInput()
 			D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
 
 			CObj* pObj = AbstractFactory<CBullet1>::Create();
-			pObj->SetPos(m_vWorldPosinPoint);
+			pObj->SetPos(m_vWorldPosinVec);
 			pObj->SetDir(m_tINFO.vDir);
 			pObj->SetParent(this);
 			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj);

@@ -26,20 +26,27 @@ private:
     void Dead() override;
 
 private:
-    D3DXVECTOR3 m_vLocalPosinPoint;
-    D3DXVECTOR3 m_vWorldPosinPoint;
+    D3DXVECTOR3 m_vLocalPosinVec;
+    D3DXVECTOR3 m_vWorldPosinVec;
+    D3DXVECTOR3 m_vViewPosinVec;
+    D3DXVECTOR3 m_vProjPosinVec;
 
-    D3DXVECTOR3 m_vLocalShotPosinPoint[2];
-    D3DXVECTOR3 m_vWorldShotPosinPoint[2];
+    D3DXVECTOR3 m_vLocalShotPosinVec[2];
+    D3DXVECTOR3 m_vWorldShotPosinVec[2];
+    D3DXVECTOR3 m_vViewShotPosinVec[2];
+    D3DXVECTOR3 m_vProjShotPosinVec[2];
 
-    D3DXVECTOR3 m_vLocalBackPosinPoint[2];
-    D3DXVECTOR3 m_vWorldBackPosinPoint[2];
+    D3DXVECTOR3 m_vLocalBackPosinVec[2];
+    D3DXVECTOR3 m_vWorldBackPosinVec[2];
+    D3DXVECTOR3 m_vViewBackPosinVec[2];
+    D3DXVECTOR3 m_vProjBackPosinVec[2];
 
-    D3DXVECTOR3 m_vLocalSummonerPosinPoint[8];
-    D3DXVECTOR3 m_vWorldSummonerPosinPoint[8];
+    D3DXVECTOR3 m_vLocalSummonerPosinVec[8];
+    D3DXVECTOR3 m_vWorldSummonerPosinVec[8];
+    D3DXVECTOR3 m_vViewSummonerPosinVec[8];
+    D3DXVECTOR3 m_vProjSummonerPosinVec[8];
 
     bool m_bIsShootGun;
-
     bool m_bIsTargeted;
     bool m_bIsBooster;
     bool m_bIsSummoner;

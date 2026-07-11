@@ -12,7 +12,7 @@ CBullet1::~CBullet1()
 
 void CBullet1::Initialize()
 {
-	m_fSize = 30.f;
+	m_fRadius = 30.f;
 	
 	m_vLocalVec.resize(1);
 	m_vWorldVec.resize(1);
@@ -65,10 +65,10 @@ void CBullet1::Render(HDC _hDC)
 	float projScale = CameraMgr::GetInstance().GetProjScale();
 
 	Ellipse(_hDC,
-		m_vProjVec[0].x - m_fSize / 2 * projScale,
-		m_vProjVec[0].y - m_fSize / 2 * projScale,
-		m_vProjVec[0].x + m_fSize / 2 * projScale,
-		m_vProjVec[0].y + m_fSize / 2 * projScale);
+		m_vProjVec[0].x - m_fRadius / 2 * projScale,
+		m_vProjVec[0].y - m_fRadius / 2 * projScale,
+		m_vProjVec[0].x + m_fRadius / 2 * projScale,
+		m_vProjVec[0].y + m_fRadius / 2 * projScale);
 }
 
 void CBullet1::Release()
