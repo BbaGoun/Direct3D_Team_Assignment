@@ -38,6 +38,7 @@ void CStage::Initialize()
 	// 플레이어 2
 	CObj* pPlayer2 = AbstractFactory<CEnemy>::Create();
 	pPlayer2->SetPos({ 980, 360, 0 });
+	pPlayer2->SetParent(pPlayer1);
 	ObjMgr::GetInstance().AddObject(OBJ_PLAYER, pPlayer2);
 
 	CUI* pPlayer2HP = UIFactory<CHPBar>::Create();

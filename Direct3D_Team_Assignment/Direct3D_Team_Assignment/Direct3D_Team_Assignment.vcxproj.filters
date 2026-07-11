@@ -210,8 +210,8 @@
     <ClInclude Include="CSummonee.h">
       <Filter>MainGame\00. Obj\01. Player\Summonee</Filter>
     </ClInclude>
-    <ClInclude Include="CDrone.h">
-      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\Drone</Filter>
+    <ClInclude Include="CBulletTrakin1.h">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\TakingBullet</Filter>
     </ClInclude>
     <ClInclude Include="CTargetBullet2.h">
       <Filter>MainGame\00. Obj\01. Player\TargetBullet2</Filter>
@@ -315,8 +315,8 @@
     <ClCompile Include="CSummonee.cpp">
       <Filter>MainGame\00. Obj\01. Player\Summonee</Filter>
     </ClCompile>
-    <ClCompile Include="CDrone.cpp">
-      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\Drone</Filter>
+    <ClCompile Include="CBulletTrakin1.cpp">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\TakingBullet</Filter>
     </ClCompile>
     <ClCompile Include="CTargetBullet2.cpp">
       <Filter>MainGame\00. Obj\01. Player\TargetBullet2</Filter>
