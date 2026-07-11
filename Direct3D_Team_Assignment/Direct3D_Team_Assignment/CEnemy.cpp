@@ -20,8 +20,6 @@ void CEnemy::Initialize()
 
 
 	m_fDelayTime = 0;
-	m_fInvincibleTime = 0;
-	m_fInvincibleTimer = 60;
 
 	m_tINFO.vPos = { WINCX * 0.5f, WINCY * 0.5f, 0 };
 	m_tINFO.vLook = { 0, -1, 0 };
@@ -99,7 +97,6 @@ void CEnemy::LateUpdate()
 	if (m_bDead)
 		return;
 
-	if (m_fDelay > 0)
 	if (m_fDelayTime >=0)
 	{
 		--m_fDelayTime;
