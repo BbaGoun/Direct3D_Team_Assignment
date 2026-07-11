@@ -192,6 +192,9 @@ void ObjMgr::CollisionBulletToPlayer()
 		for (auto& pPlayer : m_ObjList[OBJ_PLAYER]) {
 			if (pPlayer->GetDead())
 				continue;
+			if (pBullet->GetParent() == pPlayer)
+				continue;
+
 			if (CollisionProcess::CollisionBulletToObj(pBullet, pPlayer)) {
 				// 총알에게 플레이어의 데미지
 				pBullet->TakeDamageByObj(pPlayer);
