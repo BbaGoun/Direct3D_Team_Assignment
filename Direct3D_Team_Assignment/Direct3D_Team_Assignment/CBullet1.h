@@ -17,13 +17,18 @@ public:
 	void Release() override;
 
 	float GetRadius() { return m_fSize/2; }//동적으로 바꿀거임(곧)
+	void SetTraking(bool _bBeTraking) { m_bBeTraking = _bBeTraking; };
+	void SetEnemy(CObj* _pEnemy) { m_pEnemy = _pEnemy; };
 
 private:
 
 	D3DXVECTOR3 m_vWorldPoint;
 	D3DXVECTOR3 m_vLocalPoint;
+	CObj* m_pEnemy;
 
 	float m_fSize;
+	float m_fDuration;
+	bool m_bBeTraking;
 
 	//각종 총알용 스탯 정보 
 };

@@ -26,7 +26,6 @@ public:
 
 public:
 
-    // CObjÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
     void Initialize() override;
     void Update() override;
     void LateUpdate() override;
@@ -34,8 +33,6 @@ public:
     void Release() override;
 
 public:
-    //vector<D3DXVECTOR3> GetWorldBodyPoints() {
-    //    return m_vWorldBodyPoints;}
     void ReUpdateWorldVertex() override;
 private:
 
@@ -43,11 +40,13 @@ public:
     void DecelerationCurrentSpeed();
     void Accelerate(float _fFactor);
 
-    void SetDelay(float _fDelay) { m_fDelay = _fDelay;}
+    void SetDelayTime() { m_fDelayTime = m_fDelayTimer;}
+    void SetDelayTimer(float _fDelay) { m_fDelayTimer = _fDelay;}
+
     void SetBeMove(bool _bMove) { m_bMove = _bMove;}
 
-    bool GetDelay() { return m_bMove;}
-    float GetMove() { return m_fDelay;}
+    bool GetMove() { return m_bMove;}
+    float GetDelay() { return m_fDelayTime;}
 
 private:
     void KeyInput();
@@ -60,11 +59,9 @@ private:
     TANKID m_eNextTankID;
     TANKID m_eCurTankID;
     CTank* m_pTankStat;
-    //int m_iEXP;
-    //int m_iMaxEXP;
-    //int m_iLevel;
 
-    float m_fDelay;
+    float m_fDelayTime;
+    float m_fDelayTimer;
 
     float m_fCurrentSpeed;
     float m_fAccel;        
