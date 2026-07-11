@@ -75,7 +75,10 @@ void CEnemy::LateUpdate()
 	if (m_fDelay > 0)
 	{
 		--m_fDelay;
+		if (m_fDelay <= 0)
+			m_fDelay == 0;
 	}
+	//getdelta타임 
 	DecelerationCurrentSpeed();
 }
 
