@@ -9,17 +9,21 @@
 void CTankNomal::Fire(CEnemy* _Enemy)
 {
 	D3DXMATRIX matRotZ;
-	D3DXVECTOR3 vTempDir = _Enemy->GetDir();
+	D3DXVECTOR3 vTempDir;
 	D3DXVECTOR3 vTempLook = _Enemy->GetLook();
 	CObj* Temp;
-	D3DXMatrixRotationZ(&matRotZ, _Enemy->GetRadian()+ D3DXToRadian(-5 + dis(gen) * (10.0 / 99.0)));
-	D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
-	Temp = AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), 8.f);
 
-	Temp->SetParent(_Enemy);
-	static_cast<CBullet1*>(Temp)->SetTraking(false);
-	static_cast<CBullet1*>(Temp)->SetEnemy(_Enemy->GetParent());
-	ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
+	for (int i(0); i < m_vWorldPosinPoint.size(); i++)
+	{
+		vTempDir = m_vWorldPosinPoint[i] - _Enemy->GetPos();
+		D3DXVec3Normalize(&vTempDir, &vTempDir);
+		D3DXMatrixRotationZ(&matRotZ, _Enemy->GetRadian() + D3DXToRadian(-5 + dis(gen) * (10.0 / 99.0)));
+		D3DXVec3TransformNormal(&vTempDir, &vTempDir, &matRotZ);
+
+		Temp = AbstractFactory<CBullet1>::Create(vTempDir, m_vWorldPosinPoint[i], 8.f);
+		Temp->SetParent(_Enemy);
+		ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
+	}
 
 	SetDelayAndRebound(_Enemy);
 }
@@ -27,8 +31,8 @@ void CTankNomal::Fire(CEnemy* _Enemy)
 void CTankShotGun::Fire(CEnemy* _Enemy)
 {
 	D3DXMATRIX matRotZ;
-	D3DXVECTOR3 vTempDir= _Enemy->GetDir();
-	D3DXVECTOR3 vTempLook= _Enemy->GetLook();
+	D3DXVECTOR3 vTempDir = _Enemy->GetDir();
+	D3DXVECTOR3 vTempLook = _Enemy->GetLook();
 	float fTempSpeed;
 	CObj* Temp;
 
@@ -36,12 +40,11 @@ void CTankShotGun::Fire(CEnemy* _Enemy)
 	for (int i(0); i < 10; ++i)
 	{
 		fTempSpeed = 5.f + (dis(gen) % 9 + 5);
-		D3DXMatrixRotationZ(&matRotZ, _Enemy->GetRadian()+D3DXToRadian(-15 + dis(gen) * 0.3));
+		D3DXMatrixRotationZ(&matRotZ, _Enemy->GetRadian() + D3DXToRadian(-15 + dis(gen) * 0.3));
 
 		D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
-		Temp=AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), fTempSpeed);
+		Temp = AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), fTempSpeed);
 		Temp->SetParent(_Enemy);
-		static_cast<CBullet1*>(Temp)->SetTraking(false);
 		ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 	}
 	SetDelayAndRebound(_Enemy);
@@ -65,7 +68,6 @@ void CTankBooster::Fire(CEnemy* _Enemy)
 	Temp = AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), 10.f);
 
 	Temp->SetParent(_Enemy);
-	static_cast<CBullet1*>(Temp)->SetTraking(false);
 	ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 	for (int i(0); i < 5; ++i)
 	{
@@ -75,7 +77,6 @@ void CTankBooster::Fire(CEnemy* _Enemy)
 		D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
 		Temp = AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), fTempSpeed);
 		Temp->SetParent(_Enemy);
-		static_cast<CBullet1*>(Temp)->SetTraking(false);
 		ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 	}
 	SetDelayAndRebound(_Enemy);
@@ -89,11 +90,10 @@ void CTankGuided::Fire(CEnemy* _Enemy)
 	CObj* Temp;
 	D3DXMatrixRotationZ(&matRotZ, _Enemy->GetRadian() + D3DXToRadian(-5 + dis(gen) * (10.0 / 99.0)));
 	D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
-	Temp = AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), 5.f);
+	Temp = AbstractFactory<CBulletTrakin1>::Create(vTempDir, _Enemy->GetPos(), 5.f);
 
 	Temp->SetParent(_Enemy);
-	static_cast<CBullet1*>(Temp)->SetTraking(true);
-	static_cast<CBullet1*>(Temp)->SetEnemy(_Enemy->GetParent());
+	static_cast<CBulletTrakin1*>(Temp)->SetTarget(_Enemy->GetParent());
 	ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 
 	SetDelayAndRebound(_Enemy);
@@ -101,13 +101,10 @@ void CTankGuided::Fire(CEnemy* _Enemy)
 
 void CTankNomal::RanderPosin(HDC _hdc)
 {
+
 }
 
 void CTankShotGun::RanderPosin(HDC _hdc)
-{
-}
-
-void CTankSommoner::RanderPosin(HDC _hdc)
 {
 }
 
@@ -119,9 +116,17 @@ void CTankGuided::RanderPosin(HDC _hdc)
 {
 }
 
-//포신위치 이니셜라이저하고, 서모너의 경우 리스트 관리..
+void CTankSommoner::RanderPosin(HDC _hdc)
+{
+}
+
 void CTankNomal::Initialize(CEnemy* _Enemy)
 {
+	m_vLocalPosinPoint.resize(2);
+	m_vWorldPosinPoint.resize(2);
+	m_vLocalPosinPoint[0] = { 50,-100,0 };
+	m_vLocalPosinPoint[1] = { 0,-100,0 };
+
 	m_fDelayTime = 15.f;
 	m_fRebound = -5.f;
 	_Enemy->SetDelayTimer(m_fDelayTime);

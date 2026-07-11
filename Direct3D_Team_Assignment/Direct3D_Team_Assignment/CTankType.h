@@ -2,6 +2,7 @@
 #include "CTank.h"
 #include "CEnemy.h"
 #include "CBullet1.h"
+#include "CBulletTrakin1.h"
 
 class CTankNomal :
     public CTank

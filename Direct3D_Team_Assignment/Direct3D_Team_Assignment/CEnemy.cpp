@@ -83,7 +83,6 @@ void CEnemy::Update()
 
 	// 월드 -> 뷰 -> 투영 스페이스 변환
 	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
-
 	D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
 
 	for (int i = 0; i < m_vWorldVec.size(); ++i) {
@@ -92,6 +91,10 @@ void CEnemy::Update()
 		D3DXVec3TransformCoord(&m_vProjVec[i], &m_vViewVec[i], &matProj);
 		m_vProjVec[i] += {640, 360, 0};
 	}
+
+	if (m_pTankStat != nullptr)
+		m_pTankStat->PosUpdate(this);
+
 }
 
 void CEnemy::LateUpdate()
@@ -99,7 +102,6 @@ void CEnemy::LateUpdate()
 	if (m_bDead)
 		return;
 
-	if (m_fDelay > 0)
 	if (m_fDelayTime >=0)
 	{
 		--m_fDelayTime;
@@ -166,7 +168,7 @@ void CEnemy::ReUpdateWorldVertex()
 	//월드 행렬에 구성 요소 적용. 크기/자전/이동/공전/위치(부모)<- 순서 잊지 말것!
 	D3DXMatrixIdentity(&matWorld);
 	matWorld = matScale * matRotZ * matTrans;
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < m_vLocalVec.size(); ++i) {
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
 	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
@@ -210,23 +212,6 @@ void CEnemy::KeyInput()
 	else if (GetAsyncKeyState(VK_DOWN)) {
 		Accelerate(-1.f);
 	}
-
-#pragma region inertia_yet
-	//if (GetAsyncKeyState(VK_UP)) {
-	//	D3DXMATRIX matRotZ;
-	//	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
-	//	D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
-
-	//	m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
-	//}
-	//if (GetAsyncKeyState(VK_DOWN)) {
-	//	D3DXMATRIX matRotZ;
-	//	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
-	//	D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
-
-	//	m_tINFO.vPos -= m_tINFO.vDir * m_fSpeed;
-	//}
-#pragma endregion
 
 	if (GetAsyncKeyState(VK_RSHIFT)) {
 		if (m_fDelayTime <= 0)

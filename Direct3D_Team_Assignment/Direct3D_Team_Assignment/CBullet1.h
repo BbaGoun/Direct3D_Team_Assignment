@@ -16,13 +16,10 @@ public:
 	void Render(HDC _hDC) override;
 	void Release() override;
 
-	float GetRadius() { return m_fSize/2; }//동적으로 바꿀거임(곧)
+	float GetRadius() { return m_fSize/2; }
 
 private:
-
 	float m_fSize;
 	float m_fDuration;
 	bool m_bBeTraking;
-
-	//각종 총알용 스탯 정보 
 };
