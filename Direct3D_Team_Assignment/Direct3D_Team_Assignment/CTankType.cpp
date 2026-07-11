@@ -17,8 +17,6 @@ void CTankNomal::Fire(CEnemy* _Enemy)
 	Temp = AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), 8.f);
 
 	Temp->SetParent(_Enemy);
-	static_cast<CBullet1*>(Temp)->SetTraking(false);
-	static_cast<CBullet1*>(Temp)->SetEnemy(_Enemy->GetParent());
 	ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 
 	SetDelayAndRebound(_Enemy);
@@ -41,7 +39,6 @@ void CTankShotGun::Fire(CEnemy* _Enemy)
 		D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
 		Temp=AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), fTempSpeed);
 		Temp->SetParent(_Enemy);
-		static_cast<CBullet1*>(Temp)->SetTraking(false);
 		ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 	}
 	SetDelayAndRebound(_Enemy);
@@ -65,7 +62,6 @@ void CTankBooster::Fire(CEnemy* _Enemy)
 	Temp = AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), 10.f);
 
 	Temp->SetParent(_Enemy);
-	static_cast<CBullet1*>(Temp)->SetTraking(false);
 	ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 	for (int i(0); i < 5; ++i)
 	{
@@ -75,7 +71,6 @@ void CTankBooster::Fire(CEnemy* _Enemy)
 		D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
 		Temp = AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), fTempSpeed);
 		Temp->SetParent(_Enemy);
-		static_cast<CBullet1*>(Temp)->SetTraking(false);
 		ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 	}
 	SetDelayAndRebound(_Enemy);
@@ -92,8 +87,8 @@ void CTankGuided::Fire(CEnemy* _Enemy)
 	Temp = AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), 5.f);
 
 	Temp->SetParent(_Enemy);
-	static_cast<CBullet1*>(Temp)->SetTraking(true);
-	static_cast<CBullet1*>(Temp)->SetEnemy(_Enemy->GetParent());
+	//static_cast<CBullet1*>(Temp)->SetTraking(true);
+	//static_cast<CBullet1*>(Temp)->SetEnemy(_Enemy->GetParent());
 	ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 
 	SetDelayAndRebound(_Enemy);

@@ -27,6 +27,8 @@ void CBullet1::Initialize()
 
 void CBullet1::Update()
 {
+	m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
+
 	UpdateTimers();
 
 	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
@@ -41,7 +43,6 @@ void CBullet1::Update()
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
 
-	// ���� -> �� -> ���� �����̽� ��ȯ
 	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
 
 	D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
