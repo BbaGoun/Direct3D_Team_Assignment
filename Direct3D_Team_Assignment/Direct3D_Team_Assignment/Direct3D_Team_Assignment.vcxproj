@@ -139,7 +139,7 @@
       </ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="CBullet1.h" />
-    <ClInclude Include="CDrone.h" />
+    <ClInclude Include="CBulletTrakin1.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CExpBar.h" />
     <ClInclude Include="CHPBar.h" />
@@ -176,7 +176,7 @@
       </ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="CBullet1.cpp" />
-    <ClCompile Include="CDrone.cpp" />
+    <ClCompile Include="CBulletTrakin1.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CExpBar.cpp" />
     <ClCompile Include="CHPBar.cpp" />
