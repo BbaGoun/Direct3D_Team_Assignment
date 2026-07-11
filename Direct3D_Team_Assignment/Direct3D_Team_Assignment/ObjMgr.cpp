@@ -138,8 +138,12 @@ void ObjMgr::CollisionBulletToBreakable()
 	for (auto& pBullet : m_ObjList[OBJ_BULLET]) {
 		if (pBullet->GetDead())
 			continue;
+		if (pBullet->GetInvincible())
+			continue;
 		for (auto& pBreakable : m_ObjList[OBJ_BREAKABLE]) {
 			if (pBreakable->GetDead())
+				continue;
+			if (pBreakable->GetInvincible())
 				continue;
 			if (CollisionProcess::CollisionBulletToObj(pBullet, pBreakable)) {
 				// 총알에게 오브젝트의 데미지
@@ -160,6 +164,10 @@ void ObjMgr::CollisionBulletToBullet()
 			++i;
 			continue;
 		}
+		if (pBullet1->GetInvincible()) {
+			++i;
+			continue;
+		}
 		j = 0;
 		for (auto& pBullet2 : m_ObjList[OBJ_BULLET]) {
 			if (j < i)
@@ -167,7 +175,9 @@ void ObjMgr::CollisionBulletToBullet()
 				++j;
 				continue;
 			}
-			if (pBullet1->GetDead())
+			if (pBullet2->GetDead())
+				continue;
+			if (pBullet2->GetInvincible())
 				continue;
 			if (pBullet1 == pBullet2)
 				continue;
@@ -189,8 +199,12 @@ void ObjMgr::CollisionBulletToPlayer()
 	for (auto& pBullet : m_ObjList[OBJ_BULLET]) {
 		if (pBullet->GetDead())
 			continue;
+		if (pBullet->GetInvincible())
+			continue;
 		for (auto& pPlayer : m_ObjList[OBJ_PLAYER]) {
 			if (pPlayer->GetDead())
+				continue;
+			if (pPlayer->GetInvincible())
 				continue;
 			if (pBullet->GetParent() == pPlayer)
 				continue;
@@ -230,8 +244,12 @@ void ObjMgr::CollisionPlayerToBreakable()
 	for (auto& pPlayer : m_ObjList[OBJ_PLAYER]) {
 		if (pPlayer->GetDead())
 			continue;
+		if (pPlayer->GetInvincible())
+			continue;
 		for (auto& pBreakable : m_ObjList[OBJ_BREAKABLE]) {
 			if (pBreakable->GetDead())
+				continue;
+			if (pBreakable->GetInvincible())
 				continue;
 			if (CollisionProcess::CollisionObjToObj(pPlayer, pBreakable)) {
 				// 플레이어에게 오브젝트의 데미지
@@ -252,6 +270,10 @@ void ObjMgr::CollisionPlayerToPlayer()
 			++i;
 			continue;
 		}
+		if (pPlayer1->GetInvincible()) {
+			++i;
+			continue;
+		}
 		j = 0;
 		for (auto& pPlayer2 : m_ObjList[OBJ_PLAYER]) {
 			if (j < i)
@@ -260,6 +282,8 @@ void ObjMgr::CollisionPlayerToPlayer()
 				continue;
 			}
 			if (pPlayer2->GetDead())
+				continue;
+			if (pPlayer2->GetInvincible())
 				continue;
 			if (pPlayer1 == pPlayer2)
 				continue;

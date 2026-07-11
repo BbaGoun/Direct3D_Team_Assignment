@@ -22,6 +22,8 @@ public:
 private:
     void KeyInput();
     void AttackKeyInput();
+    void UpdateTimers() override;
+    void Dead() override;
 
 private:
     D3DXVECTOR3 m_vLocalPosinPoint;
@@ -45,6 +47,8 @@ private:
     bool m_bAttacked;
     int m_iAttackDelay;
 
+    bool m_bRespawn;
+    float m_fRespawnTimer;
     int m_iSwitchDelay;
 
     float m_fGoBack;

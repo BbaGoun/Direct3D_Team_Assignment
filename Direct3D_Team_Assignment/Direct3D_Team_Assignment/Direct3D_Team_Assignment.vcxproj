@@ -134,10 +134,6 @@
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="CBreakableObj.h" />
     <ClInclude Include="CameraMgr.h" />
-    <ClInclude Include="CBullet2.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="CBullet1.h" />
     <ClInclude Include="CBulletTrakin1.h" />
     <ClInclude Include="CEnemy.h" />
@@ -172,10 +168,6 @@
   <ItemGroup>
     <ClCompile Include="CBreakableObj.cpp" />
     <ClCompile Include="CameraMgr.cpp" />
-    <ClCompile Include="CBullet2.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="CBullet1.cpp" />
     <ClCompile Include="CBulletTrakin1.cpp" />
     <ClCompile Include="CEnemy.cpp" />

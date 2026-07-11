@@ -19,35 +19,30 @@ public:
 	void Release();
 
 public:
+	const D3DXMATRIX& GetViewMat() { return m_matView; }
+	const D3DXMATRIX& GetProjMat() { return m_matProj; }
+	const RECT& GetCameraRect() { return m_CameraRect; }
+	float GetProjScale() { return 1 / m_fCameraScale; }
+
 	void Set_CameraCenter(D3DXVECTOR3 _CameraCenter) {
 		m_CameraWorldCenter = _CameraCenter;
-		m_CameraWorldRect = { int(m_CameraWorldCenter.x - 640), int(m_CameraWorldCenter.y - 360), 1280, 720 };
+		m_CameraRect = {
+			int(m_CameraWorldCenter.x - 1280 * m_fCameraScale * 0.5f),
+			int(m_CameraWorldCenter.y - 720 * m_fCameraScale * 0.5f),
+			int(m_CameraWorldCenter.x + 1280 * m_fCameraScale * 0.5f),
+			int(m_CameraWorldCenter.y + 720 * m_fCameraScale * 0.5f),
+		};
 	}
 
 	void Set_Target1(CObj* _pObj) { m_pTarget1 = _pObj; }
 	void Set_Target2(CObj* _pObj) { m_pTarget2 = _pObj; }
 
-	void MoveX(float _fX) {
-		m_CameraWorldCenter.x += _fX;
-		m_CameraWorldRect = { int(m_CameraWorldCenter.x - 640), int(m_CameraWorldCenter.y - 360), 1280, 720 };
-	}
-	void MoveY(float _fY) {
-		m_CameraWorldCenter.y += _fY;
-		m_CameraWorldRect = { int(m_CameraWorldCenter.x - 640), int(m_CameraWorldCenter.y - 360), 1280, 720 };
-	}
-
-	const RECT& Get_CameraRect() { return m_CameraWorldRect; }
-
-	void Convert_VirtualToWorldPoint(D3DXVECTOR3* _vPoint) {
-		(*_vPoint).x += m_CameraWorldRect.left;
-		(*_vPoint).y += m_CameraWorldRect.top;
-	}
-
 	void Set_Shake(float _fShakeRadian);
 
 private:
 	D3DXVECTOR3 m_CameraWorldCenter;
-	RECT m_CameraWorldRect;
+	RECT m_CameraRect;
+	float m_fCameraScale;
 
 	D3DXVECTOR3 m_ShakeDir;
 	float m_fShakeDistance;
@@ -55,5 +50,8 @@ private:
 
 	CObj* m_pTarget1;
 	CObj* m_pTarget2;
+
+	D3DXMATRIX m_matView;
+	D3DXMATRIX m_matProj;
 };
 

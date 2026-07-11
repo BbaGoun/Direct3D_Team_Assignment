@@ -60,6 +60,8 @@ public:
 	virtual void ReUpdateWorldVertex() {};
 
 protected:
+	virtual void UpdateTimers();
+	virtual void Dead();
 
 protected:
 	OBJID m_eObjID;
@@ -87,5 +89,7 @@ protected:
 
 	vector<D3DXVECTOR3> m_vLocalVec;
 	vector<D3DXVECTOR3> m_vWorldVec;
+	vector<D3DXVECTOR3> m_vViewVec;
+	vector<D3DXVECTOR3> m_vProjVec;
 };
 

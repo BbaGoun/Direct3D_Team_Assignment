@@ -4,6 +4,8 @@
 #include "ObjMgr.h"
 #include "CBullet1.h"
 #include "CSummonee.h"
+#include "CameraMgr.h"
+#include "TimeMgr.h"
 #include "CTargetBullet2.h"
 
 CPlayer::CPlayer()
@@ -32,15 +34,18 @@ void CPlayer::Initialize()
 	m_fSpeed = 8;
 	m_fRadian = 0;
 
-	m_vLocalVec.push_back({ -50.f, -50.f, 0 });
-	m_vLocalVec.push_back({ 50.f, -50.f, 0 });
-	m_vLocalVec.push_back({ 50.f, 50.f, 0 });
-	m_vLocalVec.push_back({ -50.f, 50.f, 0 });
+	m_vLocalVec.resize(4);
+	m_vWorldVec.resize(4);
+	m_vViewVec.resize(4);
+	m_vProjVec.resize(4);
+
+	m_vLocalVec[0] = { -50.f, -50.f, 0 };
+	m_vLocalVec[1] = { 50.f, -50.f, 0 };
+	m_vLocalVec[2] = { 50.f, 50.f, 0 };
+	m_vLocalVec[3] = { -50.f, 50.f, 0 };
 
 	m_vLocalPosinPoint = { 0, -100.f, 0 };
 	m_fRadian = 0;
-
-	m_vWorldVec.resize(4);
 
 	m_vLocalShotPosinPoint[0] = {0, -100.f, 0};
 	m_vLocalShotPosinPoint[1] = {0, -100.f, 0};
@@ -61,10 +66,15 @@ void CPlayer::Initialize()
 	m_iCurrentExp = 0;
 	m_iLevel = 0;
 	m_iAttackDelay = 30;
+	m_iDropExp = 5;
 }
 
 void CPlayer::Update()
 {
+	UpdateTimers();
+	if (m_bDead)
+		return;
+
 	KeyInput();
 
 	if (m_iAttackDelay >= 30)
@@ -161,35 +171,55 @@ void CPlayer::Update()
 
 		D3DXVec3TransformCoord(&m_vWorldSummonerPosinPoint[i], &m_vLocalSummonerPosinPoint[i], &tempWorld);
 	}
+
+	// ���� -> �� -> ���� �����̽� ��ȯ
+	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
+
+	D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
+
+	for (int i = 0; i < m_vWorldVec.size(); ++i) {
+		D3DXVec3TransformCoord(&m_vViewVec[i], &m_vWorldVec[i], &matView);
+		// Z Division �� ��Ŀ� ���ԵǾ� ����.
+		D3DXVec3TransformCoord(&m_vProjVec[i], &m_vViewVec[i], &matProj);
+		m_vProjVec[i] += {640, 360, 0};
+	}
 }
 
 void CPlayer::LateUpdate()
 {
+	if (m_bDead)
+		return;
 }
 
 void CPlayer::Render(HDC _hDC)
 {
+	if (m_bDead)
+		return;
+
+	// ������ ���� ���� ��� ũ�� ������ ���� ��
+	float projScale = CameraMgr::GetInstance().GetProjScale();
+
 	HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
 	HPEN hOldPen = (HPEN)SelectObject(_hDC, hPen);
 
-	MoveToEx(_hDC, m_vWorldVec[0].x, m_vWorldVec[0].y, nullptr);
+	MoveToEx(_hDC, m_vProjVec[0].x, m_vProjVec[0].y, nullptr);
 	for (int i = 1; i <= 4; ++i) {
-		LineTo(_hDC, m_vWorldVec[i % 4].x, m_vWorldVec[i % 4].y);
+		LineTo(_hDC, m_vProjVec[i % 4].x, m_vProjVec[i % 4].y);
 	}
 
 	Ellipse(_hDC,
-		m_vWorldVec[0].x - 5,
-		m_vWorldVec[0].y - 5,
-		m_vWorldVec[0].x + 5,
-		m_vWorldVec[0].y + 5);
+		m_vProjVec[0].x - 5 * projScale,
+		m_vProjVec[0].y - 5 * projScale,
+		m_vProjVec[0].x + 5 * projScale,
+		m_vProjVec[0].y + 5 * projScale);
 
 	Ellipse(_hDC,
-		m_vWorldVec[1].x - 5,
-		m_vWorldVec[1].y - 5,
-		m_vWorldVec[1].x + 5,
-		m_vWorldVec[1].y + 5);
+		m_vProjVec[1].x - 5 * projScale,
+		m_vProjVec[1].y - 5 * projScale,
+		m_vProjVec[1].x + 5 * projScale,
+		m_vProjVec[1].y + 5 * projScale);
 
-	if (m_bIsShootGun)
+	/*if (m_bIsShootGun)
 	{
 		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
 		LineTo(_hDC, m_vWorldShotPosinPoint[0].x, m_vWorldShotPosinPoint[0].y);
@@ -238,7 +268,7 @@ void CPlayer::Render(HDC _hDC)
 	{
 		MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
 		LineTo(_hDC, m_vWorldPosinPoint.x, m_vWorldPosinPoint.y);
-	}
+	}*/
 
 	SelectObject(_hDC, hOldPen);
 	DeleteObject(hPen);
@@ -430,4 +460,28 @@ void CPlayer::AttackKeyInput()
 			m_fGoBack = -10.f;
 		}
 	}
+}
+
+void CPlayer::UpdateTimers()
+{
+	m_fInvincibleTimer = max(0.f, m_fInvincibleTimer - TimeMgr::GetInstance().GetDeltaTime());
+	if (m_bRespawn) {
+		m_fRespawnTimer = max(0.f, m_fRespawnTimer - TimeMgr::GetInstance().GetDeltaTime());
+		if (m_fRespawnTimer <= 0) {
+			m_bRespawn = false;
+			m_bDead = false;
+			m_iHP = m_iMaxHP;
+			m_iCurrentExp = 0;
+			m_iMaxExp = 3;
+			m_iLevel = 1;
+			m_tINFO.vPos = { 640, 360, 0 };
+		}
+	}
+}
+
+void CPlayer::Dead()
+{
+	m_bRespawn = true;
+	m_bDead = true;
+	m_fRespawnTimer = 3.f;
 }

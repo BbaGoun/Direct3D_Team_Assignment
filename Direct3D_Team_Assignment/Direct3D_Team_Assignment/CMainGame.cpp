@@ -5,6 +5,7 @@
 #include <profileapi.h>
 #include "TimeMgr.h"
 #include "SceneMgr.h"
+#include "CameraMgr.h"
 
 CMainGame::CMainGame()
 {
@@ -63,6 +64,7 @@ void CMainGame::Update()
 void CMainGame::LateUpdate()
 {
 	SceneMgr::GetInstance().LateUpdate();
+	CameraMgr::GetInstance().LateUpdate();
 }
 
 void CMainGame::Render()
