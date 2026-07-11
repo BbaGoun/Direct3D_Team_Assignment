@@ -12,6 +12,7 @@
 #include "CObstacle.h"
 #include "CameraMgr.h"
 #include "TimeMgr.h"
+#include "KeyMgr.h"
 
 CStage::CStage()
 {
@@ -109,6 +110,7 @@ void CStage::Initialize()
 
 void CStage::Update()
 {
+	KeyInput();
 	SpawnBreakable();
 	ObjMgr::GetInstance().Update();
 	UIMgr::GetInstance().Update();
@@ -118,7 +120,6 @@ void CStage::LateUpdate()
 {
 	ObjMgr::GetInstance().LateUpdate();
 	UIMgr::GetInstance().LateUpdate();
-
 }
 
 void CStage::Render(HDC _HDC)
@@ -143,5 +144,42 @@ void CStage::SpawnBreakable()
 			ObjMgr::GetInstance().AddObject(OBJ_BREAKABLE, pObj);
 		}
 		m_fSpawnTimer = 5.f;
+	}
+}
+
+void CStage::KeyInput()
+{
+	if (KeyMgr::GetInstance().KeyDown(VK_LBUTTON)) {
+		D3DXVECTOR3 vMouse = GetMouse();
+	
+		// 뷰포트 -> 투영 차원
+		vMouse -= {640, 360, 0};
+		// z곱하기, 투영 차원 -> 클립 차원
+		float originZ = -CameraMgr::GetInstance().GetCameraCenter().z;
+		vMouse *= originZ;
+
+		// 클립 차원 -> 뷰 차원
+		D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
+		D3DXMatrixInverse(&matProj, 0, &matProj);
+		// proj -> view
+		D3DXVec3TransformCoord(&vMouse, &vMouse, &matProj);
+
+		// 뷰 차원 -> 월드 차원
+		D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
+		D3DXMatrixInverse(&matView, 0, &matView);
+		// view -> world
+		D3DXVec3TransformCoord(&vMouse, &vMouse, &matView);
+
+		vMouse.z = 0;
+		for (int i = 0; i < 12; ++i) {
+			D3DXMATRIX matRotZ;
+			D3DXVECTOR3 vDir = { 0, 1, 0 };
+			D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(i * 30));
+			D3DXVec3TransformNormal(&vDir, &vDir, &matRotZ);
+			CObj* pObj;
+			pObj = AbstractFactory<CBullet1>::Create(vDir, vMouse, 15.f);
+			pObj->SetParent(nullptr);
+			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj);
+		}
 	}
 }

@@ -6,6 +6,7 @@
 #include "TimeMgr.h"
 #include "SceneMgr.h"
 #include "CameraMgr.h"
+#include "KeyMgr.h"
 
 CMainGame::CMainGame()
 {
@@ -58,6 +59,7 @@ void CMainGame::RunGame()
 
 void CMainGame::Update()
 {
+	KeyMgr::GetInstance().Key_Update();
 	SceneMgr::GetInstance().Update();
 }
 
@@ -65,6 +67,7 @@ void CMainGame::LateUpdate()
 {
 	SceneMgr::GetInstance().LateUpdate();
 	CameraMgr::GetInstance().LateUpdate();
+	KeyMgr::GetInstance().Key_LateUpdate();
 }
 
 void CMainGame::Render()

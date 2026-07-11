@@ -20,7 +20,8 @@ void CObj::TakeDamageByBullet(CObj* _pBullet)
 	m_iHP -= _pBullet->GetDamage();
 	m_fInvincibleTimer = m_fInvincibleTime;
 	if (m_iHP <= 0) {
-		_pBullet->GetParent()->GainExp(m_iDropExp);
+		if (_pBullet->GetParent())
+			_pBullet->GetParent()->GainExp(m_iDropExp);
 		Dead();
 	}
 }

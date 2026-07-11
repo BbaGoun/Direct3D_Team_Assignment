@@ -19,6 +19,7 @@ public:
 
 private:
     void SpawnBreakable();
+    void KeyInput();
 
 private:
     float m_fSpawnTimer;

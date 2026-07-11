@@ -155,6 +155,7 @@
     <ClInclude Include="Define.h" />
     <ClInclude Include="Direct3D_Team_Assignment.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="ObjMgr.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="CTank.cpp" />
     <ClCompile Include="CTankType.cpp" />
     <ClCompile Include="Direct3D_Team_Assignment.cpp" />
+    <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="ObjMgr.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="SceneMgr.cpp" />

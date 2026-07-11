@@ -19,6 +19,7 @@ public:
 	void Release();
 
 public:
+	const D3DXVECTOR3& GetCameraCenter() { return m_CameraWorldCenter; }
 	const D3DXMATRIX& GetViewMat() { return m_matView; }
 	const D3DXMATRIX& GetProjMat() { return m_matProj; }
 	const RECT& GetCameraRect() { return m_CameraRect; }
