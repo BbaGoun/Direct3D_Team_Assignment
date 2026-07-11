@@ -34,7 +34,6 @@ void CBullet1::Update()
 	D3DXMatrixScaling(&matScale, 1, 1, 1);
 	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
 	D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
-
 	D3DXMatrixIdentity(&matWorld);
 	matWorld = matScale * matRotZ * matTrans;
 
@@ -42,14 +41,14 @@ void CBullet1::Update()
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
 
-	// ¿ùµå -> ºä -> Åõ¿µ ½ºÆäÀÌ½º º¯È¯
+	// ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½È¯
 	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
 
 	D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
 
 	for (int i = 0; i < m_vWorldVec.size(); ++i) {
 		D3DXVec3TransformCoord(&m_vViewVec[i], &m_vWorldVec[i], &matView);
-		// Z Division ÀÌ Çà·Ä¿¡ Æ÷ÇÔµÇ¾î ÀÖÀ½.
+		// Z Division ï¿½ï¿½ ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½.
 		D3DXVec3TransformCoord(&m_vProjVec[i], &m_vViewVec[i], &matProj);
 		m_vProjVec[i] += {640, 360, 0};
 	}
@@ -57,12 +56,11 @@ void CBullet1::Update()
 
 void CBullet1::LateUpdate()
 {
-	m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
 }
 
 void CBullet1::Render(HDC _hDC)
 {
-	// Á¤Á¡ÀÌ ¾ø´Â ¿øÀÇ °æ¿ì Å©±â Á¶ÀýÀ» À§ÇÑ °ª
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	float projScale = CameraMgr::GetInstance().GetProjScale();
 
 	Ellipse(_hDC,

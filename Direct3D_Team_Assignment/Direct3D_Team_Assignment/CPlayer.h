@@ -40,7 +40,6 @@ private:
 
     bool m_bIsShootGun;
 
-    // CObj��(��) ���� ��ӵ�
     bool m_bIsTargeted;
     bool m_bIsBooster;
     bool m_bIsSummoner;
@@ -50,4 +49,7 @@ private:
 
     bool m_bRespawn;
     float m_fRespawnTimer;
+    int m_iSwitchDelay;
+
+    float m_fGoBack;
 };

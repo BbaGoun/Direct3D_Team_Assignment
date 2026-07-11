@@ -6,16 +6,21 @@
 #include "CSummonee.h"
 #include "CameraMgr.h"
 #include "TimeMgr.h"
+#include "CTargetBullet2.h"
 
 CPlayer::CPlayer()
 {
 	m_bIsShootGun = false;
 	m_bIsTargeted = false;
-	m_bIsBooster = true;
+	m_bIsBooster = false;
 	m_bIsSummoner = false;
 
 	m_bAttacked = false;
 	m_iAttackDelay = 0;
+
+	m_iSwitchDelay = 0;
+
+	m_fGoBack = 0;
 }
 
 CPlayer::~CPlayer()
@@ -88,6 +93,28 @@ void CPlayer::Update()
 		++m_iAttackDelay;
 	}
 
+	if (m_fGoBack != 0 && !m_bIsBooster)
+	{
+		m_fGoBack += 0.5;
+	}
+	else if (m_fGoBack != 0 && m_bIsBooster)
+	{
+		m_fGoBack -= 0.5;
+	}
+	else if (m_fGoBack >= 0 || m_fGoBack <= 0)
+	{
+		m_fGoBack = 0;
+	}
+
+	if (GetAsyncKeyState('S'))
+	{
+		m_tINFO.vPos -= m_tINFO.vDir * (m_fGoBack * 0.5f);
+	}
+	else
+	{
+		m_tINFO.vPos += m_tINFO.vDir * m_fGoBack;
+	}
+
 	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
 	D3DXMatrixScaling(&matScale, 1, 1, 1);
 	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
@@ -145,14 +172,14 @@ void CPlayer::Update()
 		D3DXVec3TransformCoord(&m_vWorldSummonerPosinPoint[i], &m_vLocalSummonerPosinPoint[i], &tempWorld);
 	}
 
-	// ¿ùµå -> ºä -> Åõ¿µ ½ºÆäÀÌ½º º¯È¯
+	// ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½È¯
 	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
 
 	D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
 
 	for (int i = 0; i < m_vWorldVec.size(); ++i) {
 		D3DXVec3TransformCoord(&m_vViewVec[i], &m_vWorldVec[i], &matView);
-		// Z Division ÀÌ Çà·Ä¿¡ Æ÷ÇÔµÇ¾î ÀÖÀ½.
+		// Z Division ï¿½ï¿½ ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½.
 		D3DXVec3TransformCoord(&m_vProjVec[i], &m_vViewVec[i], &matProj);
 		m_vProjVec[i] += {640, 360, 0};
 	}
@@ -169,7 +196,7 @@ void CPlayer::Render(HDC _hDC)
 	if (m_bDead)
 		return;
 
-	// Á¤Á¡ÀÌ ¾ø´Â ¿øÀÇ °æ¿ì Å©±â Á¶ÀýÀ» À§ÇÑ °ª
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	float projScale = CameraMgr::GetInstance().GetProjScale();
 
 	HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
@@ -294,6 +321,42 @@ void CPlayer::KeyInput()
 
 		m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
 	}
+
+	if (GetAsyncKeyState('R'))
+	{
+		if (m_iSwitchDelay == 0)
+		{
+			if (m_bIsShootGun)
+			{
+				m_bIsShootGun = false;
+				m_bIsTargeted = true;
+			}
+			else if (m_bIsTargeted)
+			{
+				m_bIsTargeted = false;
+				m_bIsBooster = true;
+			}
+			else if (m_bIsBooster)
+			{
+				m_bIsBooster = false;
+				m_bIsSummoner = true;
+			}
+			else if (m_bIsSummoner)
+			{
+				m_bIsSummoner = false;
+			}
+			else
+			{
+				m_bIsShootGun = true;
+			}
+
+			m_iSwitchDelay = 5;
+		}
+		else
+		{
+			--m_iSwitchDelay;
+		}
+	}
 }
 
 void CPlayer::AttackKeyInput()
@@ -321,10 +384,23 @@ void CPlayer::AttackKeyInput()
 				pObj->SetParent(this);
 				ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj);
 			}
+
+			m_fGoBack = -20.f;
 		}
 		else if (m_bIsTargeted)
 		{
-			
+			D3DXMATRIX matRotZ;
+			D3DXMatrixRotationZ(&matRotZ, m_fRadian);
+			D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
+
+			CObj* pObj = AbstractFactory<CTargetBullet2>::Create();
+			pObj->SetPos(m_vWorldPosinPoint);
+			pObj->SetDir(m_tINFO.vDir);
+			pObj->SetParent(this);
+			dynamic_cast<CTargetBullet2*>(pObj)->SetTarget(m_pParent);
+			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj);
+
+			m_fGoBack = -10.f;
 		}
 		else if (m_bIsBooster)
 		{
@@ -356,7 +432,7 @@ void CPlayer::AttackKeyInput()
 			pObj2->SetParent(this);
 			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj2);
 
-			m_tINFO.vPos += m_tINFO.vDir * 4.f;
+			m_fGoBack = 10.f;
 		}
 		else if (m_bIsSummoner)
 		{
@@ -381,7 +457,7 @@ void CPlayer::AttackKeyInput()
 			pObj->SetParent(this);
 			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj);
 
-			m_tINFO.vPos -= m_tINFO.vDir * 2.f;
+			m_fGoBack = -10.f;
 		}
 	}
 }

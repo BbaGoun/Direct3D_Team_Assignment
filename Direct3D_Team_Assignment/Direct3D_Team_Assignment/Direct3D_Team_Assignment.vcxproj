@@ -135,7 +135,7 @@
     <ClInclude Include="CBreakableObj.h" />
     <ClInclude Include="CameraMgr.h" />
     <ClInclude Include="CBullet1.h" />
-    <ClInclude Include="CDrone.h" />
+    <ClInclude Include="CBulletTrakin1.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CExpBar.h" />
     <ClInclude Include="CHPBar.h" />
@@ -150,6 +150,7 @@
     <ClInclude Include="CSummonee.h" />
     <ClInclude Include="CTank.h" />
     <ClInclude Include="CTankType.h" />
+    <ClInclude Include="CTargetBullet2.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Direct3D_Team_Assignment.h" />
@@ -168,7 +169,7 @@
     <ClCompile Include="CBreakableObj.cpp" />
     <ClCompile Include="CameraMgr.cpp" />
     <ClCompile Include="CBullet1.cpp" />
-    <ClCompile Include="CDrone.cpp" />
+    <ClCompile Include="CBulletTrakin1.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CExpBar.cpp" />
     <ClCompile Include="CHPBar.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="CPreview.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CStage.cpp" />
+    <ClCompile Include="CTargetBullet2.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CSummonee.cpp" />
     <ClCompile Include="Define.cpp" />

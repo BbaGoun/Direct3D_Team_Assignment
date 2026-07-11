@@ -18,9 +18,11 @@ void CEnemy::Initialize()
 	m_eCurTankID = TANK_NOMAL;
 	m_eNextTankID = TANK_END;
 
-	m_pTankStat = new CTankNomal;
 
-	m_fDelay = 0;
+	m_fDelayTime = 0;
+	m_fInvincibleTime = 0;
+	m_fInvincibleTimer = 60;
+
 	m_tINFO.vPos = { WINCX * 0.5f, WINCY * 0.5f, 0 };
 	m_tINFO.vLook = { 0, -1, 0 };
 
@@ -42,12 +44,14 @@ void CEnemy::Initialize()
 	m_fSpeed = 8;
 
 	m_fCurrentSpeed = 0.f;
-	m_fAccel = 0.4f;      
-	m_fDecel = 0.2f;        
+	m_fAccel = 0.4f;
+	m_fDecel = 0.2f;
 
 	m_bMove = false;
 
 	m_iDropExp = 5;
+	m_pTankStat = new CTankNomal;
+	m_pTankStat->Initialize(this);
 }
 
 void CEnemy::Update()
@@ -96,10 +100,11 @@ void CEnemy::LateUpdate()
 		return;
 
 	if (m_fDelay > 0)
+	if (m_fDelayTime >=0)
 	{
-		--m_fDelay;
-		if (m_fDelay <= 0)
-			m_fDelay == 0;
+		--m_fDelayTime;
+		if (m_fDelayTime <=0)
+			m_fDelayTime == 0;
 	}
 	//getdelta타임 
 	DecelerationCurrentSpeed();
@@ -224,20 +229,21 @@ void CEnemy::KeyInput()
 #pragma endregion
 
 	if (GetAsyncKeyState(VK_RSHIFT)) {
-		if (m_fDelay <= 0)
+		if (m_fDelayTime <= 0)
 		{
 			m_pTankStat->Fire(this);
 		}
 	}
 	if (GetAsyncKeyState('P')) {
-		ChaingeTankType(TANK_SHOTGUN);
+		TANKID eNextID;
+		eNextID = (TANKID)((m_eCurTankID)+1 % TANK_END);
+		ChaingeTankType(/*eNextID*/TANK_GUIDED);
 	}
-	if (GetAsyncKeyState('O')) {
-		ChaingeTankType(TANK_BOOSTER);
-	}
-	if (GetAsyncKeyState('I')) {
-		ChaingeTankType(TANK_NOMAL);
-	}//
+	//if (GetAsyncKeyState('O')) {
+	//	TANKID eBeforID;
+	//	eBeforID = (TANKID)((m_eCurTankID)+TANK_END - 1 % TANK_END);
+	//	ChaingeTankType(eBeforID);
+	//}
 }
 
 void CEnemy::ChaingeTankType(TANKID _eID)
@@ -255,21 +261,16 @@ void CEnemy::ChaingeTankType(TANKID _eID)
 			m_pTankStat = new CTankShotGun;
 			break;
 		case TANK_GUIDED:
+			m_pTankStat = new CTankGuided;
 			break;
 		case TANK_BOOSTER:
 			m_pTankStat = new CTankBooster;
 			break;
 		case TANK_SOMMONER:
 			break;
-		case TANK_END:
-			break;
-		default:
-			break;
 		}
-		m_eNextTankID = m_eCurTankID;
-
-		//m_pTankStat->Initialize();
-		//이니셜라이저 구현 안끝남.
+		m_eCurTankID = m_eNextTankID;
+		m_pTankStat->Initialize(this);
 	}
 }
 

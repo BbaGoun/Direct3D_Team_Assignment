@@ -24,7 +24,7 @@ CStage::~CStage()
 
 void CStage::Initialize()
 {
-	// ÇÃ·¹ÀÌ¾î 1
+	// í”Œë ˆì´ì–´ 1
 	CObj* pPlayer1 = AbstractFactory<CPlayer>::Create();
 	pPlayer1->SetPos({ 640, 360, 0 });
 	ObjMgr::GetInstance().AddObject(OBJ_PLAYER, pPlayer1);
@@ -37,12 +37,15 @@ void CStage::Initialize()
 	pPlayer1Exp->SetTarget(pPlayer1);
 	UIMgr::GetInstance().AddUI(UI_NORMAL, pPlayer1Exp);
 
-	// ÇÃ·¹ÀÌ¾î 2
+	// í”Œë ˆì´ì–´ 2
 	CObj* pPlayer2 = AbstractFactory<CEnemy>::Create();
 	pPlayer2->SetPos({ 1920, 1080, 0 });
+	pPlayer2->SetParent(pPlayer1);
 	ObjMgr::GetInstance().AddObject(OBJ_PLAYER, pPlayer2);
+  //í”Œë ˆì´ì–´ 1
+	pPlayer1->SetParent(pPlayer2);
 
-	CUI* pPlayer2HP = UIFactory<CHPBar>::Create();
+  CUI* pPlayer2HP = UIFactory<CHPBar>::Create();
 	pPlayer2HP->SetTarget(pPlayer2);
 	UIMgr::GetInstance().AddUI(UI_NORMAL, pPlayer2HP);
 
@@ -50,12 +53,13 @@ void CStage::Initialize()
 	pPlayer2Exp->SetTarget(pPlayer2);
 	UIMgr::GetInstance().AddUI(UI_NORMAL, pPlayer2Exp);
 
-	// Ä«¸Ş¶ó ¼³Á¤
+	// ì¹´ë©”ë¼ ì„¤ì •
 	CameraMgr::GetInstance().Set_Target1(pPlayer1);
 	CameraMgr::GetInstance().Set_Target2(pPlayer2);
 
 	CObj* pObj;
-	// Áß¾Ó Àå¾Ö¹°
+
+	// ì¤‘ì•™ ì¥ì• ë¬¼
 	for (int i = 0; i < 2; ++i) {
 		pObj = AbstractFactory<CObstacle>::Create();
 		static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_TRIANGLE, { 320+i*1280.f, 180+i*720.f, 0 }, 0);
@@ -74,7 +78,7 @@ void CStage::Initialize()
 		ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
 	}
 
-	// »óÇÏÁÂ¿ì º®
+	// ìƒí•˜ì¢Œìš° ë²½
 	pObj = AbstractFactory<CObstacle>::Create();
 	static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_VERTICAL_WALL, { -100, 720, 0 }, 0);
 	ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
