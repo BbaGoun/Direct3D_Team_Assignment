@@ -10,10 +10,14 @@ void CTankNomal::Fire(CEnemy* _Enemy)
 	D3DXMATRIX matRotZ;
 	D3DXVECTOR3 vTempDir = _Enemy->GetDir();
 	D3DXVECTOR3 vTempLook = _Enemy->GetLook();
-
+	CObj* Temp;
 	D3DXMatrixRotationZ(&matRotZ, _Enemy->GetRadian());
 	D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
-	ObjMgr::GetInstance().AddObject(OBJ_BULLET, AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), 5.f));
+	Temp = AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), 5.f);
+
+	Temp->SetParent(_Enemy);
+	ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
+
 	_Enemy->Accelerate(-5.f);
 	_Enemy->SetDelay(15.f);
 }
@@ -24,6 +28,7 @@ void CTankShotGun::Fire(CEnemy* _Enemy)
 	D3DXVECTOR3 vTempDir= _Enemy->GetDir();
 	D3DXVECTOR3 vTempLook= _Enemy->GetLook();
 	float fTempSpeed;
+	CObj* Temp;
 
 	D3DXMatrixRotationZ(&matRotZ, _Enemy->GetRadian());
 	for (int i(0); i < 10; ++i)
@@ -32,10 +37,13 @@ void CTankShotGun::Fire(CEnemy* _Enemy)
 		D3DXMatrixRotationZ(&matRotZ, _Enemy->GetRadian()+D3DXToRadian(-15 + dis(gen) * 0.3));
 
 		D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
-		ObjMgr::GetInstance().AddObject(OBJ_BULLET, AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), fTempSpeed));
+		Temp=AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), fTempSpeed);
+		Temp->SetParent(_Enemy);
+		ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 	}
 	_Enemy->Accelerate(-20.f);
 	_Enemy->SetDelay(30.f);
+
 }
 
 void CTankSommoner::Fire(CEnemy* _Enemy)
@@ -49,17 +57,23 @@ void CTankBooster::Fire(CEnemy* _Enemy)
 	D3DXVECTOR3 vTempDir = _Enemy->GetDir();
 	D3DXVECTOR3 vTempLook = _Enemy->GetLook();
 	float fTempSpeed;
+	CObj* Temp;
 
 	D3DXMatrixRotationZ(&matRotZ, _Enemy->GetRadian());
 	D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
-	ObjMgr::GetInstance().AddObject(OBJ_BULLET, AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), 10.f));
+	Temp = AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), 5.f);
+
+	Temp->SetParent(_Enemy);
+	ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 	for (int i(0); i < 5; ++i)
 	{
 		fTempSpeed = 5.f + (dis(gen) % 9 + 5);
-		D3DXMatrixRotationZ(&matRotZ, _Enemy->GetRadian() + D3DXToRadian(180+(-15 + dis(gen) * 0.3)));
-		
+		D3DXMatrixRotationZ(&matRotZ, _Enemy->GetRadian() + 180+(D3DXToRadian(-15 + dis(gen) * 0.3)));
+
 		D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
-		ObjMgr::GetInstance().AddObject(OBJ_BULLET, AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), fTempSpeed));
+		Temp = AbstractFactory<CBullet1>::Create(vTempDir, _Enemy->GetPos(), fTempSpeed);
+		Temp->SetParent(_Enemy);
+		ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 	}
 	_Enemy->Accelerate(+15.f);
 	_Enemy->SetDelay(25.f);
