@@ -19,7 +19,6 @@ void CBullet1::Update()
 {
 	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
 
-
 	D3DXMatrixScaling(&matScale, 1, 1, 1);
 	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
 	D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);

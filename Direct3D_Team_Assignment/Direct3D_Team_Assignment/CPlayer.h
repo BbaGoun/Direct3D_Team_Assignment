@@ -38,11 +38,14 @@ private:
 
     bool m_bIsShootGun;
 
-    // CObj��(��) ���� ��ӵ�
     bool m_bIsTargeted;
     bool m_bIsBooster;
     bool m_bIsSummoner;
 
     bool m_bAttacked;
     int m_iAttackDelay;
+
+    int m_iSwitchDelay;
+
+    float m_fGoBack;
 };

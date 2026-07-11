@@ -154,6 +154,7 @@
     <ClInclude Include="CSummonee.h" />
     <ClInclude Include="CTank.h" />
     <ClInclude Include="CTankType.h" />
+    <ClInclude Include="CTargetBullet2.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Direct3D_Team_Assignment.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="CPreview.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CStage.cpp" />
+    <ClCompile Include="CTargetBullet2.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CSummonee.cpp" />
     <ClCompile Include="Define.cpp" />

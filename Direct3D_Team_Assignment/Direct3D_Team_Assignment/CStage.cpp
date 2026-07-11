@@ -48,6 +48,9 @@ void CStage::Initialize()
 	pPlayer2Exp->SetTarget(pPlayer2);
 	UIMgr::GetInstance().AddUI(UI_NORMAL, pPlayer2Exp);
 
+	//플레이어 1
+	pPlayer1->SetParent(pPlayer2);
+
 	// 중앙 장애물
 	CObj* pObj = AbstractFactory<CObstacle>::Create();
 	static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_TRIANGLE, { 320, 180, 0 }, 0);

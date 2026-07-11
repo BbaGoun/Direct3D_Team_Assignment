@@ -103,6 +103,9 @@
     <Filter Include="MainGame\00. Obj\02. Enemy\CBullet1\TakingBullet">
       <UniqueIdentifier>{feb555e6-74e9-4b24-a9e1-85380455042e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\00. Obj\01. Player\TargetBullet2">
+      <UniqueIdentifier>{b46edc3b-7bd2-42cc-89d1-987520963d49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -210,6 +213,9 @@
     <ClInclude Include="CDrone.h">
       <Filter>MainGame\00. Obj\02. Enemy\CBullet1\Drone</Filter>
     </ClInclude>
+    <ClInclude Include="CTargetBullet2.h">
+      <Filter>MainGame\00. Obj\01. Player\TargetBullet2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Direct3D_Team_Assignment.rc">
@@ -311,6 +317,9 @@
     </ClCompile>
     <ClCompile Include="CDrone.cpp">
       <Filter>MainGame\00. Obj\02. Enemy\CBullet1\Drone</Filter>
+    </ClCompile>
+    <ClCompile Include="CTargetBullet2.cpp">
+      <Filter>MainGame\00. Obj\01. Player\TargetBullet2</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
