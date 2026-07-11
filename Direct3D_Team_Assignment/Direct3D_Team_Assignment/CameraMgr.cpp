@@ -11,28 +11,31 @@ CameraMgr::~CameraMgr()
 }
 
 void CameraMgr::LateUpdate() {
-	if (m_pTarget1) {
+	if (m_pTarget1 && m_pTarget2) {
 		D3DXVECTOR3 cameraCenter;
-		int width = 1280;
-		int height = 720;
+		
+		D3DXVECTOR3 worldPos1 = m_pTarget1->GetPos();
 
-		if (m_pTarget2) {
-			D3DXVECTOR3 worldPos1 = m_pTarget1->GetPos();
+		D3DXVECTOR3 worldPos2 = m_pTarget2->GetPos();
 
-			D3DXVECTOR3 worldPos2 = m_pTarget2->GetPos();
+		cameraCenter = {
+			(worldPos1.x + worldPos2.x) * 0.5f,
+			(worldPos1.y + worldPos2.y) * 0.5f,
+			0
+		};
 
-			cameraCenter = {
-				(worldPos1.x + worldPos2.x) * 0.5f,
-				(worldPos1.y + worldPos2.y) * 0.5f,
-				0
-			};
-		}
+		float gapX = fabsf(worldPos1.x - worldPos2.x);
+		float gapY = fabsf(worldPos1.y - worldPos2.y);
+		float scaleX = min(2.f, max(1.f, gapX / 1024));
+		float scaleY = min(2.f, max(1.f, gapY / 576));
+		m_fCameraScale = max(scaleX, scaleY);
+		cameraCenter.z = -m_fCameraScale;
 
 		RECT cameraRECT = {
-			int(cameraCenter.x - (width >> 1)),
-			int(cameraCenter.y - (height >> 1)),
-			width,
-			height
+			int(cameraCenter.x - 1280 * m_fCameraScale * 0.5f),
+			int(cameraCenter.y - 720 * m_fCameraScale * 0.5f),
+			int(cameraCenter.x + 1280 * m_fCameraScale * 0.5f),
+			int(cameraCenter.y + 720 * m_fCameraScale * 0.5f),
 		};
 
 		RECT rc{};
@@ -61,6 +64,20 @@ void CameraMgr::LateUpdate() {
 			m_fShakeDistance -= 1;
 			m_fMulRadian += 0.7854f;
 		}
+
+		D3DXVECTOR3 vAt = cameraCenter;
+		vAt.z = 1;
+		D3DXVECTOR3 vUp = { 0, 1, 0 };
+		D3DXMatrixLookAtLH(&m_matView,
+			&cameraCenter,
+			&vAt,
+			&vUp);
+		D3DXMatrixPerspectiveFovLH(&m_matProj,
+			D3DXToRadian(90),
+			1,
+			0,
+			100
+		);
 
 		Set_CameraCenter(cameraCenter);
 	}

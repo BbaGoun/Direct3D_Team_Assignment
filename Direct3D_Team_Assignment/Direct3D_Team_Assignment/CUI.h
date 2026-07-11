@@ -29,5 +29,7 @@ protected:
 
 	vector<D3DXVECTOR3> m_vLocalVec;
 	vector<D3DXVECTOR3> m_vWorldVec;
+	vector<D3DXVECTOR3> m_vViewVec;
+	vector<D3DXVECTOR3> m_vProjVec;
 };
 

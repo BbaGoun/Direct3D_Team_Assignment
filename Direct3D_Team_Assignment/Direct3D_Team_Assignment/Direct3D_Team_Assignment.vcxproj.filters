@@ -31,9 +31,6 @@
     <Filter Include="MainGame\00. Obj\02. Enemy\CBullet1">
       <UniqueIdentifier>{27250e12-1227-4ab7-a8e9-25cb21ff9140}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\00. Obj\03.Bullet2">
-      <UniqueIdentifier>{37697e54-99a4-447d-9f65-08de96d99f0b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\00. Obj\BreakableObj">
       <UniqueIdentifier>{0b35914f-ec81-47fb-a0c3-7e2fb8d0c1c2}</UniqueIdentifier>
     </Filter>
@@ -125,9 +122,6 @@
     </ClInclude>
     <ClInclude Include="Define.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CBullet2.h">
-      <Filter>MainGame\00. Obj\03.Bullet2</Filter>
     </ClInclude>
     <ClInclude Include="CMainGame.h">
       <Filter>MainGame</Filter>
@@ -257,9 +251,6 @@
     </ClCompile>
     <ClCompile Include="CMenu.cpp">
       <Filter>MainGame\03. Scene\Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="CBullet2.cpp">
-      <Filter>MainGame\00. Obj\03.Bullet2</Filter>
     </ClCompile>
     <ClCompile Include="Define.cpp">
       <Filter>소스 파일</Filter>

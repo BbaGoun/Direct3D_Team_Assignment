@@ -16,7 +16,7 @@ public:
     void Release() override;
 
 private:
-    D3DXVECTOR3 m_vWorldExpRightTop;
-    D3DXVECTOR3 m_vWorldExpRightBottom;
+    D3DXVECTOR3 m_vExpRightTop;
+    D3DXVECTOR3 m_vExpRightBottom;
 };
 

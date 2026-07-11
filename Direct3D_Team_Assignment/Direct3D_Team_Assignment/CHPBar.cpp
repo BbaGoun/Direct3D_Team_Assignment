@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CHPBar.h"
+#include "CameraMgr.h"
 
 CHPBar::CHPBar()
 {
@@ -17,6 +18,8 @@ void CHPBar::Initialize()
 	m_vLocalVec.push_back({ -50, 12.5, 0 });
 
 	m_vWorldVec.resize(m_vLocalVec.size());
+	m_vViewVec.resize(m_vLocalVec.size());
+	m_vProjVec.resize(m_vLocalVec.size());
 }
 
 void CHPBar::Update()
@@ -37,8 +40,26 @@ void CHPBar::Update()
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matTrans);
 	}
 
-	D3DXVec3TransformCoord(&m_vWorldHPRightTop, &hpRightTop, &matTrans);
-	D3DXVec3TransformCoord(&m_vWorldHPRightBottom, &hpRightBottom, &matTrans);
+	D3DXVec3TransformCoord(&m_vHPRightTop, &hpRightTop, &matTrans);
+	D3DXVec3TransformCoord(&m_vHPRightBottom, &hpRightBottom, &matTrans);
+
+	// 월드 -> 뷰 -> 투영 스페이스 변환
+	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
+
+	D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
+
+	for (int i = 0; i < m_vWorldVec.size(); ++i) {
+		D3DXVec3TransformCoord(&m_vViewVec[i], &m_vWorldVec[i], &matView);
+		// Z Division 이 행렬에 포함되어 있음.
+		D3DXVec3TransformCoord(&m_vProjVec[i], &m_vViewVec[i], &matProj);
+		m_vProjVec[i] += {640, 360, 0};
+	}
+	D3DXVec3TransformCoord(&m_vHPRightTop, &m_vHPRightTop, &matView);
+	D3DXVec3TransformCoord(&m_vHPRightTop, &m_vHPRightTop, &matProj);
+	m_vHPRightTop += {640, 360, 0};
+	D3DXVec3TransformCoord(&m_vHPRightBottom, &m_vHPRightBottom, &matView);
+	D3DXVec3TransformCoord(&m_vHPRightBottom, &m_vHPRightBottom, &matProj);
+	m_vHPRightBottom += {640, 360, 0};
 }
 
 void CHPBar::LateUpdate()
@@ -50,12 +71,12 @@ void CHPBar::Render(HDC _hDC)
 	POINT pointsBase[4];
 	POINT pointsBar[4];
 	for (int i = 0; i < m_vWorldVec.size(); ++i) {
-		pointsBase[i] = { int(m_vWorldVec[i].x), int(m_vWorldVec[i].y) };
+		pointsBase[i] = { int(m_vProjVec[i].x), int(m_vProjVec[i].y) };
 	}
-	pointsBar[0] = { int(m_vWorldVec[0].x), int(m_vWorldVec[0].y) };
-	pointsBar[1] = { int(m_vWorldHPRightTop.x), int(m_vWorldHPRightTop.y) };
-	pointsBar[2] = { int(m_vWorldHPRightBottom.x), int(m_vWorldHPRightBottom.y) };
-	pointsBar[3] = { int(m_vWorldVec[3].x), int(m_vWorldVec[3].y) };
+	pointsBar[0] = { int(m_vProjVec[0].x), int(m_vProjVec[0].y) };
+	pointsBar[1] = { int(m_vHPRightTop.x), int(m_vHPRightTop.y) };
+	pointsBar[2] = { int(m_vHPRightBottom.x), int(m_vHPRightBottom.y) };
+	pointsBar[3] = { int(m_vProjVec[3].x), int(m_vProjVec[3].y) };
 
 	HBRUSH hBrush1 = CreateSolidBrush(RGB(255, 255, 255));
 	HBRUSH hOldBrush = (HBRUSH)SelectObject(_hDC, hBrush1);

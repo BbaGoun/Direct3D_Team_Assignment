@@ -52,6 +52,9 @@ public:
 private:
     void KeyInput();
     void ChaingeTankType(TANKID _eID);
+    void UpdateTimers() override;
+    void Dead() override;
+
 private:
    
     D3DXVECTOR3 m_vLocalPosinPoint;
@@ -71,5 +74,8 @@ private:
     float m_fDecel;        
 
     bool m_bMove;
+
+    bool m_bRespawn;
+    float m_fRespawnTimer;
 };
 

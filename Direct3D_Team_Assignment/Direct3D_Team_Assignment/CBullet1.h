@@ -20,9 +20,6 @@ public:
 
 private:
 
-	D3DXVECTOR3 m_vWorldPoint;
-	D3DXVECTOR3 m_vLocalPoint;
-
 	float m_fSize;
 
 	//°¢Á¾ ÃÑ¾Ë¿ë ½ºÅÈ Á¤º¸ 

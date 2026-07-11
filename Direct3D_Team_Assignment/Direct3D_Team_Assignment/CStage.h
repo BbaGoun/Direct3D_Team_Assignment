@@ -18,5 +18,8 @@ public:
     void Release() override;
 
 private:
+    void SpawnBreakable();
 
+private:
+    float m_fSpawnTimer;
 };
