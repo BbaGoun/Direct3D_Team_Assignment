@@ -61,26 +61,35 @@ void CStage::Initialize()
 	CObj* pObj;
 
 	// 중앙 장애물
-	for (int i = 0; i < 2; ++i) {
-		pObj = AbstractFactory<CObstacle>::Create();
-		static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_TRIANGLE, { 320+i*1280.f, 180+i*720.f, 0 }, 0);
-		ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
+	pObj = AbstractFactory<CObstacle>::Create();
+	static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_TRIANGLE, { 320, 230, 0 }, 0);
+	ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
 
-		pObj = AbstractFactory<CObstacle>::Create();
-		static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_SQUARE, { 960 + i * 1280.f, 180 + i * 720.f, 0 }, 0);
-		ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
+	pObj = AbstractFactory<CObstacle>::Create();
+	static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_SQUARE, { 960, 230, 0 }, 0);
+	ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
 
-		pObj = AbstractFactory<CObstacle>::Create();
-		static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_PENTAGON, { 320 + i * 1280.f, 540 + i * 720.f, 0 }, 0);
-		ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
+	pObj = AbstractFactory<CObstacle>::Create();
+	static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_PENTAGON, { 320, 590, 0 }, 0);
+	ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
 
+	pObj = AbstractFactory<CObstacle>::Create();
+	static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_HEXAGON, { 960, 590, 0 }, 0);
+	ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
+
+	for (int i = 0; i < 4; ++i) {
 		pObj = AbstractFactory<CObstacle>::Create();
-		static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_HEXAGON, { 960 + i * 1280.f, 540 + i * 720.f, 0 }, 0);
+		static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_ROTATION_CROSS_PART, { 1280, 720, 0 }, i * D3DXToRadian(90));
 		ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
 	}
-	//pObj = AbstractFactory<CObstacle>::Create();
-	//static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_ROTATION_CROSS, { 1280, 720, 0 }, 0);
-	//ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
+
+	pObj = AbstractFactory<CObstacle>::Create();
+	static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_ORBIT, { 1920, 1030, 0 }, 0);
+	ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
+	
+	pObj = AbstractFactory<CObstacle>::Create();
+	static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_ORBIT, { 1920, 1030, 0 }, D3DXToRadian(180));
+	ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
 
 	// 상하좌우 벽
 	pObj = AbstractFactory<CObstacle>::Create();
