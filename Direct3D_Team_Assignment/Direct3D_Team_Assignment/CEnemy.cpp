@@ -218,11 +218,11 @@ void CEnemy::KeyInput()
 			m_pTankStat->Fire(this);
 		}
 	}
-	if (GetAsyncKeyState('P')) {
-		TANKID eNextID;
-		eNextID = (TANKID)((m_eCurTankID)+1 % TANK_END);
-		ChaingeTankType(eNextID);
-	}
+	//if (GetAsyncKeyState('P')) {
+	//	TANKID eNextID;
+	//	eNextID = (TANKID)((m_eCurTankID)+1 % TANK_END);
+	//	ChaingeTankType(eNextID);
+	//}
 	if (GetAsyncKeyState('O')) {
 		TANKID eBeforID;
 		eBeforID = (TANKID)((m_eCurTankID)+TANK_END - 1 % TANK_END);
