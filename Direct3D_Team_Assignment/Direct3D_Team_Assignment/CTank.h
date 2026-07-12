@@ -19,11 +19,14 @@ public:
 
     void SetDelayAndRebound(CEnemy* _Enemy);
 
+    void PosUpdate(CEnemy* _Enemy);
+
 protected:
 
     float m_fDelayTime;
     float m_fRebound;
 
-    D3DXVECTOR3 m_vLocalPosinPoint;
-    D3DXVECTOR3 m_vWorldPosinPoint;
+    vector<D3DXVECTOR3> m_vLocalPosinPoint;
+    vector<D3DXVECTOR3> m_vWorldPosinPoint;
+
 };

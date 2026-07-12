@@ -8,6 +8,7 @@ CBullet1::CBullet1()
 
 CBullet1::~CBullet1()
 {
+	Release();
 }
 
 void CBullet1::Initialize()
@@ -44,15 +45,15 @@ void CBullet1::Update()
 	}
 
 	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
-
 	D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
 
 	for (int i = 0; i < m_vWorldVec.size(); ++i) {
 		D3DXVec3TransformCoord(&m_vViewVec[i], &m_vWorldVec[i], &matView);
-		// Z Division �� ��Ŀ� ���ԵǾ� ����.
 		D3DXVec3TransformCoord(&m_vProjVec[i], &m_vViewVec[i], &matProj);
 		m_vProjVec[i] += {640, 360, 0};
 	}
+
+	m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
 }
 
 void CBullet1::LateUpdate()
@@ -61,7 +62,6 @@ void CBullet1::LateUpdate()
 
 void CBullet1::Render(HDC _hDC)
 {
-	// ������ ���� ���� ��� ũ�� ������ ���� ��
 	float projScale = CameraMgr::GetInstance().GetProjScale();
 
 	Ellipse(_hDC,

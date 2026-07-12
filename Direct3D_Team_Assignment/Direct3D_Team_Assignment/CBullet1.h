@@ -20,6 +20,4 @@ public:
 private:
 	float m_fDuration;
 	bool m_bBeTraking;
-
-	//각종 총알용 스탯 정보 
 };
