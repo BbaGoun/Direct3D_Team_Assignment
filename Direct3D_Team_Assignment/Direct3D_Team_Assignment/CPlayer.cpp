@@ -421,7 +421,7 @@ void CPlayer::AttackKeyInput()
 			pObj->SetPos(m_vWorldPosinVec);
 			pObj->SetDir(m_tINFO.vDir);
 			pObj->SetParent(this);
-			dynamic_cast<CTargetBullet2*>(pObj)->SetTarget(m_pParent);
+			static_cast<CTargetBullet2*>(pObj)->SetTarget(m_pParent);
 			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj);
 
 			m_fGoBack = -10.f;

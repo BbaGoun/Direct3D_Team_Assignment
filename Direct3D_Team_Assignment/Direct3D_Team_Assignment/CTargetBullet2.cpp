@@ -25,7 +25,11 @@ void CTargetBullet2::Update()
 		FollowTarget(m_pTarget);
 	}
 	else
-		m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
+	m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
+	//일단 이것 팔로우타겟에서 움직임을 진행하고있으면 필요없긴해요
+	//상민이형이 타겟 안없어지게 바꿔서 ㄱㅊ음
+	//나중에 플레이어 추적이 아니라 주변 오브젝트 추적으로 바뀌면 그때 고려하면됨.
+	//혹시 모르니까 냄겨두고(삭제 해도 바뀐게 없었으니까
 
 	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
 
@@ -45,6 +49,7 @@ void CTargetBullet2::Update()
 	D3DXVec3TransformCoord(&m_vViewVec, &m_vWorldVec, &matView);
 	D3DXVec3TransformCoord(&m_vProjVec, &m_vViewVec, &matProj);
 	m_vProjVec += {640, 360, 0};
+	
 }
 
 void CTargetBullet2::LateUpdate()
@@ -70,29 +75,41 @@ void CTargetBullet2::FollowTarget(CObj* pTarget)
 {
 	D3DXVECTOR3 tempTargetPos = pTarget->GetPos() - m_tINFO.vPos;
 
-	//float fLength = sqrtf((tempTargetPos.x * tempTargetPos.x) + (tempTargetPos.y * tempTargetPos.y));
 	D3DXVec3Normalize(&tempTargetPos, &tempTargetPos);
+	
+	D3DXVECTOR3 tempCrossResult;
+	D3DXVec3Cross(&tempCrossResult, &m_tINFO.vDir, &tempTargetPos);
+	
+	float fAngle = D3DXVec3Dot(&m_tINFO.vDir, &tempTargetPos);
 
-	//float fDirX = tempTargetPos.x / fLength;
-	//float fDirY = tempTargetPos.y / fLength;
-	//float fDirZ = 0;
-	//
-	//float PosX = 1;
-	//float PosY = 0;
-	//float PosZ = 0;
+	if (fAngle <= -1.f)
+		fAngle = -1.f;
+	if (fAngle >= 1.f)
+		fAngle = 1.f;
 
-	//float fAngle = acosf((fDirX * PosX) + (fDirY * PosY) /
-	//	(sqrtf((fDirX * fDirX) + (fDirY * fDirY)) *
-	//		sqrtf((PosX * PosX) + (PosY * PosY))));
-
-	D3DXVECTOR3 vRight = { 1, 0, 0 };
-	float fAngle = D3DXVec3Dot(&tempTargetPos, &vRight);
-
-	if (pTarget->GetPos().y > m_tINFO.vPos.y)
+	fAngle = acosf(fAngle);
+	//일단 버그중에 하나 고침  아크코사인 다음에 선회력 계산을 해야하는데 순서가 꼬여있었고, 포스문제도 제가 또 확인해볼게요
+	if (fAngle > D3DXToRadian(5))
 	{
-		fAngle = 2 * D3DX_PI - fAngle;
+		fAngle = D3DXToRadian(5);
+	}
+	if (fAngle < D3DXToRadian(-5))
+	{
+		fAngle = D3DXToRadian(-5);
 	}
 
-	m_tINFO.vPos.x += cosf(fAngle) * m_fSpeed;
-	m_tINFO.vPos.y -= sinf(fAngle) * m_fSpeed;
+	if (tempCrossResult.z > 0)
+	{
+		fAngle = -fAngle;
+	}
+
+	m_fRadian += fAngle;
+
+	D3DXMATRIX newMatDIR;
+	D3DXVECTOR3 newDir;
+
+	D3DXMatrixRotationZ(&newMatDIR, m_fRadian);
+	D3DXVec3TransformNormal(&newDir, &m_tINFO.vDir, &newMatDIR);
+
+	m_tINFO.vPos += newDir * m_fSpeed;
 }
