@@ -135,6 +135,7 @@
     <ClInclude Include="CBreakableObj.h" />
     <ClInclude Include="CameraMgr.h" />
     <ClInclude Include="CBullet1.h" />
+    <ClInclude Include="CBulletDrone.h" />
     <ClInclude Include="CBulletTrakin1.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CExpBar.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="CBreakableObj.cpp" />
     <ClCompile Include="CameraMgr.cpp" />
     <ClCompile Include="CBullet1.cpp" />
+    <ClCompile Include="CBulletDrone.cpp" />
     <ClCompile Include="CBulletTrakin1.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CExpBar.cpp" />

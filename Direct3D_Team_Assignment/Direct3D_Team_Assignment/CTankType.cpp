@@ -17,9 +17,6 @@ void CTankNomal::Fire(CEnemy* _Enemy)
 	{
 		vTempDir = m_vWorldPosinPoint[i] - _Enemy->GetPos();
 		D3DXVec3Normalize(&vTempDir, &vTempDir);
-		D3DXMatrixRotationZ(&matRotZ, _Enemy->GetRadian() + D3DXToRadian(-5 + dis(gen) * (10.0 / 99.0)));
-		D3DXVec3TransformNormal(&vTempDir, &vTempDir, &matRotZ);
-
 		Temp = AbstractFactory<CBullet1>::Create(vTempDir, m_vWorldPosinPoint[i], 8.f);
 		Temp->SetParent(_Enemy);
 		ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
@@ -85,16 +82,20 @@ void CTankBooster::Fire(CEnemy* _Enemy)
 void CTankGuided::Fire(CEnemy* _Enemy)
 {
 	D3DXMATRIX matRotZ;
-	D3DXVECTOR3 vTempDir = _Enemy->GetDir();
+	D3DXVECTOR3 vTempDir;
 	D3DXVECTOR3 vTempLook = _Enemy->GetLook();
 	CObj* Temp;
-	D3DXMatrixRotationZ(&matRotZ, _Enemy->GetRadian() + D3DXToRadian(-5 + dis(gen) * (10.0 / 99.0)));
-	D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
-	Temp = AbstractFactory<CBulletTrakin1>::Create(vTempDir, _Enemy->GetPos(), 5.f);
 
-	Temp->SetParent(_Enemy);
-	static_cast<CBulletTrakin1*>(Temp)->SetTarget(_Enemy->GetParent());
-	ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
+	for (int i(0); i < m_vWorldPosinPoint.size(); i++)
+	{
+		vTempDir = m_vWorldPosinPoint[i] - _Enemy->GetPos();
+		D3DXVec3Normalize(&vTempDir, &vTempDir);
+		Temp = AbstractFactory<CBulletTrakin1>::Create(vTempDir, m_vWorldPosinPoint[i], 5.f);
+
+		Temp->SetParent(_Enemy);
+		static_cast<CBulletTrakin1*>(Temp)->SetTarget(_Enemy->GetParent());
+		ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
+	}
 
 	SetDelayAndRebound(_Enemy);
 }
@@ -122,10 +123,9 @@ void CTankSommoner::RanderPosin(HDC _hdc)
 
 void CTankNomal::Initialize(CEnemy* _Enemy)
 {
-	m_vLocalPosinPoint.resize(2);
-	m_vWorldPosinPoint.resize(2);
-	m_vLocalPosinPoint[0] = { 50,-100,0 };
-	m_vLocalPosinPoint[1] = { 0,-100,0 };
+	m_vLocalPosinPoint.resize(1);
+	m_vWorldPosinPoint.resize(1);
+	m_vLocalPosinPoint[0] = { 0,-100,0 };
 
 	m_fDelayTime = 15.f;
 	m_fRebound = -5.f;
@@ -155,6 +155,10 @@ void CTankSommoner::Initialize(CEnemy* _Enemy)
 
 void CTankGuided::Initialize(CEnemy* _Enemy)
 {
+	m_vLocalPosinPoint.resize(1);
+	m_vWorldPosinPoint.resize(1);
+	m_vLocalPosinPoint[0] = { 0,-100,0 };
+
 	m_fDelayTime = 30.f;
 	m_fRebound = -10.f;
 	_Enemy->SetDelayTimer(m_fDelayTime);

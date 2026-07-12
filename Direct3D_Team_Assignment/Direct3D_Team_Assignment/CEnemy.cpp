@@ -70,7 +70,8 @@ void CEnemy::Update()
 	D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
 
 	D3DXMatrixIdentity(&matWorld);
-	matWorld = matScale * matRotZ * matTrans;
+	matWorld = matScale * matRotZ * matTrans;//공전
+	matWorld = matScale * matRotZ * matTrans;//공전
 	for (int i = 0; i < 4; ++i) {
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
