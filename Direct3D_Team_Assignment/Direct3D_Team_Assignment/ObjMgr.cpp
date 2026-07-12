@@ -128,6 +128,7 @@ void ObjMgr::CollisionBulletToObstacle()
 			if (CollisionProcess::CollisionBulletToObj(pBullet, pObstacle)) {
 				// 벽에 닿으면 삭제
 				ObjMgr::GetInstance().DeleteSpecificObj(OBJ_BULLET, pBullet);
+				pBullet->SetDead(true);
 			}
 		}
 	}

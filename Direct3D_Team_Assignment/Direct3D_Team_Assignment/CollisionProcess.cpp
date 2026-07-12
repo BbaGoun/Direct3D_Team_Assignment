@@ -34,7 +34,7 @@ bool CollisionProcess::CollisionBulletToObstacle(CObj* _pBullet, CObj* _pObstacl
 			minDistance = distance;
 	}
 
-	float radius = static_cast<CBullet1*>(_pBullet)->GetRadius();
+	float radius = _pBullet->GetRadius();
 	if (minDistance < radius) {
 		ObjMgr::GetInstance().DeleteSpecificObj(OBJ_BULLET, _pBullet);
 		return true;
@@ -71,7 +71,7 @@ bool CollisionProcess::CollisionBulletToObj(CObj* _pBullet, CObj* _pObj)
 			minDistance = distance;
 	}
 
-	float radius = static_cast<CBullet1*>(_pBullet)->GetRadius();
+	float radius = _pBullet->GetRadius();
 	if (minDistance < radius) {
 		return true;
 	}
@@ -80,8 +80,8 @@ bool CollisionProcess::CollisionBulletToObj(CObj* _pBullet, CObj* _pObj)
 
 bool CollisionProcess::CollisionBulletToBullet(CObj* _pDstObj, CObj* _pSrcObj)
 {
-	float radiusDst = static_cast<CBullet1*>(_pDstObj)->GetRadius();
-	float radiusSrc = static_cast<CBullet1*>(_pSrcObj)->GetRadius();
+	float radiusDst = _pDstObj->GetRadius();
+	float radiusSrc = _pSrcObj->GetRadius();
 
 	D3DXVECTOR3 dstPos = _pDstObj->GetPos();
 	D3DXVECTOR3 srcPos = _pSrcObj->GetPos();
