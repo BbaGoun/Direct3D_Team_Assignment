@@ -48,11 +48,13 @@ void CBulletDrone::Update()
 	D3DXMatrixTranslation(&matParTrans, m_pParent->GetPos().x, m_pParent->GetPos().y, m_pParent->GetPos().z);
 
 	D3DXMatrixIdentity(&matWorld); 
-	matWorld = matScale * matTrans * matRotZ * matParTrans;
+	matWorld = matScale * matRotZ * matTrans * matParTrans; 
+	
 	for (int i = 0; i < 4; ++i) {
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 		//D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matParTrans);
 	}
+	D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
 
 	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
 	D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
