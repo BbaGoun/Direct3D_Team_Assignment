@@ -49,15 +49,13 @@ public:
     float GetDelay() { return m_fDelayTime;}
 
 private:
+
     void KeyInput();
     void ChaingeTankType(TANKID _eID);
     void UpdateTimers() override;
     void Dead() override;
 
 private:
-   
-    D3DXVECTOR3 m_vLocalPosinPoint;
-    D3DXVECTOR3 m_vWorldPosinPoint;
 
     TANKID m_eNextTankID;
     TANKID m_eCurTankID;
