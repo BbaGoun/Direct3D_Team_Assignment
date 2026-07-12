@@ -77,27 +77,31 @@ void CPlayer::Update()
 
 	if (m_iLevel == 2)
 	{
-		m_bIsShootGun = true;
-	}
-	else if (m_bIsShootGun && m_iLevel == 3)
-	{
-		m_bIsShootGun = false;
+		m_fGoBack = 0;
 		m_bIsTargeted = true;
 	}
-	else if (m_bIsTargeted && m_iLevel == 4)
+	else if (m_bIsTargeted && m_iLevel == 3)
 	{
+		m_fGoBack = 0;
 		m_bIsTargeted = false;
 		m_bIsBooster = true;
 	}
-	else if (m_bIsBooster && m_iLevel == 5)
+	else if (m_bIsBooster && m_iLevel == 4)
 	{
+		m_fGoBack = 0;
 		m_bIsBooster = false;
-		m_bIsSummoner = true;
+		m_bIsShootGun = true;
 	}
-	else if (m_bIsSummoner && m_iLevel == 6)
+	else if (m_bIsShootGun && m_iLevel == 5)
 	{
-		m_bIsSummoner = false;
+		m_fGoBack = 0;
+		//m_bIsShootGun = false;
+		//m_bIsSummoner = true;
 	}
+	/*else if (m_bIsSummoner && m_iLevel == 6)
+	{
+		m_fGoBack = 0;
+	}*/
 
 	KeyInput();
 
@@ -377,6 +381,7 @@ void CPlayer::AttackKeyInput()
 	{
 		if (m_bIsShootGun)
 		{
+			m_fGoBack = 0;
 			D3DXMATRIX matRotZ, matRot;
 			D3DXMatrixRotationZ(&matRotZ, m_fRadian);
 			D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
