@@ -15,8 +15,6 @@ public:
 	void Render(HDC _hDC) override;
 	void Release() override;
 
-	float GetRadius() { return m_fSize / 2; }
-
 public:
 	void SetTarget(CObj* pTarget) { m_pTarget = pTarget; }
 
@@ -24,10 +22,10 @@ public:
 	void FollowTarget(CObj* pTarget);
 
 private:
-	D3DXVECTOR3 m_vWorldPoint;
-	D3DXVECTOR3 m_vLocalPoint;
+	D3DXVECTOR3 m_vWorldVec;
+	D3DXVECTOR3 m_vLocalVec;
+	D3DXVECTOR3 m_vViewVec;
+	D3DXVECTOR3 m_vProjVec;
 
 	CObj* m_pTarget;
-
-	float m_fSize;
 };
