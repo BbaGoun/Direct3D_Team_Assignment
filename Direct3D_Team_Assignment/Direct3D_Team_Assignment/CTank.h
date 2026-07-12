@@ -20,6 +20,8 @@ public:
     void SetDelayAndRebound(CEnemy* _Enemy);
 
     void PosUpdate(CEnemy* _Enemy);
+    
+    float GetPosinRadian(D3DXVECTOR3 _posinPoint, D3DXVECTOR3 _PlayerPoint);
 
 protected:
 

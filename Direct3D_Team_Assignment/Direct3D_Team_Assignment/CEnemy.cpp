@@ -221,13 +221,13 @@ void CEnemy::KeyInput()
 	if (GetAsyncKeyState('P')) {
 		TANKID eNextID;
 		eNextID = (TANKID)((m_eCurTankID)+1 % TANK_END);
-		ChaingeTankType(/*eNextID*/TANK_GUIDED);
+		ChaingeTankType(eNextID);
 	}
-	//if (GetAsyncKeyState('O')) {
-	//	TANKID eBeforID;
-	//	eBeforID = (TANKID)((m_eCurTankID)+TANK_END - 1 % TANK_END);
-	//	ChaingeTankType(eBeforID);
-	//}
+	if (GetAsyncKeyState('O')) {
+		TANKID eBeforID;
+		eBeforID = (TANKID)((m_eCurTankID)+TANK_END - 1 % TANK_END);
+		ChaingeTankType(eBeforID);
+	}
 }
 
 void CEnemy::ChaingeTankType(TANKID _eID)
@@ -251,6 +251,7 @@ void CEnemy::ChaingeTankType(TANKID _eID)
 			m_pTankStat = new CTankBooster;
 			break;
 		case TANK_SOMMONER:
+			m_pTankStat = new CTankSommoner;
 			break;
 		}
 		m_eCurTankID = m_eNextTankID;
