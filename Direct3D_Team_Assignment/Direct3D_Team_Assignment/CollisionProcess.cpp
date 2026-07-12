@@ -128,6 +128,8 @@ bool CollisionProcess::CheckPointInPolygon(D3DXVECTOR3 _vPoint, vector<D3DXVECTO
 	float ccw;
 	bool bFirst = true;
 	int m = _VertexVec.size();
+	if (m < 3)
+		return false;
 	for (int i = 0; i < m; ++i) {
 		D3DXVECTOR3 edge = _VertexVec[(i + 1) % m] - _VertexVec[i];
 		D3DXVECTOR3 toPoint = _vPoint - _VertexVec[i];
