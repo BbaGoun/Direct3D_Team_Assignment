@@ -210,6 +210,12 @@
     <ClInclude Include="CTargetBullet2.h">
       <Filter>MainGame\00. Obj\01. Player\TargetBullet2</Filter>
     </ClInclude>
+    <ClInclude Include="KeyMgr.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CBulletDrone.h">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\Drone</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Direct3D_Team_Assignment.rc">
@@ -311,6 +317,12 @@
     </ClCompile>
     <ClCompile Include="CTargetBullet2.cpp">
       <Filter>MainGame\00. Obj\01. Player\TargetBullet2</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMgr.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CBulletDrone.cpp">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\Drone</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

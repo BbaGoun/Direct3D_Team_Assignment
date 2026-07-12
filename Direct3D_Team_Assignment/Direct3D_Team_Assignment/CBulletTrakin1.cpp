@@ -45,6 +45,7 @@ void CBulletTrakin1::Update()
 		D3DXVec3Cross(&vCrossVec, &m_tINFO.vDir, &vTargetDir);
 
 		fDotVec = D3DXVec3Dot(&m_tINFO.vDir, &vTargetDir);
+
 		if (fDotVec <= -1.f)
 			fDotVec = -1.f;
 		if (fDotVec >= 1.f)
@@ -62,7 +63,7 @@ void CBulletTrakin1::Update()
 			m_fRadian -= fDotVec;
 		}
 	}
-
+	//대조확인해보려고 제거 잠깐 켜본거임
 	UpdateTimers();
 
 	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
@@ -90,7 +91,10 @@ void CBulletTrakin1::Update()
 
 	m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
 }
-
+//참조하는 타겟 포스가 몇인지 확인해봐야할듯 중단점 찍어서
+//오우 값이 왜 1920 ㅇㅈㄹ 그 혹시 포신 현재 위치도 저 위치인가요 지금 디버그 중이니까 지금 현 상태에서 총알 스폰지점이랑 지금 저 vpos가 같은지 확인해봅시다
+//아 코드 밖이라서 그런가
+//확실히 포스 지정이 이상한듯 
 void CBulletTrakin1::LateUpdate()
 {
 }

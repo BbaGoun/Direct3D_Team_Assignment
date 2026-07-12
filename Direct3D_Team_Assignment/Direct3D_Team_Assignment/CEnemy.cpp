@@ -70,7 +70,8 @@ void CEnemy::Update()
 	D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
 
 	D3DXMatrixIdentity(&matWorld);
-	matWorld = matScale * matRotZ * matTrans;
+	matWorld = matScale * matRotZ * matTrans;//공전
+	matWorld = matScale * matRotZ * matTrans;//공전
 	for (int i = 0; i < 4; ++i) {
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
@@ -220,13 +221,13 @@ void CEnemy::KeyInput()
 	if (GetAsyncKeyState('P')) {
 		TANKID eNextID;
 		eNextID = (TANKID)((m_eCurTankID)+1 % TANK_END);
-		ChaingeTankType(/*eNextID*/TANK_GUIDED);
+		ChaingeTankType(eNextID);
 	}
-	//if (GetAsyncKeyState('O')) {
-	//	TANKID eBeforID;
-	//	eBeforID = (TANKID)((m_eCurTankID)+TANK_END - 1 % TANK_END);
-	//	ChaingeTankType(eBeforID);
-	//}
+	if (GetAsyncKeyState('O')) {
+		TANKID eBeforID;
+		eBeforID = (TANKID)((m_eCurTankID)+TANK_END - 1 % TANK_END);
+		ChaingeTankType(eBeforID);
+	}
 }
 
 void CEnemy::ChaingeTankType(TANKID _eID)
@@ -250,6 +251,7 @@ void CEnemy::ChaingeTankType(TANKID _eID)
 			m_pTankStat = new CTankBooster;
 			break;
 		case TANK_SOMMONER:
+			m_pTankStat = new CTankSommoner;
 			break;
 		}
 		m_eCurTankID = m_eNextTankID;
