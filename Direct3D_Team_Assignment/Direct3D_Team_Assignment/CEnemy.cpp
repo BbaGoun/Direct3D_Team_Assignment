@@ -34,7 +34,6 @@ void CEnemy::Initialize()
 	m_vLocalVec[2] = { 50.f, 50.f, 0 };
 	m_vLocalVec[3] = { -50.f, 50.f, 0 };
 
-	m_vLocalPosinPoint = { 0.f, -100.f, 0 };
 
 	m_fRadian = 0;
 
@@ -71,11 +70,10 @@ void CEnemy::Update()
 
 	D3DXMatrixIdentity(&matWorld);
 	matWorld = matScale * matRotZ * matTrans;//공전
-	matWorld = matScale * matRotZ * matTrans;//공전
 	for (int i = 0; i < 4; ++i) {
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
-	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
+	//D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
 
 	D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
 	m_tINFO.vPos += m_tINFO.vDir * m_fCurrentSpeed;
@@ -93,6 +91,8 @@ void CEnemy::Update()
 
 	if (m_pTankStat != nullptr)
 		m_pTankStat->PosUpdate(this);
+
+	//레벨 상승에 맞춰서 탱크 유형 변경
 
 }
 
@@ -142,11 +142,6 @@ void CEnemy::Render(HDC _hDC)
 		m_vProjVec[1].x + 5 * projScale,
 		m_vProjVec[1].y + 5 * projScale);
 
-	////포신 렌더
-	//MoveToEx(_hDC, m_tINFO.vPos.x, m_tINFO.vPos.y, nullptr);
-	//LineTo(_hDC, m_vWorldPosinPoint.x, m_vWorldPosinPoint.y);
-
-	//펜 할당 해제
 	SelectObject(_hDC, hOldPen);
 	DeleteObject(hPen);
 
@@ -170,7 +165,6 @@ void CEnemy::ReUpdateWorldVertex()
 	for (int i = 0; i < m_vLocalVec.size(); ++i) {
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
-	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
 }
 
 void CEnemy::DecelerationCurrentSpeed()
@@ -218,15 +212,9 @@ void CEnemy::KeyInput()
 			m_pTankStat->Fire(this);
 		}
 	}
-	//if (GetAsyncKeyState('P')) {
-	//	TANKID eNextID;
-	//	eNextID = (TANKID)((m_eCurTankID)+1 % TANK_END);
-	//	ChaingeTankType(eNextID);
-	//}
-	if (GetAsyncKeyState('O')) {
-		TANKID eBeforID;
-		eBeforID = (TANKID)((m_eCurTankID)+TANK_END - 1 % TANK_END);
-		ChaingeTankType(eBeforID);
+
+	if (GetAsyncKeyState('P')) {
+		ChaingeTankType(TANK_SOMMONER);
 	}
 }
 
