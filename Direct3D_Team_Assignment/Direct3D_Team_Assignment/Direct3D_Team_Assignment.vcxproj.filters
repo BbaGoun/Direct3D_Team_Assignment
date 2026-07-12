@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="MainGame">
+      <UniqueIdentifier>{cd391374-c305-47ae-9622-d6b6b3ff72a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj">
+      <UniqueIdentifier>{872dcb33-0f91-4f6b-b988-4f9b36e48e66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\01. Player">
+      <UniqueIdentifier>{daa5c4e6-f73e-49d0-8783-68cf6119ed8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\02. Enemy">
+      <UniqueIdentifier>{103c99fd-8107-4ddc-a155-824fcb4c5ba1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\02. Enemy\Tank">
+      <UniqueIdentifier>{052cae86-eb6f-4ff6-b93a-f79201ab13c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\02. Enemy\CBullet1">
+      <UniqueIdentifier>{27250e12-1227-4ab7-a8e9-25cb21ff9140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\BreakableObj">
+      <UniqueIdentifier>{0b35914f-ec81-47fb-a0c3-7e2fb8d0c1c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\01. Manager">
+      <UniqueIdentifier>{ff9bff2d-7f2f-481a-9da2-7a5d4a184c25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\01. Manager\00. ObjMgr">
+      <UniqueIdentifier>{df895cd6-a336-44a2-b380-128cfe19a74e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\01. Manager\01. TimeMgr">
+      <UniqueIdentifier>{9e1511e3-4202-4db9-b88e-17c831ea48d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\01. Manager\02. CameraMgr">
+      <UniqueIdentifier>{a054e63b-a1aa-4019-adbc-68fa4c1ccc48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\01. Manager\03. SceneMgr">
+      <UniqueIdentifier>{f801173e-9964-425a-accc-76d2cf06ffda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\02. Utility">
+      <UniqueIdentifier>{8f77b91b-b125-4037-8f62-4d84e42110c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\02. Utility\CollisionProcess">
+      <UniqueIdentifier>{7a50266d-247f-4cc2-9bfb-5e2242cfef3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\03. Scene">
+      <UniqueIdentifier>{c1ee8563-72b4-454f-95b2-4f921b7bb6be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\03. Scene\Menu">
+      <UniqueIdentifier>{28c9e350-ed47-4c16-ba03-3f02ec534d30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\03. Scene\Stage">
+      <UniqueIdentifier>{e0b55b12-acbf-409c-8f60-86f8a148ad98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\02. Utility\AbstractFactory">
+      <UniqueIdentifier>{2dcd7ed3-4c3c-45cc-a60e-f7ee0ba1c945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\02. Enemy\Tank\TankType">
+      <UniqueIdentifier>{b2be7382-7bb9-471d-91c2-2cdf8414ae14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\04. UI">
+      <UniqueIdentifier>{b1d36fa3-f771-44a1-91f3-dbe3ec02bde5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\04. UI\Preview">
+      <UniqueIdentifier>{d903a8c5-e91c-414b-9a01-eb79b6b78a20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\04. UI\HPBar">
+      <UniqueIdentifier>{db7230be-f4d3-48cb-a1a8-28ce9ee091a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\04. UI\ExpBar">
+      <UniqueIdentifier>{e6445066-e90c-4dc4-a62f-33d5f246282a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\01. Manager\04. UIMgr">
+      <UniqueIdentifier>{140f94cd-e446-41a7-b327-ba5239af2949}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\02. Utility\UIFactory">
+      <UniqueIdentifier>{1928b878-7295-4cbd-9b33-c5152a2628fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\Obstacle">
+      <UniqueIdentifier>{d6ec1155-c992-4b34-b7a1-a2c5fcf514de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\01. Player\Summonee">
+      <UniqueIdentifier>{907e8cc4-e63b-411f-8ff4-e1fe93f9c84d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\02. Enemy\CBullet1\Drone">
+      <UniqueIdentifier>{f9b906f9-f119-45c8-b770-37f040ca46a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\02. Enemy\CBullet1\TakingBullet">
+      <UniqueIdentifier>{feb555e6-74e9-4b24-a9e1-85380455042e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\00. Obj\01. Player\TargetBullet2">
+      <UniqueIdentifier>{b46edc3b-7bd2-42cc-89d1-987520963d49}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3D_Team_Assignment.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractFactory.h">
+      <Filter>MainGame\02. Utility\AbstractFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CMainGame.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CMenu.h">
+      <Filter>MainGame\03. Scene\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>MainGame\03. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CStage.h">
+      <Filter>MainGame\03. Scene\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="CObj.h">
+      <Filter>MainGame\00. Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>MainGame\00. Obj\01. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy.h">
+      <Filter>MainGame\00. Obj\02. Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CBreakableObj.h">
+      <Filter>MainGame\00. Obj\BreakableObj</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjMgr.h">
+      <Filter>MainGame\01. Manager\00. ObjMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeMgr.h">
+      <Filter>MainGame\01. Manager\01. TimeMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMgr.h">
+      <Filter>MainGame\01. Manager\02. CameraMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMgr.h">
+      <Filter>MainGame\01. Manager\03. SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionProcess.h">
+      <Filter>MainGame\02. Utility\CollisionProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="CTankType.h">
+      <Filter>MainGame\00. Obj\02. Enemy\Tank\TankType</Filter>
+    </ClInclude>
+    <ClInclude Include="CTank.h">
+      <Filter>MainGame\00. Obj\02. Enemy\Tank</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet1.h">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet1.h">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1</Filter>
+    </ClInclude>
+    <ClInclude Include="CTank.h">
+      <Filter>MainGame\00. Obj\02. Enemy\Tank</Filter>
+    </ClInclude>
+    <ClInclude Include="CUI.h">
+      <Filter>MainGame\04. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIMgr.h">
+      <Filter>MainGame\01. Manager\04. UIMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CExpBar.h">
+      <Filter>MainGame\04. UI\ExpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="CHPBar.h">
+      <Filter>MainGame\04. UI\HPBar</Filter>
+    </ClInclude>
+    <ClInclude Include="CPreview.h">
+      <Filter>MainGame\04. UI\Preview</Filter>
+    </ClInclude>
+    <ClInclude Include="UIFactory.h">
+      <Filter>MainGame\02. Utility\UIFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="CObstacle.h">
+      <Filter>MainGame\00. Obj\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="CSummonee.h">
+      <Filter>MainGame\00. Obj\01. Player\Summonee</Filter>
+    </ClInclude>
+    <ClInclude Include="CBulletTrakin1.h">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\TakingBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="CTargetBullet2.h">
+      <Filter>MainGame\00. Obj\01. Player\TargetBullet2</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMgr.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CBulletDrone.h">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\Drone</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Direct3D_Team_Assignment.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Direct3D_Team_Assignment.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Direct3D_Team_Assignment.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeMgr.cpp">
+      <Filter>MainGame\01. Manager\01. TimeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjMgr.cpp">
+      <Filter>MainGame\01. Manager\00. ObjMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy.cpp">
+      <Filter>MainGame\00. Obj\02. Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>MainGame\00. Obj\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainGame.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMgr.cpp">
+      <Filter>MainGame\01. Manager\02. CameraMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMgr.cpp">
+      <Filter>MainGame\01. Manager\03. SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CStage.cpp">
+      <Filter>MainGame\03. Scene\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="CMenu.cpp">
+      <Filter>MainGame\03. Scene\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Define.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CBreakableObj.cpp">
+      <Filter>MainGame\00. Obj\BreakableObj</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene.cpp">
+      <Filter>MainGame\03. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CObj.cpp">
+      <Filter>MainGame\00. Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionProcess.cpp">
+      <Filter>MainGame\02. Utility\CollisionProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="CTank.cpp">
+      <Filter>MainGame\00. Obj\02. Enemy\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="CTankType.cpp">
+      <Filter>MainGame\00. Obj\02. Enemy\Tank\TankType</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet1.cpp">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1</Filter>
+    </ClCompile>
+    <ClCompile Include="CTank.cpp">
+      <Filter>MainGame\00. Obj\02. Enemy\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="CUI.cpp">
+      <Filter>MainGame\04. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMgr.cpp">
+      <Filter>MainGame\01. Manager\04. UIMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CExpBar.cpp">
+      <Filter>MainGame\04. UI\ExpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="CHPBar.cpp">
+      <Filter>MainGame\04. UI\HPBar</Filter>
+    </ClCompile>
+    <ClCompile Include="CPreview.cpp">
+      <Filter>MainGame\04. UI\Preview</Filter>
+    </ClCompile>
+    <ClCompile Include="CObstacle.cpp">
+      <Filter>MainGame\00. Obj\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="CSummonee.cpp">
+      <Filter>MainGame\00. Obj\01. Player\Summonee</Filter>
+    </ClCompile>
+    <ClCompile Include="CBulletTrakin1.cpp">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\TakingBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CTargetBullet2.cpp">
+      <Filter>MainGame\00. Obj\01. Player\TargetBullet2</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMgr.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CBulletDrone.cpp">
+      <Filter>MainGame\00. Obj\02. Enemy\CBullet1\Drone</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
