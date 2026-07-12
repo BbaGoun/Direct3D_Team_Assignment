@@ -75,7 +75,7 @@ void CameraMgr::LateUpdate() {
 		D3DXMatrixPerspectiveFovLH(&m_matProj,
 			D3DXToRadian(90),
 			1,
-			0,
+			1,
 			100
 		);
 
