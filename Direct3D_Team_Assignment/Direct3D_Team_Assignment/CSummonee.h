@@ -18,7 +18,11 @@ public:
 private:
 	D3DXVECTOR3 m_vLocalBodyPoints[4];
 	D3DXVECTOR3 m_vWorldBodyPoints[4];
+	D3DXVECTOR3 m_vViewBodyPoints[4];
+	D3DXVECTOR3 m_vProjBodyPoints[4];
 
 	D3DXVECTOR3 m_vLocalPosinPoint;
 	D3DXVECTOR3 m_vWorldPosinPoint;
+	D3DXVECTOR3 m_vViewPosinPoint;
+	D3DXVECTOR3 m_vProjPosinPoint;
 };
