@@ -13,6 +13,8 @@ CTargetBullet2::~CTargetBullet2()
 
 void CTargetBullet2::Initialize()
 {
+	m_tINFO.vLook = { 0, -1, 0 };
+
 	m_fRadius = 30.f;
 
 	m_vLocalVec = { 0,0,0 };
@@ -25,11 +27,7 @@ void CTargetBullet2::Update()
 		FollowTarget(m_pTarget);
 	}
 	else
-	m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
-	//일단 이것 팔로우타겟에서 움직임을 진행하고있으면 필요없긴해요
-	//상민이형이 타겟 안없어지게 바꿔서 ㄱㅊ음
-	//나중에 플레이어 추적이 아니라 주변 오브젝트 추적으로 바뀌면 그때 고려하면됨.
-	//혹시 모르니까 냄겨두고(삭제 해도 바뀐게 없었으니까
+		m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
 
 	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
 
@@ -41,6 +39,7 @@ void CTargetBullet2::Update()
 
 	matWorld = matScale * matRotZ * matTrans;
 
+	D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
 	D3DXVec3TransformCoord(&m_vWorldVec, &m_vLocalVec, &matWorld);
 
 	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
@@ -88,14 +87,10 @@ void CTargetBullet2::FollowTarget(CObj* pTarget)
 		fAngle = 1.f;
 
 	fAngle = acosf(fAngle);
-	//일단 버그중에 하나 고침  아크코사인 다음에 선회력 계산을 해야하는데 순서가 꼬여있었고, 포스문제도 제가 또 확인해볼게요
+	
 	if (fAngle > D3DXToRadian(5))
 	{
 		fAngle = D3DXToRadian(5);
-	}
-	if (fAngle < D3DXToRadian(-5))
-	{
-		fAngle = D3DXToRadian(-5);
 	}
 
 	if (tempCrossResult.z > 0)
@@ -111,5 +106,5 @@ void CTargetBullet2::FollowTarget(CObj* pTarget)
 	D3DXMatrixRotationZ(&newMatDIR, m_fRadian);
 	D3DXVec3TransformNormal(&newDir, &m_tINFO.vDir, &newMatDIR);
 
-	m_tINFO.vPos += newDir * m_fSpeed;
+	m_tINFO.vPos -= newDir * m_fSpeed;
 }

@@ -64,7 +64,7 @@ void CPlayer::Initialize()
 
 	m_iMaxExp = 100;
 	m_iCurrentExp = 0;
-	m_iLevel = 0;
+	m_iLevel = 1;
 	m_iAttackDelay = 30;
 	m_iDropExp = 5;
 }
@@ -74,6 +74,30 @@ void CPlayer::Update()
 	UpdateTimers();
 	if (m_bDead)
 		return;
+
+	if (m_iLevel == 2)
+	{
+		m_bIsShootGun = true;
+	}
+	else if (m_bIsShootGun && m_iLevel == 3)
+	{
+		m_bIsShootGun = false;
+		m_bIsTargeted = true;
+	}
+	else if (m_bIsTargeted && m_iLevel == 4)
+	{
+		m_bIsTargeted = false;
+		m_bIsBooster = true;
+	}
+	else if (m_bIsBooster && m_iLevel == 5)
+	{
+		m_bIsBooster = false;
+		m_bIsSummoner = true;
+	}
+	else if (m_bIsSummoner && m_iLevel == 6)
+	{
+		m_bIsSummoner = false;
+	}
 
 	KeyInput();
 
@@ -345,42 +369,6 @@ void CPlayer::KeyInput()
 
 		m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
 	}
-
-	if (GetAsyncKeyState('R'))
-	{
-		if (m_iSwitchDelay == 0)
-		{
-			if (m_bIsShootGun)
-			{
-				m_bIsShootGun = false;
-				m_bIsTargeted = true;
-			}
-			else if (m_bIsTargeted)
-			{
-				m_bIsTargeted = false;
-				m_bIsBooster = true;
-			}
-			else if (m_bIsBooster)
-			{
-				m_bIsBooster = false;
-				m_bIsSummoner = true;
-			}
-			else if (m_bIsSummoner)
-			{
-				m_bIsSummoner = false;
-			}
-			else
-			{
-				m_bIsShootGun = true;
-			}
-
-			m_iSwitchDelay = 5;
-		}
-		else
-		{
-			--m_iSwitchDelay;
-		}
-	}
 }
 
 void CPlayer::AttackKeyInput()
@@ -467,6 +455,7 @@ void CPlayer::AttackKeyInput()
 			CObj* pObj = AbstractFactory<CSummonee>::Create();
 			pObj->SetPos(m_tINFO.vPos);
 			pObj->SetDir(m_tINFO.vDir);
+			pObj->SetParent(this);
 			ObjMgr::GetInstance().AddObject(OBJ_BULLET, pObj);
 		}
 		else

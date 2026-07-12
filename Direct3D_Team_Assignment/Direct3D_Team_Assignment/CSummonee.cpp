@@ -13,6 +13,8 @@ CSummonee::~CSummonee()
 
 void CSummonee::Initialize()
 {
+	m_tINFO.vLook = { 0, -1, 0 };
+
 	m_fSpeed = 4.f;
 
 	m_vLocalBodyPoints[0] = { -20, -20, 0 };
@@ -20,17 +22,30 @@ void CSummonee::Initialize()
 	m_vLocalBodyPoints[2] = { 20, 20, 0 };
 	m_vLocalBodyPoints[3] = { -20, 20, 0 };
 
-	m_vWorldPosinPoint = { 0, -40, 0 };
+	m_vLocalPosinPoint = { 0, -40, 0 };
 
 	m_fRadian = 0;
 }
 
 void CSummonee::Update()
 {
+	D3DXVECTOR3 tempPlayerPos = m_pParent->GetPos() + 10;
+	m_tINFO.vPos = tempPlayerPos;
+
+	m_fRadian += D3DXToRadian(10);
+
+	D3DXMATRIX tempDir;
+	D3DXVECTOR3 tempVecDir;
+
+	D3DXMatrixRotationZ(&tempDir, m_fRadian);
+	D3DXVec3TransformCoord(&tempVecDir, &m_tINFO.vDir, &tempDir);
+
+	m_tINFO.vPos += tempVecDir * m_fSpeed;
+
 	D3DXMATRIX matScale, matTrans, matRev, matWorld;
 	D3DXMatrixScaling(&matScale, 1, 1, 1);
 	D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
-	D3DXMatrixRotationZ(&matRev, D3DXToRadian(20));
+	D3DXMatrixRotationZ(&matRev, m_fRadian);
 
 	D3DXMatrixIdentity(&matWorld);
 	matWorld = matScale * matTrans* matRev;
