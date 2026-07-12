@@ -16,6 +16,8 @@ void CObstacle::Initialize()
 
 void CObstacle::Update()
 {
+	if (m_eType == OBSTACLE_ROTATION_CROSS)
+		m_fRadian += D3DXToRadian(1.f);
 	D3DXMATRIX matScale, matRotZ, matTrans;
 	D3DXMatrixScaling(&matScale, 1, 1, 1);
 	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
@@ -114,7 +116,26 @@ void CObstacle::SetObstacle(OBSTACLE_ID _eID, D3DXVECTOR3 _vPos, float _fRadian)
 		m_vLocalVec.push_back({ -deltaX, -deltaY, 0 });
 		m_eType = OBSTACLE_HEXAGON;
 	}
-		break;
+	break;
+	case OBSTACLE_ROTATION_CROSS:
+	{
+		float r = 200;
+		float halfWidth = 20;
+		m_vLocalVec.push_back({-halfWidth, -r, 0});
+		m_vLocalVec.push_back({halfWidth, -r, 0});
+		m_vLocalVec.push_back({halfWidth, -halfWidth, 0});
+		m_vLocalVec.push_back({r, -halfWidth, 0});
+		m_vLocalVec.push_back({r, halfWidth, 0});
+		m_vLocalVec.push_back({halfWidth, halfWidth, 0});
+		m_vLocalVec.push_back({halfWidth, r, 0});
+		m_vLocalVec.push_back({-halfWidth, r, 0});
+		m_vLocalVec.push_back({-halfWidth, halfWidth, 0});
+		m_vLocalVec.push_back({-r, halfWidth, 0});
+		m_vLocalVec.push_back({-r, -halfWidth, 0});
+		m_vLocalVec.push_back({-halfWidth, -halfWidth, 0});
+		m_eType = OBSTACLE_ROTATION_CROSS;
+	}
+	break;
 	case OBSTACLE_VERTICAL_WALL:
 	{
 		m_vLocalVec.push_back({ -100, -800, 0 });

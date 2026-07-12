@@ -78,6 +78,9 @@ void CStage::Initialize()
 		static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_HEXAGON, { 960 + i * 1280.f, 540 + i * 720.f, 0 }, 0);
 		ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
 	}
+	//pObj = AbstractFactory<CObstacle>::Create();
+	//static_cast<CObstacle*>(pObj)->SetObstacle(OBSTACLE_ROTATION_CROSS, { 1280, 720, 0 }, 0);
+	//ObjMgr::GetInstance().AddObject(OBJ_OBSTACLE, pObj);
 
 	// 상하좌우 벽
 	pObj = AbstractFactory<CObstacle>::Create();
