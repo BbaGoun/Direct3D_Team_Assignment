@@ -72,5 +72,7 @@ private:
 
     bool m_bRespawn;
     float m_fRespawnTimer;
+
+    int m_iCurLevel;
 };
 

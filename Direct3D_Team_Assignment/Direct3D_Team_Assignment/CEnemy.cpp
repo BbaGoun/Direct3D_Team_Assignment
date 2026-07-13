@@ -57,6 +57,12 @@ void CEnemy::Update()
 	if (m_bDead)
 		return;
 
+	if (m_iCurLevel != m_iLevel)
+	{
+		if ((TANKID)(m_iLevel - 1) < TANK_END)
+			ChaingeTankType((TANKID)(m_iLevel - 1));
+		m_iCurLevel = m_iLevel;
+	}
 	KeyInput();
 
 	//월드 행렬에 구성 요소 적용. 크기/자전/이동/공전/위치(부모)<- 순서 잊지 말것!
