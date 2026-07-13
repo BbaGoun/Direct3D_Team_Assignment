@@ -113,31 +113,11 @@ void CTankGuided::Fire(CEnemy* _Enemy)
 		D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
 		Temp = AbstractFactory<CBulletTrakin1>::Create(vTempDir, m_vWorldPosinPoint[i], 8.f);
 		Temp->SetParent(_Enemy);
+		static_cast<CBulletTrakin1*>(Temp)->SetTarget(_Enemy->GetParent());
 		ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 	}
 
 	SetDelayAndRebound(_Enemy);
-}
-
-void CTankNomal::RanderPosin(HDC _hdc)
-{
-
-}
-
-void CTankShotGun::RanderPosin(HDC _hdc)
-{
-}
-
-void CTankBooster::RanderPosin(HDC _hdc)
-{
-}
-
-void CTankGuided::RanderPosin(HDC _hdc)
-{
-}
-
-void CTankSommoner::RanderPosin(HDC _hdc)
-{
 }
 
 void CTankNomal::Initialize(CEnemy* _Enemy)

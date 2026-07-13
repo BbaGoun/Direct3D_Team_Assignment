@@ -91,10 +91,6 @@ void CBulletTrakin1::Update()
 
 	m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;
 }
-//참조하는 타겟 포스가 몇인지 확인해봐야할듯 중단점 찍어서
-//오우 값이 왜 1920 ㅇㅈㄹ 그 혹시 포신 현재 위치도 저 위치인가요 지금 디버그 중이니까 지금 현 상태에서 총알 스폰지점이랑 지금 저 vpos가 같은지 확인해봅시다
-//아 코드 밖이라서 그런가
-//확실히 포스 지정이 이상한듯 
 void CBulletTrakin1::LateUpdate()
 {
 }

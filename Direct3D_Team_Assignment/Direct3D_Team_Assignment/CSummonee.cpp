@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CSummonee.h"
+#include "CameraMgr.h"
 
 CSummonee::CSummonee()
 {
@@ -13,6 +14,7 @@ CSummonee::~CSummonee()
 
 void CSummonee::Initialize()
 {
+	m_tINFO.vPos = { 0, -10, 0 };
 	m_tINFO.vLook = { 0, -1, 0 };
 
 	m_fSpeed = 4.f;
@@ -29,26 +31,24 @@ void CSummonee::Initialize()
 
 void CSummonee::Update()
 {
-	D3DXVECTOR3 tempPlayerPos = m_pParent->GetPos() + 10;
-	m_tINFO.vPos = tempPlayerPos;
+	// 공전의 중심
+	D3DXVECTOR3 tempPlayerPos = m_pParent->GetPos();
 
+	// 공전의 각도
 	m_fRadian += D3DXToRadian(10);
 
-	D3DXMATRIX tempDir;
-	D3DXVECTOR3 tempVecDir;
+	m_tINFO.vPos = tempPlayerPos;
+	m_tINFO.vPos.y -= 10;
 
-	D3DXMatrixRotationZ(&tempDir, m_fRadian);
-	D3DXVec3TransformCoord(&tempVecDir, &m_tINFO.vDir, &tempDir);
-
-	m_tINFO.vPos += tempVecDir * m_fSpeed;
-
-	D3DXMATRIX matScale, matTrans, matRev, matWorld;
+	D3DXMATRIX matScale, matRotZ, matTrans, matRev, matParentPos, matWorld;
 	D3DXMatrixScaling(&matScale, 1, 1, 1);
+	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(0));
 	D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
 	D3DXMatrixRotationZ(&matRev, m_fRadian);
+	D3DXMatrixTranslation(&matParentPos, tempPlayerPos.x, tempPlayerPos.y, tempPlayerPos.z);
 
 	D3DXMatrixIdentity(&matWorld);
-	matWorld = matScale * matTrans* matRev;
+	matWorld = matScale * matRotZ * matTrans* matRev * matParentPos;
 
 	for (int i = 0; i < 4; ++i)
 	{
@@ -56,6 +56,20 @@ void CSummonee::Update()
 	}
 
 	D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
+
+	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
+	D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
+
+	for (int i = 0; i < 4; ++i)
+	{
+		D3DXVec3TransformCoord(&m_vViewBodyPoints[i], &m_vWorldBodyPoints[i], &matView);
+		D3DXVec3TransformCoord(&m_vProjBodyPoints[i], &m_vViewBodyPoints[i], &matProj);
+		m_vProjBodyPoints[i] += {640, 360, 0};
+	}
+	
+	D3DXVec3TransformCoord(&m_vViewPosinPoint, &m_vWorldPosinPoint, &matView);
+	D3DXVec3TransformCoord(&m_vProjPosinPoint, &m_vViewPosinPoint, &matProj);
+	m_vProjPosinPoint += {640, 360, 0};
 }
 
 void CSummonee::LateUpdate()

@@ -13,9 +13,7 @@ public:
 public:
 
     virtual void Initialize(CEnemy* _Enemy) PURE;
-
     virtual void Fire(CEnemy* _Enemy) PURE;
-    virtual void RanderPosin(HDC _hdc) PURE;
 
     void SetDelayAndRebound(CEnemy* _Enemy);
 
@@ -23,6 +21,8 @@ public:
     
     float GetPosinRadian(D3DXVECTOR3 _posinPoint, D3DXVECTOR3 _PlayerPoint);
 
+    vector<D3DXVECTOR3> getLocalPosinPoint() { return m_vLocalPosinPoint; }
+    vector<D3DXVECTOR3> getWorldPosinPoint() { return m_vWorldPosinPoint; }
 protected:
 
     float m_fDelayTime;
@@ -30,5 +30,4 @@ protected:
 
     vector<D3DXVECTOR3> m_vLocalPosinPoint;
     vector<D3DXVECTOR3> m_vWorldPosinPoint;
-
 };
