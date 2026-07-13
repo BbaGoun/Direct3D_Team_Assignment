@@ -107,7 +107,7 @@ void CObstacle::SetObstacle(OBSTACLE_ID _eID, D3DXVECTOR3 _vPos, float _fRadian)
 		float circleR = 60;
 		for (int i = 0; i < 12; ++i) {
 			m_vLocalVec.push_back({ cosf(D3DXToRadian(-30 * i)) * circleR,
-				sinf(D3DXToRadian(30 * i)) * circleR , 0 });
+				sinf(D3DXToRadian(-30 * i)) * circleR , 0 });
 		}
 		m_eType = OBSTACLE_CIRCLE;
 	}
