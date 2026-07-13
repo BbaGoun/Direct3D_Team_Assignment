@@ -60,11 +60,9 @@ void CBulletDrone::Update()
 	matWorld = matScale * matTransOffset * matRotZ * matParWorld;
 	//matWorld = matScale * matRotZ * matTrans * matParWorld;
 
-	//버텍스에 행렬 적용하고
 	for (int i = 0; i < 4; ++i) {
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
-	//D3DXVec3TransformCoord(&m_tINFO.vPos, &m_vdOffestPos, &matWorld);
 	D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
 
 	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
