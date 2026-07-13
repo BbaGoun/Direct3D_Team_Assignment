@@ -2,6 +2,7 @@
 #include "CBulletDrone.h"
 #include "AbstractFactory.h"
 #include "CBullet1.h"
+#include "CEnemy.h"
 #include "CameraMgr.h"
 #include "TimeMgr.h"
 
@@ -19,7 +20,8 @@ void CBulletDrone::Initialize()
 	m_fDelayTimer = 30.f;
 
 	m_tINFO.vLook = { 0, -1, 0 };
-	m_tINFO.vPos = { 0, -200, 0 };
+	//m_tINFO.vPos = { 0, -100, 0 };
+	m_vdOffestPos = { 0, -100, 0 };
 
 	m_vLocalVec.resize(4);
 	m_vWorldVec.resize(4);
@@ -31,29 +33,38 @@ void CBulletDrone::Initialize()
 	m_vLocalVec[2] = { 15.f, 15.f, 0 };
 	m_vLocalVec[3] = { -15.f, 15.f, 0 };
 }
-/*임시로 로컬로 땡겨와서 공전 후의 위치를 찍은다음에 다시 월드로 돌아가는 느낌인가?
 
-그렇다는건 이미 계산된 부모 포스를 굳이 로컬로 땡겨올 필요도 없이
-로컬 상태에서 로컬 중점을 두고 공전 포스를 찍은다음에 그걸 플레이어의 월드 포스에 대입하면 되지 않나..?*/
 void CBulletDrone::Update()
 {
 	m_fRadian += 2.0f * TimeMgr::GetInstance().GetDeltaTime();
 
 	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
-	D3DXMATRIX matParTrans;
-	D3DXMatrixScaling(&matScale, 1, 1, 1);
-	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
+	D3DXMATRIX matTransOffset;
+	D3DXMATRIX matParWorld;
+
+	D3DXMatrixScaling(&matScale, 1, 1, 1);//크기
+	D3DXMatrixRotationZ(&matRotZ, m_fRadian);//회전 행렬(다이렉션을 얼마나 회전할 지)
 	D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
-
-	D3DXMatrixTranslation(&matParTrans, m_pParent->GetPos().x, m_pParent->GetPos().y, m_pParent->GetPos().z);
-
+	D3DXMatrixTranslation(&matTransOffset, m_vdOffestPos.x, m_vdOffestPos.y, m_vdOffestPos.z);
+	//이동 행렬에는 월드에 대입할 위치값이 아닌 중점에서의 오프셋을.
 	D3DXMatrixIdentity(&matWorld); 
-	matWorld = matScale * matRotZ * matTrans * matParTrans; 
+
+	//결정적으로 크기*이동*행렬 까지의 과정은 사실상 로컬 내에서 중점을 기준으로 돌고있는 상태를 로컬 안에 만들고
+	//그 상태에다가 부모의 월드 상태(부모의 중점, 회전각, 크기)를 가져와 대입한거임
+
+	//이같은 경우 당연히 플레이어에게 적용된 월드가 적용되겠지
 	
+	// 이 부모의 월드 행렬을 대입 하기 전 중점을 기준으로 돌고 있는 공전상태)를 만들어둔것
+
+	matParWorld = dynamic_cast<CEnemy*>(m_pParent)->GetWorld();
+	matWorld = matScale * matTransOffset * matRotZ * matParWorld;
+	//matWorld = matScale * matRotZ * matTrans * matParWorld;
+
+	//버텍스에 행렬 적용하고
 	for (int i = 0; i < 4; ++i) {
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
-		//D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matParTrans);
 	}
+	//D3DXVec3TransformCoord(&m_tINFO.vPos, &m_vdOffestPos, &matWorld);
 	D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
 
 	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
@@ -104,7 +115,7 @@ void CBulletDrone::Release()
 void CBulletDrone::AutoFire()
 {
 	CObj* Temp;
-	Temp = AbstractFactory<CBullet1>::Create(m_tINFO.vDir, m_tINFO.vPos , 5.f);
+	Temp = AbstractFactory<CBullet1>::Create(m_tINFO.vDir, m_tINFO.vPos, 0.f);
 	Temp->SetParent(m_pParent);
 	ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 }

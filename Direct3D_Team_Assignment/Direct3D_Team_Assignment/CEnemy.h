@@ -48,6 +48,10 @@ public:
     bool GetMove() { return m_bMove;}
     float GetDelay() { return m_fDelayTime;}
 
+    D3DXMATRIX GetWorld() { return matWorld; }
+    D3DXMATRIX GetWorldWithoutZ() { return matWorldWithoutZ; }
+    D3DXMATRIX GetWorldWithoutTrans() { return matWorldWithoutTrans; }
+
 private:
 
     void KeyInput();
@@ -56,6 +60,10 @@ private:
     void Dead() override;
 
 private:
+
+    D3DXMATRIX matWorld;
+    D3DXMATRIX matWorldWithoutZ;
+    D3DXMATRIX matWorldWithoutTrans;
 
     TANKID m_eNextTankID;
     TANKID m_eCurTankID;

@@ -49,6 +49,8 @@ void CEnemy::Initialize()
 	m_iDropExp = 5;
 	m_pTankStat = new CTankNomal;
 	m_pTankStat->Initialize(this);
+
+	D3DXMatrixIdentity(&matWorld);
 }
 
 void CEnemy::Update()
@@ -65,22 +67,21 @@ void CEnemy::Update()
 	}
 	KeyInput();
 
-	//월드 행렬에 구성 요소 적용. 크기/자전/이동/공전/위치(부모)<- 순서 잊지 말것!
 	if (m_bMove == true)
 		m_bMove = false;
 
-	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
+	D3DXMATRIX matScale, matRotZ, matTrans;
 	D3DXMatrixScaling(&matScale, 1, 1, 1);
 	D3DXMatrixRotationZ(&matRotZ, m_fRadian);
 	D3DXMatrixTranslation(&matTrans, m_tINFO.vPos.x, m_tINFO.vPos.y, m_tINFO.vPos.z);
 
-	D3DXMatrixIdentity(&matWorld);
 	matWorld = matScale * matRotZ * matTrans;//공전
+	matWorldWithoutZ = matScale * matTrans;
+	matWorldWithoutTrans = matScale * matRotZ;
+
 	for (int i = 0; i < 4; ++i) {
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
-	//D3DXVec3TransformCoord(&m_vWorldPosinPoint, &m_vLocalPosinPoint, &matWorld);
-
 	D3DXVec3TransformNormal(&m_tINFO.vDir, &m_tINFO.vLook, &matRotZ);
 	m_tINFO.vPos += m_tINFO.vDir * m_fCurrentSpeed;
 

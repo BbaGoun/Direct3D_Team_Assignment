@@ -25,4 +25,7 @@ private:
     float m_fDecel;
 
     bool m_bMove;
+
+    D3DXVECTOR3 m_vdOffestPos;
+    float m_bOffsetLook;
 };
