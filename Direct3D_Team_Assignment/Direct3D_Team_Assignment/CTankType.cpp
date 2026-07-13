@@ -68,7 +68,7 @@ void CTankSommoner::Fire(CEnemy* _Enemy)
 		vDirOffset = GetPosinRadian(m_vWorldPosinPoint[i], _Enemy->GetPos());
 		D3DXMatrixRotationZ(&matRotZ, vDirOffset);
 		D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
-		Temp = AbstractFactory<CBulletDrone>::Create(vTempDir, m_vWorldPosinPoint[i], 8.f);
+		Temp = AbstractFactory<CBullet1>::Create(vTempDir, m_vWorldPosinPoint[i], 8.f);
 		Temp->SetParent(_Enemy);
 		ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 	}
@@ -113,6 +113,7 @@ void CTankGuided::Fire(CEnemy* _Enemy)
 		D3DXVec3TransformNormal(&vTempDir, &vTempLook, &matRotZ);
 		Temp = AbstractFactory<CBulletTrakin1>::Create(vTempDir, m_vWorldPosinPoint[i], 8.f);
 		Temp->SetParent(_Enemy);
+		static_cast<CBulletTrakin1*>(Temp)->SetTarget(_Enemy->GetParent());
 		ObjMgr::GetInstance().AddObject(OBJ_BULLET, Temp);
 	}
 
