@@ -43,23 +43,23 @@ void CExpBar::Update()
 	D3DXVec3TransformCoord(&m_vExpRightTop, &expRightTop, &matTrans);
 	D3DXVec3TransformCoord(&m_vExpRightBottom, &expRightBottom, &matTrans);
 
-	// ¿ùµå -> ºä -> Åõ¿µ ½ºÆäÀÌ½º º¯È¯
+	// ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½È¯
 	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
 
 	D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
 
 	for (int i = 0; i < m_vWorldVec.size(); ++i) {
 		D3DXVec3TransformCoord(&m_vViewVec[i], &m_vWorldVec[i], &matView);
-		// Z Division ÀÌ Çà·Ä¿¡ Æ÷ÇÔµÇ¾î ÀÖÀ½.
+		// Z Division ï¿½ï¿½ ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½.
 		D3DXVec3TransformCoord(&m_vProjVec[i], &m_vViewVec[i], &matProj);
-		m_vProjVec[i] += {640, 360, 0};
+		m_vProjVec[i] = CameraMgr::GetInstance().ProjToScreen(m_vProjVec[i]);
 	}
 	D3DXVec3TransformCoord(&m_vExpRightTop, &m_vExpRightTop, &matView);
 	D3DXVec3TransformCoord(&m_vExpRightTop, &m_vExpRightTop, &matProj);
-	m_vExpRightTop += {640, 360, 0};
+	m_vExpRightTop = CameraMgr::GetInstance().ProjToScreen(m_vExpRightTop);
 	D3DXVec3TransformCoord(&m_vExpRightBottom, &m_vExpRightBottom, &matView);
 	D3DXVec3TransformCoord(&m_vExpRightBottom, &m_vExpRightBottom, &matProj);
-	m_vExpRightBottom += {640, 360, 0};
+	m_vExpRightBottom = CameraMgr::GetInstance().ProjToScreen(m_vExpRightBottom);
 }
 
 void CExpBar::LateUpdate()

@@ -63,7 +63,7 @@ void CBulletTrakin1::Update()
 			m_fRadian -= fDotVec;
 		}
 	}
-	//´ëÁ¶È®ÀÎÇØº¸·Á°í Á¦°Å Àá±ñ ÄÑº»°ÅÀÓ
+	//ï¿½ï¿½ï¿½ï¿½È®ï¿½ï¿½ï¿½Øºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ñºï¿½ï¿½ï¿½ï¿½ï¿½
 	UpdateTimers();
 
 	D3DXMATRIX matScale, matRotZ, matTrans, matWorld;
@@ -86,7 +86,7 @@ void CBulletTrakin1::Update()
 	for (int i = 0; i < m_vWorldVec.size(); ++i) {
 		D3DXVec3TransformCoord(&m_vViewVec[i], &m_vWorldVec[i], &matView);
 		D3DXVec3TransformCoord(&m_vProjVec[i], &m_vViewVec[i], &matProj);
-		m_vProjVec[i] += {640, 360, 0};
+		m_vProjVec[i] = CameraMgr::GetInstance().ProjToScreen(m_vProjVec[i]);
 	}
 
 	m_tINFO.vPos += m_tINFO.vDir * m_fSpeed;

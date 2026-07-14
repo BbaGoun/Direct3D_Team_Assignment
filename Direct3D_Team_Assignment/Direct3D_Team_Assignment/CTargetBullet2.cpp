@@ -47,7 +47,7 @@ void CTargetBullet2::Update()
 
 	D3DXVec3TransformCoord(&m_vViewVec, &m_vWorldVec, &matView);
 	D3DXVec3TransformCoord(&m_vProjVec, &m_vViewVec, &matProj);
-	m_vProjVec += {640, 360, 0};
+	m_vProjVec = CameraMgr::GetInstance().ProjToScreen(m_vProjVec);
 	
 }
 

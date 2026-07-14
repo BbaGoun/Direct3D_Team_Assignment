@@ -29,7 +29,9 @@ void CameraMgr::LateUpdate() {
 		float scaleX = min(2.f, max(1.f, gapX / 1024));
 		float scaleY = min(2.f, max(1.f, gapY / 576));
 		m_fCameraScale = max(scaleX, scaleY);
-		cameraCenter.z = -m_fCameraScale;
+		const float fovY = D3DXToRadian(90.f);
+		const float cameraDistance = (WINCY * m_fCameraScale * 0.5f) / tanf(fovY * 0.5f);
+		cameraCenter.z = -cameraDistance;
 
 		RECT cameraRECT = {
 			int(cameraCenter.x - 1280 * m_fCameraScale * 0.5f),
@@ -66,17 +68,17 @@ void CameraMgr::LateUpdate() {
 		}
 
 		D3DXVECTOR3 vAt = cameraCenter;
-		vAt.z = 1;
+		vAt.z = 0;
 		D3DXVECTOR3 vUp = { 0, 1, 0 };
 		D3DXMatrixLookAtLH(&m_matView,
 			&cameraCenter,
 			&vAt,
 			&vUp);
 		D3DXMatrixPerspectiveFovLH(&m_matProj,
-			D3DXToRadian(90),
+			fovY,
+			float(WINCX) / WINCY,
 			1,
-			1,
-			100
+			10000
 		);
 
 		Set_CameraCenter(cameraCenter);
