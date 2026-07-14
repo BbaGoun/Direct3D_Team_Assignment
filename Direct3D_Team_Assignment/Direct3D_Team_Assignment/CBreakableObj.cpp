@@ -14,7 +14,7 @@ CBreakableObj::~CBreakableObj()
 
 void CBreakableObj::Initialize()
 {
-	if (dis(gen) < 25) { // Á¤»ï°¢Çü
+	if (dis(gen) < 25) { // ï¿½ï¿½ï¿½ï°¢ï¿½ï¿½
 		float side = 80.f;
 		float halfSide = side * 0.5f;
 		float height = side * sqrtf(3) * 0.5f;
@@ -27,7 +27,7 @@ void CBreakableObj::Initialize()
 		m_iHP = 10;
 		m_iMaxHP = 10;
 	}
-	else if (dis(gen) < 50) { // Á¤»ç°¢Çü
+	else if (dis(gen) < 50) { // ï¿½ï¿½ï¿½ç°¢ï¿½ï¿½
 		float halfLength = 75 * 0.5f;
 		m_vLocalVec.push_back({ -halfLength, -halfLength, 0 });
 		m_vLocalVec.push_back({ halfLength, -halfLength, 0 });
@@ -38,7 +38,7 @@ void CBreakableObj::Initialize()
 		m_iHP = 15;
 		m_iMaxHP = 15;
 	}
-	else if (dis(gen) < 75) { // Á¤¿À°¢Çü
+	else if (dis(gen) < 75) { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		for (int i = 0; i < 5; ++i) {
 			float x = 45 * sinf(PI * i * 0.4);
 			float y = 45 * cosf(PI * i * 0.4);
@@ -49,7 +49,7 @@ void CBreakableObj::Initialize()
 		m_iHP = 20;
 		m_iMaxHP = 20;
 	}
-	else { // Á¤À°°¢Çü
+	else { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		float r = 45;
 		float deltaX = r * sqrtf(3) * 0.5f;
 		float deltaY = r * 0.5f;
@@ -89,16 +89,16 @@ void CBreakableObj::Update()
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &matWorld);
 	}
 
-	// ¿ùµå -> ºä -> Åõ¿µ ½ºÆäÀÌ½º º¯È¯
+	// ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½È¯
 	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
 
 	D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
 
 	for (int i = 0; i < m_vWorldVec.size(); ++i) {
 		D3DXVec3TransformCoord(&m_vViewVec[i], &m_vWorldVec[i], &matView);
-		// Z Division ÀÌ Çà·Ä¿¡ Æ÷ÇÔµÇ¾î ÀÖÀ½.
+		// Z Division ï¿½ï¿½ ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½.
 		D3DXVec3TransformCoord(&m_vProjVec[i], &m_vViewVec[i], &matProj);
-		m_vProjVec[i] += {640, 360, 0};
+		m_vProjVec[i] = CameraMgr::GetInstance().ProjToScreen(m_vProjVec[i]);
 	}
 }
 

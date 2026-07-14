@@ -162,27 +162,7 @@ void CStage::SpawnBreakable()
 void CStage::KeyInput()
 {
 	if (KeyMgr::GetInstance().KeyDown(VK_LBUTTON)) {
-		D3DXVECTOR3 vMouse = GetMouse();
-	
-		// 뷰포트 -> 투영 차원
-		vMouse -= {640, 360, 0};
-		// z곱하기, 투영 차원 -> 클립 차원
-		float originZ = -CameraMgr::GetInstance().GetCameraCenter().z;
-		vMouse *= originZ;
-
-		// 클립 차원 -> 뷰 차원
-		D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
-		D3DXMatrixInverse(&matProj, 0, &matProj);
-		// proj -> view
-		D3DXVec3TransformCoord(&vMouse, &vMouse, &matProj);
-
-		// 뷰 차원 -> 월드 차원
-		D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
-		D3DXMatrixInverse(&matView, 0, &matView);
-		// view -> world
-		D3DXVec3TransformCoord(&vMouse, &vMouse, &matView);
-
-		vMouse.z = 0;
+		D3DXVECTOR3 vMouse = CameraMgr::GetInstance().ScreenToWorld(GetMouse());
 		for (int i = 0; i < 12; ++i) {
 			D3DXMATRIX matRotZ;
 			D3DXVECTOR3 vDir = { 0, 1, 0 };

@@ -209,29 +209,29 @@ void CPlayer::Update()
 		D3DXVec3TransformCoord(&m_vViewVec[i], &m_vWorldVec[i], &matView);
 		// Z Division �� ��Ŀ� ���ԵǾ� ����.
 		D3DXVec3TransformCoord(&m_vProjVec[i], &m_vViewVec[i], &matProj);
-		m_vProjVec[i] += {640, 360, 0};
+		m_vProjVec[i] = CameraMgr::GetInstance().ProjToScreen(m_vProjVec[i]);
 	}
 
 	D3DXVec3TransformCoord(&m_vViewPosinVec, &m_vWorldPosinVec, &matView);
 	D3DXVec3TransformCoord(&m_vProjPosinVec, &m_vViewPosinVec, &matProj);
-	m_vProjPosinVec += {640, 360, 0};
+	m_vProjPosinVec = CameraMgr::GetInstance().ProjToScreen(m_vProjPosinVec);
 
 	for (int i = 0; i < 2; ++i)
 	{
 		D3DXVec3TransformCoord(&m_vViewShotPosinVec[i], &m_vWorldShotPosinVec[i], &matView);
 		D3DXVec3TransformCoord(&m_vProjShotPosinVec[i], &m_vViewShotPosinVec[i], &matProj);
-		m_vProjShotPosinVec[i] += {640, 360, 0};
+		m_vProjShotPosinVec[i] = CameraMgr::GetInstance().ProjToScreen(m_vProjShotPosinVec[i]);
 
 		D3DXVec3TransformCoord(&m_vViewBackPosinVec[i], &m_vWorldBackPosinVec[i], &matView);
 		D3DXVec3TransformCoord(&m_vProjBackPosinVec[i], &m_vViewBackPosinVec[i], &matProj);
-		m_vProjBackPosinVec[i] += {640, 360, 0};
+		m_vProjBackPosinVec[i] = CameraMgr::GetInstance().ProjToScreen(m_vProjBackPosinVec[i]);
 	}
 
 	for (int i = 0; i < 8; ++i)
 	{
 		D3DXVec3TransformCoord(&m_vViewSummonerPosinVec[i], &m_vWorldSummonerPosinVec[i], &matView);
 		D3DXVec3TransformCoord(&m_vProjSummonerPosinVec[i], &m_vViewSummonerPosinVec[i], &matProj);
-		m_vProjSummonerPosinVec[i] += {640, 360, 0};
+		m_vProjSummonerPosinVec[i] = CameraMgr::GetInstance().ProjToScreen(m_vProjSummonerPosinVec[i]);
 	}
 }
 

@@ -31,10 +31,10 @@ void CSummonee::Initialize()
 
 void CSummonee::Update()
 {
-	// °øÀüÀÇ Áß½É
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½
 	D3DXVECTOR3 tempPlayerPos = m_pParent->GetPos();
 
-	// °øÀüÀÇ °¢µµ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	m_fRadian += D3DXToRadian(10);
 
 	m_tINFO.vPos = tempPlayerPos;
@@ -64,12 +64,12 @@ void CSummonee::Update()
 	{
 		D3DXVec3TransformCoord(&m_vViewBodyPoints[i], &m_vWorldBodyPoints[i], &matView);
 		D3DXVec3TransformCoord(&m_vProjBodyPoints[i], &m_vViewBodyPoints[i], &matProj);
-		m_vProjBodyPoints[i] += {640, 360, 0};
+		m_vProjBodyPoints[i] = CameraMgr::GetInstance().ProjToScreen(m_vProjBodyPoints[i]);
 	}
 	
 	D3DXVec3TransformCoord(&m_vViewPosinPoint, &m_vWorldPosinPoint, &matView);
 	D3DXVec3TransformCoord(&m_vProjPosinPoint, &m_vViewPosinPoint, &matProj);
-	m_vProjPosinPoint += {640, 360, 0};
+	m_vProjPosinPoint = CameraMgr::GetInstance().ProjToScreen(m_vProjPosinPoint);
 }
 
 void CSummonee::LateUpdate()
