@@ -24,6 +24,38 @@ public:
 	const D3DXMATRIX& GetProjMat() { return m_matProj; }
 	const RECT& GetCameraRect() { return m_CameraRect; }
 	float GetProjScale() { return 1 / m_fCameraScale; }
+	D3DXVECTOR3 ProjToScreen(const D3DXVECTOR3& _vProj) {
+		return {
+			(_vProj.x + 1.f) * WINCX * 0.5f,
+			(_vProj.y + 1.f) * WINCY * 0.5f,
+			_vProj.z
+		};
+	}
+	D3DXVECTOR3 ScreenToProj(const D3DXVECTOR3& _vScreen) {
+		return {
+			_vScreen.x / (WINCX * 0.5f) - 1.f,
+			_vScreen.y / (WINCY * 0.5f) - 1.f,
+			_vScreen.z
+		};
+	}
+	D3DXVECTOR3 ScreenToWorld(const D3DXVECTOR3& _vScreen) {
+		D3DXVECTOR3 vProj = ScreenToProj(_vScreen);
+		const float fovY = D3DXToRadian(90.f);
+		const float viewZ = -m_CameraWorldCenter.z;
+		const float halfViewY = viewZ * tanf(fovY * 0.5f);
+		const float halfViewX = halfViewY * float(WINCX) / WINCY;
+		D3DXVECTOR3 vView = {
+			vProj.x * halfViewX,
+			vProj.y * halfViewY,
+			viewZ
+		};
+		D3DXMATRIX matInvView;
+		D3DXVECTOR3 vWorld;
+		D3DXMatrixInverse(&matInvView, 0, &m_matView);
+		D3DXVec3TransformCoord(&vWorld, &vView, &matInvView);
+		vWorld.z = 0;
+		return vWorld;
+	}
 
 	void Set_CameraCenter(D3DXVECTOR3 _CameraCenter) {
 		m_CameraWorldCenter = _CameraCenter;

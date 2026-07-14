@@ -56,16 +56,16 @@ void CObstacle::Update()
 		D3DXVec3TransformCoord(&m_vWorldVec[i], &m_vLocalVec[i], &m_tINFO.matWorld);
 	}
 
-	// ¿ùµå -> ºä -> Åõ¿µ ½ºÆäÀÌ½º º¯È¯
+	// ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½È¯
 	D3DXMATRIX matView = CameraMgr::GetInstance().GetViewMat();
 
 	D3DXMATRIX matProj = CameraMgr::GetInstance().GetProjMat();
 
 	for (int i = 0; i < m_vWorldVec.size(); ++i) {
 		D3DXVec3TransformCoord(&m_vViewVec[i], &m_vWorldVec[i], &matView);
-		// Z Division ÀÌ Çà·Ä¿¡ Æ÷ÇÔµÇ¾î ÀÖÀ½.
+		// Z Division ï¿½ï¿½ ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½.
 		D3DXVec3TransformCoord(&m_vProjVec[i], &m_vViewVec[i], &matProj);
-		m_vProjVec[i] += {640, 360, 0};
+		m_vProjVec[i] = CameraMgr::GetInstance().ProjToScreen(m_vProjVec[i]);
 	}
 }
 

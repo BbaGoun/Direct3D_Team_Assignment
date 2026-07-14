@@ -86,7 +86,7 @@ void CEnemy::Update()
 		D3DXVec3TransformCoord(&m_vViewVec[i], &m_vWorldVec[i], &matView);
 		// Z Division 이 행렬에 포함되어 있음.
 		D3DXVec3TransformCoord(&m_vProjVec[i], &m_vViewVec[i], &matProj);
-		m_vProjVec[i] += {640, 360, 0};
+		m_vProjVec[i] = CameraMgr::GetInstance().ProjToScreen(m_vProjVec[i]);
 	}
 
 	if (m_pTankStat != nullptr)
